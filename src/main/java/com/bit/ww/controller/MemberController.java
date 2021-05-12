@@ -1,6 +1,6 @@
 package com.bit.ww.controller;
 
-import com.bit.ww.MemberMapper.MemberMapper;
+import com.bit.ww.mapper.MemberMapper;
 import com.bit.ww.dto.Member;
 import com.bit.ww.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;

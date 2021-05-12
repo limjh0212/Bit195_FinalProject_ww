@@ -1,4 +1,4 @@
-package com.bit.ww.MemberMapper;
+package com.bit.ww.mapper;
 
 import com.bit.ww.dto.Member;
 import org.apache.ibatis.annotations.Mapper;
