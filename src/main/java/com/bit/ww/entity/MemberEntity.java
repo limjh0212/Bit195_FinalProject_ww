@@ -1,6 +1,8 @@
 package com.bit.ww.entity;
 
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,6 +14,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 public class MemberEntity {
     @Id
+    @Column(name = "id", unique = true, nullable = false)
     private String id;
     @Column
     private String pw;
@@ -21,19 +24,21 @@ public class MemberEntity {
     private String email;
     @Column
     private boolean gender;
-    @Column
-    private int age;
+    @Column(name = "age", nullable = true)
+    private Integer age;
     @Column
     private String img;
-    @Column //접근권한
-    private String role;
     @Column //등록일자
+    @CreationTimestamp
     private Timestamp regdate;
     @Column //수정일자
+    @UpdateTimestamp
     private Timestamp editdate;
     @Column //탈퇴일자
     private Timestamp wthdrdate;
     @Column //탈퇴여부
     private boolean iswithdrawal;
+    @Column //접근권한
+    private String role;
 
 }

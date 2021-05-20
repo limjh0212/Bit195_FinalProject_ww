@@ -13,10 +13,10 @@ public class MemberDTO {
     private boolean gender;
     private int age;
     private String img;
-    private String role;
     private Timestamp regdate;
     private Timestamp editdate;
     private Timestamp wthdrdate;
     private boolean iswithdrawal;
+    private String role;
 
 }
