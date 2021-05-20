@@ -1,22 +1,16 @@
 package com.bit.ww.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "member")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberEntity extends TimeEntity {
-
+public class MemberEntity {
     @Id
     private String id;
     @Column
@@ -33,22 +27,13 @@ public class MemberEntity extends TimeEntity {
     private String img;
     @Column //접근권한
     private String role;
+    @Column //등록일자
+    private Timestamp regdate;
+    @Column //수정일자
+    private Timestamp editdate;
     @Column //탈퇴일자
     private Timestamp wthdrdate;
     @Column //탈퇴여부
     private boolean iswithdrawal;
 
-    @Builder
-    public MemberEntity(String id, String pw, String nickname, String email, boolean gender, int age, String img, String role, Timestamp wthdrdate, boolean iswithdrawal) {
-        this.id = id;
-        this.pw = pw;
-        this.nickname = nickname;
-        this.email = email;
-        this.gender = gender;
-        this.age = age;
-        this.img = img;
-        this.role = role;
-        this.wthdrdate = wthdrdate;
-        this.iswithdrawal = iswithdrawal;
-    }
 }

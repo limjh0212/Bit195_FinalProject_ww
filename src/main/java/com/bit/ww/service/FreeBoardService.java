@@ -27,8 +27,6 @@ public class FreeBoardService {
                     .writer(freeBoardEntity.getWriter())
                     .title(freeBoardEntity.getTitle())
                     .content(freeBoardEntity.getContent())
-                    .regdate(freeBoardEntity.getRegdate())
-                    .editdate(freeBoardEntity.getEditdate())
                     .readcount(freeBoardEntity.getReadcount())
                     .build();
 
@@ -47,8 +45,6 @@ public class FreeBoardService {
                 .writer(freeBoardEntity.getWriter())
                 .title(freeBoardEntity.getTitle())
                 .content(freeBoardEntity.getContent())
-                .regdate(freeBoardEntity.getRegdate())
-                .editdate(freeBoardEntity.getEditdate())
                 .readcount(freeBoardEntity.getReadcount())
                 .build();
 

@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Table(name = "free_board")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FreeBoardEntity extends TimeEntity{
+public class FreeBoardEntity{
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
