@@ -19,6 +19,7 @@ public class MemberController {
     //회원 조회
     @GetMapping("/findall")
     public List<MemberEntity> findall(){
+
         return memberRepository.findAll();
     }
 
