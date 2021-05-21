@@ -37,6 +37,8 @@ dependencies {
 //    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 }
 
+apply plugin: 'idea'
+
 test {
     useJUnitPlatform()
 }

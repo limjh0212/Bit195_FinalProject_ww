@@ -4,12 +4,11 @@ import com.bit.ww.entity.MemberEntity;
 import com.bit.ww.mapper.MemberMapper;
 import com.bit.ww.repository.MemberRepository;
 import lombok.AllArgsConstructor;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -22,10 +21,16 @@ public class MemberController {
     @Autowired
     MemberMapper memberMapper;
 
-    //회원 조회
+    //회원 전체 조회
     @GetMapping("/findall")
     public List<MemberEntity> findall() {
         return memberRepository.findAll();
+    }
+
+    //회원 ID 조회
+    @GetMapping("/findbyid/{id}")
+    public Optional<MemberEntity> findbyid(@PathVariable String id) {
+        return memberRepository.findById(id);
     }
 
     //회원 등록
@@ -43,7 +48,7 @@ public class MemberController {
     }
 
     //회원 수정
-    @PatchMapping ("/update")
+    @PatchMapping("/update")
     public String delete(@RequestBody MemberEntity member) {
         memberMapper.update(member);
         return "update ok!";
