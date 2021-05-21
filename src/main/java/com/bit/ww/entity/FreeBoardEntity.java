@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "free_board")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FreeBoardEntity{
+public class FreeBoardEntity extends TimeEntity{
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
