@@ -20,15 +20,14 @@ public class FreeBoardDTO {
     private boolean istemp;
 
     public FreeBoardEntity toEntity() {
-        FreeBoardEntity freeBoardEntity = FreeBoardEntity.builder()
-                .num(num)
-                .writer(writer)
-                .title(title)
-                .content(content)
-                .readcount(readcount)
-                .istemp(istemp)
+        return FreeBoardEntity.builder()
+                .num(this.num)
+                .writer(this.writer)
+                .title(this.title)
+                .content(this.content)
+                .readcount(this.readcount)
+                .istemp(this.istemp)
                 .build();
-        return freeBoardEntity;
     }
 
     @Builder
