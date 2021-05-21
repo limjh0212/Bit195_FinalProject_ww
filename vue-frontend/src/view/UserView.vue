@@ -1,11 +1,14 @@
 <template>
     <div>
-        userview
-        {{ item }}
+        <p>userview</p>
+        <p>{{ item }}</p>
+
     </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name    : "UserView",
     computed: {
@@ -14,8 +17,9 @@ export default {
         }
     },
     created() {
+        axios
         const userId = this.$route.params.id;
-        console.log(userId);
+        console.log(userId)
         this.$store.dispatch('FETCH_USER', userId)
     }
 }

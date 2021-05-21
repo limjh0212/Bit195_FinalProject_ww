@@ -2,6 +2,7 @@ package com.bit.ww.mapper;
 
 import com.bit.ww.entity.MemberEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 @Mapper
@@ -11,4 +12,6 @@ public interface MemberMapper {
             "age=#{age}, img=#{img}, iswithdrawal=#{iswithdrawal}, role=#{role} WHERE  `id`=#{id}")
     public void update(MemberEntity member);
 
+    @Select("SELECT * from `ww`.`member` WHERE `id`=#{id}")
+    MemberEntity findById(String id);
 }

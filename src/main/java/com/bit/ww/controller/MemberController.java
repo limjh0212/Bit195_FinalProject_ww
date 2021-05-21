@@ -30,8 +30,10 @@ public class MemberController {
     //회원 ID 조회
     @GetMapping("/findbyid/{id}")
     public Optional<MemberEntity> findbyid(@PathVariable String id) {
+//        return memberMapper.findById(id);
         return memberRepository.findById(id);
     }
+
 
     //회원 등록
     @PostMapping("/save")

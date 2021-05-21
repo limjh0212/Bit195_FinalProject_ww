@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state    : {
         member: [],
-        user  : {}
+        user  : []
     },
     mutations: {
         SET_MEMBER(state, member) {
@@ -25,9 +25,10 @@ export const store = new Vuex.Store({
                     console.log(error)
                 });
         },
-        SET_USER({commit}, id) {
-            fetchUser(id)
+        FETCH_USER({commit}, userId) {
+            fetchUser(userId)
                 .then(({data}) => commit('SET_USER', data))
+                .then(({data}) => console.log(data))
                 .catch(function (error) {
                     console.log(error)
                 });

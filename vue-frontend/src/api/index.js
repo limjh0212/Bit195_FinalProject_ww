@@ -2,11 +2,11 @@ import axios from "axios";
 
 
 function fetchMemberList() {
-    return axios.get('member/findall')
+    return axios.get('/member/findall')
 }
 
-function fetchUser(id) {
-    return axios.get('member/findall/${id}')
+function fetchUser(userId) {
+    return axios.get('/member/findbyid/${userId}')
 }
 
 export {
