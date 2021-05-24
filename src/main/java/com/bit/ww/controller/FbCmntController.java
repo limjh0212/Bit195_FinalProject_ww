@@ -14,7 +14,7 @@ import java.util.List;
 public class FbCmntController {
     private FbCmntService fbCmntService;
 
-    // 조회 - 확인용
+    // 댓글 조회 - 확인용
     @GetMapping("/boards/comments")
     public List list(Model model){
         List<FbCmntDTO> fbCmntList = fbCmntService.getFbCmntList();
@@ -22,7 +22,7 @@ public class FbCmntController {
         return fbCmntList;
     }
 
-    // 조회 - 게시물에 해당하는 댓글 출력 Todo: 해당 메소드 생성성
+    // 댓글 조회 - 게시물에 해당하는 댓글 출력 Todo: 해당 메소드 생성
 
    //댓글 등록 - 확인용 - id 값은 필요 없음.
     @PostMapping(value ="/boards/cmnt")
@@ -37,10 +37,20 @@ public class FbCmntController {
         return "update ok!";
     }
 
-    // 댓글 삭제 - 확인용
-    @DeleteMapping("/boards/cmntDelete/{num}")
-    public String delete(@PathVariable("num") int num){
-        fbCmntService.deleteCmnt(num);
-        return "delete ok!";
+    // 댓글 삭제(대댓글이 없을 경우) - 확인용
+//    @DeleteMapping("/boards/cmntDelete/{num}")
+//    public String delete(@PathVariable("num") int num){
+//        fbCmntService.deleteCmnt(num);
+//        return "delete ok!";
+//    }
+
+    // 댓글 삭제(대댓글이 있을 경우) - 값 변경 Todo: (대댓글 존재여부에 따라) if문으로 처리필요.
+    @PutMapping("/boards/cmntDelete/{num}")
+    public String deleteCmnt(@RequestBody @Validated FbCmntDTO fbCmntDTO){
+        FbCmntDTO delCmnt = fbCmntDTO;
+        delCmnt.setWriter("deleted");
+        delCmnt.setContent("deleted");
+        fbCmntService.saveCmnt(delCmnt);
+        return "deleteCmnt ok!";
     }
 }

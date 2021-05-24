@@ -44,4 +44,5 @@ public class FbCmntService {
     public void deleteCmnt(int num){
         fbCmntRepository.deleteById(num);
     }
+
 }
