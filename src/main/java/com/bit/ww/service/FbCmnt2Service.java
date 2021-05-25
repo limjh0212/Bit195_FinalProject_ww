@@ -16,8 +16,8 @@ public class FbCmnt2Service {
     private FbCmnt2Repository fbCmnt2Repository;
 
     @Transactional
-    public List<FbCmnt2DTO> getFbCmnt2List() {
-        List<FbCmnt2Entity> fbCmnt2Entities = fbCmnt2Repository.findAll();
+    public List<FbCmnt2DTO> getFbCmnt2List(int cmntnum) {
+        List<FbCmnt2Entity> fbCmnt2Entities = fbCmnt2Repository.findAllByCmntnumOrderByNumAsc(cmntnum);
         List<FbCmnt2DTO> fbCmnt2DTOList = new ArrayList<>();
 
         for (FbCmnt2Entity fbCmnt2Entity : fbCmnt2Entities) {
@@ -44,4 +44,10 @@ public class FbCmnt2Service {
     public void deleteCmnt2(int num){
         fbCmnt2Repository.deleteById(num);
     }
+
+    @Transactional
+    public boolean existCmnt2(int cmntnum) {
+        return fbCmnt2Repository.existsByCmntnum(cmntnum);
+    }
+
 }

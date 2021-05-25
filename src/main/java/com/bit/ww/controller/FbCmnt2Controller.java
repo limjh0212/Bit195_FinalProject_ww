@@ -15,14 +15,12 @@ public class FbCmnt2Controller {
     private FbCmnt2Service fbCmnt2Service;
 
     // 대댓글 조회 - 확인용
-    @GetMapping("/boards/comments2")
-    public List list(Model model){
-        List<FbCmnt2DTO> fbCmnt2List = fbCmnt2Service.getFbCmnt2List();
+    @GetMapping("/boards/cmnt2/{cmntnum}")
+    public List list(int cmntnum, Model model){
+        List<FbCmnt2DTO> fbCmnt2List = fbCmnt2Service.getFbCmnt2List(cmntnum);
         model.addAttribute("fbCmnt2List", fbCmnt2List);
         return fbCmnt2List;
     }
-
-    // 대댓글 조회 - 각 댓글에 해당하는 대댓글 출력 Todo: 해당 메소드 생성
 
    // 대댓글 등록 - 확인용 - id 값은 필요 없음.
     @PostMapping(value ="/boards/cmnt2")

@@ -16,8 +16,8 @@ public class FbCmntService {
     private FbCmntRepository fbCmntRepository;
 
     @Transactional
-    public List<FbCmntDTO> getFbCmntList() {
-        List<FbCmntEntity> fbCmntEntities = fbCmntRepository.findAll();
+    public List<FbCmntDTO> getFbCmntList(int boardnum) {
+        List<FbCmntEntity> fbCmntEntities = fbCmntRepository.findAllByBoardnumOrderByNumAsc(boardnum);
         List<FbCmntDTO> fbCmntDTOList = new ArrayList<>();
 
         for (FbCmntEntity fbCmntEntity : fbCmntEntities) {
