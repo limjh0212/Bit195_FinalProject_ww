@@ -4,41 +4,33 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "free_board")
+@Table(name = "free_cmnts2")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FreeBoardEntity extends TimeEntity{
+public class FbCmnt2Entity extends TimeEntity {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int num;
 
     @Column
-    private String writer;
+    private int cmntnum;
 
     @Column
-    private String title;
+    private String writer;
 
     @Column
     private String content;
 
-    @Column
-    private int readcount;
-
-    @Column
-    private boolean istemp;
-
     @Builder
-    public FreeBoardEntity(int num, String writer, String title, String content, int readcount, boolean istemp){
+    public FbCmnt2Entity(int num, int cmntnum, String writer, String content){
         this.num = num;
+        this.cmntnum = cmntnum;
         this.writer = writer;
-        this.title = title;
         this.content = content;
-        this.readcount = readcount;
-        this.istemp = istemp;
     }
-
 }
