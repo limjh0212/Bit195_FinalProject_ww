@@ -1,5 +1,6 @@
 package com.bit.ww.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;

@@ -1,12 +1,14 @@
 <template>
     <div>
-        userEdit
+      <h1>Main Page</h1>
     </div>
 </template>
 
 <script>
+
 export default {
-    name: "UserEdit"
+    name      : "MainPage",
+
 }
 </script>
 

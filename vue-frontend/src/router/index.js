@@ -1,34 +1,31 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
-import MemberView from "@/view/MemberView";
-import UserView from "@/view/UserView";
-import UserEdit from "@/view/UserEdit";
 
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
     mode  : "history",
     routes: [
-        // {
-        //     path    : '/',
-        //     redirect: '/main',
-        // },
         {
-            path     : '/member/:id',
-            name     : 'userView',
-            component: UserView,
+            path     : '/',
+            component: () => import('@/view/MainPage'),
         },
-
-        {
-            path     : '/useredit/:id',
-            name     : 'userEdit',
-            component: UserEdit,
-        },
-
         {
             path     : '/member',
-            name     : 'member',
-            component: MemberView,
+            component: () => import('@/view/member/MemberPage'),
         },
+        {
+            path     : '/board',
+            component: () => import('@/view/post/FreeBoardPage'),
+        },
+        {
+            path     : '/post',
+            component: () => import('@/view/post/FreeBoardPost'),
+        },
+        {
+            path     : '/login',
+            component: () => import('@/view/member/LoginPage'),
+        },
+
     ]
 });
