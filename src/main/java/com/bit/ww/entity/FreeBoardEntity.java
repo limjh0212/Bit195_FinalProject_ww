@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 
 @Entity
@@ -26,9 +28,11 @@ public class FreeBoardEntity extends TimeEntity{
     private String content;
 
     @Column
+    @ColumnDefault("0")
     private int readcount;
 
     @Column
+    @ColumnDefault("0")
     private boolean istemp;
 
     @Builder
