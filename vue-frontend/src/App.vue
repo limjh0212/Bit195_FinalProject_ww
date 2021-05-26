@@ -1,17 +1,15 @@
 <template>
-    <div id="app">
-        <tool-bar></tool-bar>
+    <div>
+        <ToolBar></ToolBar>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
-
-import ToolBar from "@/components/ToolBar";
-
+import ToolBar from "@/components/common/ToolBar";
 export default {
-    name      : 'App',
-    components: {ToolBar}
+    name: 'App',
+    components: {ToolBar},
 }
 </script>
 

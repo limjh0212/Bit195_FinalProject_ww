@@ -1,16 +1,18 @@
 <template>
     <div class="memberList">
         회원 List
-        <p v-for="(item, idx) in items" v-bind:key="idx"><a v-bind:href="`item/${item.id}`"> {{ item.id }}</a></p>
+        <p class="post" v-for="(item, idx) in items" v-bind:key="idx"><a v-bind:href="`member/${item.id}`"> {{
+                item.id
+            }}</a></p>
     </div>
 </template>
 
 <script>
 export default {
-    name    : "MemberView",
+    name    : "MemberList",
     computed: {
         items() {
-            return this.$store.state.member
+            return this.$store.state.memberList
         }
     },
 
@@ -29,6 +31,13 @@ export default {
     color: #2c3e50;
     margin-top: 60px;
 
+}
+
+.post {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    border-bottom: 1px solid #eee;
 }
 
 </style>
