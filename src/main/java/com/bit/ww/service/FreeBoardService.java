@@ -18,7 +18,7 @@ public class FreeBoardService {
 
     @Transactional
     public List<FreeBoardDTO> getFreeBoardList() {
-        List<FreeBoardEntity> freeBoardEntities = freeBoardRepository.findAll();
+        List<FreeBoardEntity> freeBoardEntities = freeBoardRepository.findAllByIstempIsFalseOrderByNumDesc();
         List<FreeBoardDTO> freeBoardDTOList = new ArrayList<>();
 
         for (FreeBoardEntity freeBoardEntity : freeBoardEntities) {
@@ -66,4 +66,42 @@ public class FreeBoardService {
     public void deletePost(int num){
         freeBoardRepository.deleteById(num);
     }
+
+    @Transactional
+    public List<FreeBoardDTO> getTempList(String writer) {
+        List<FreeBoardEntity> tempEntities = freeBoardRepository.findAllByWriterAndIstempIsTrueOrderByNumDesc(writer);
+        List<FreeBoardDTO> tempDTOList = new ArrayList<>();
+
+        for (FreeBoardEntity tempEntity : tempEntities) {
+            FreeBoardDTO tempDTO = FreeBoardDTO.builder()
+                    .num(tempEntity.getNum())
+                    .writer(tempEntity.getWriter())
+                    .title(tempEntity.getTitle())
+                    .content(tempEntity.getContent())
+                    .regdate(tempEntity.getRegdate())
+                    .editdate(tempEntity.getEditdate())
+                    .readcount(tempEntity.getReadcount())
+                    .istemp(tempEntity.isIstemp())
+                    .build();
+
+            tempDTOList.add(tempDTO);
+        }
+        return tempDTOList;
+    }
+
+    @Transactional
+    public int countList(){
+        return freeBoardRepository.countAllByIstempIsFalse();
+    }
+
+    @Transactional
+    public int countListByTemp(String writer){
+        return freeBoardRepository.countAllByWriterAndIstempIsTrue(writer);
+    }
+
+    @Transactional
+    public int countListByWriter(String writer){
+        return freeBoardRepository.countAllByWriterAndIstempIsFalse(writer);
+    }
+
 }
