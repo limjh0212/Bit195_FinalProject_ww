@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+// Todo : editdate 해결필요.
 @Getter
 @Setter
 @ToString
@@ -15,7 +16,8 @@ public class FreeBoardDTO {
     private String title;
     private String content;
     private LocalDateTime regdate;
-    private LocalDateTime editdate;
+    //private LocalDateTime editdate;
+    private LocalDateTime updatedate;
     private int readcount;
     private boolean istemp;
 
@@ -25,20 +27,19 @@ public class FreeBoardDTO {
                 .writer(this.writer)
                 .title(this.title)
                 .content(this.content)
+                .updatedate(this.updatedate)
                 .readcount(this.readcount)
-                .istemp(this.istemp)
                 .build();
     }
 
     @Builder
-    public FreeBoardDTO(int num, String writer, String title, String content, LocalDateTime regdate, LocalDateTime editdate, int readcount, boolean istemp){
+    public FreeBoardDTO(int num, String writer, String title, String content, LocalDateTime regdate, LocalDateTime updatedate, int readcount){
         this.num = num;
         this.writer = writer;
         this.title = title;
         this.content = content;
         this.regdate = regdate;
-        this.editdate = editdate;
+        this.updatedate = updatedate;
         this.readcount = readcount;
-        this.istemp = istemp;
     }
 }

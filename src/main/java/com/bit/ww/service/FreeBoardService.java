@@ -15,10 +15,12 @@ import java.util.Optional;
 @AllArgsConstructor
 public class FreeBoardService {
     private FreeBoardRepository freeBoardRepository;
-
+    // Todo: 전체에 editdate 없음. 주의
+    // Todo: Temp로 이동 2개 필요.
+    // CRUD 메인 기능
     @Transactional
     public List<FreeBoardDTO> getFreeBoardList() {
-        List<FreeBoardEntity> freeBoardEntities = freeBoardRepository.findAllByIstempIsFalseOrderByNumDesc();
+        List<FreeBoardEntity> freeBoardEntities = freeBoardRepository.findAllByOrderByNumDesc();
         List<FreeBoardDTO> freeBoardDTOList = new ArrayList<>();
 
         for (FreeBoardEntity freeBoardEntity : freeBoardEntities) {
@@ -28,9 +30,8 @@ public class FreeBoardService {
                     .title(freeBoardEntity.getTitle())
                     .content(freeBoardEntity.getContent())
                     .regdate(freeBoardEntity.getRegdate())
-                    .editdate(freeBoardEntity.getEditdate())
+                    .updatedate(freeBoardEntity.getUpdatedate())
                     .readcount(freeBoardEntity.getReadcount())
-                    .istemp(freeBoardEntity.isIstemp())
                     .build();
 
             freeBoardDTOList.add(freeBoardDTO);
@@ -49,9 +50,8 @@ public class FreeBoardService {
                 .title(freeBoardEntity.getTitle())
                 .content(freeBoardEntity.getContent())
                 .regdate(freeBoardEntity.getRegdate())
-                .editdate(freeBoardEntity.getEditdate())
+                .updatedate(freeBoardEntity.getUpdatedate())
                 .readcount(freeBoardEntity.getReadcount())
-                .istemp(freeBoardEntity.isIstemp())
                 .build();
 
         return freeBoardDTO;
@@ -67,9 +67,40 @@ public class FreeBoardService {
         freeBoardRepository.deleteById(num);
     }
 
+//   Temp로 이동   @Transactional
+//    public List<FreeBoardDTO> getTempList(String writer) {
+//        List<FreeBoardEntity> tempEntities = freeBoardRepository.findAllByWriterAndIstempIsTrueOrderByNumDesc(writer);
+//        List<FreeBoardDTO> tempDTOList = new ArrayList<>();
+//
+//        for (FreeBoardEntity tempEntity : tempEntities) {
+//            FreeBoardDTO tempDTO = FreeBoardDTO.builder()
+//                    .num(tempEntity.getNum())
+//                    .writer(tempEntity.getWriter())
+//                    .title(tempEntity.getTitle())
+//                    .content(tempEntity.getContent())
+//                    .regdate(tempEntity.getRegdate())
+//                    .readcount(tempEntity.getReadcount())
+//                    .build();
+//
+//            tempDTOList.add(tempDTO);
+//        }
+//        return tempDTOList;
+//    }
+
     @Transactional
-    public List<FreeBoardDTO> getTempList(String writer) {
-        List<FreeBoardEntity> tempEntities = freeBoardRepository.findAllByWriterAndIstempIsTrueOrderByNumDesc(writer);
+    public int countList(){
+        return freeBoardRepository.countAllByNumIsNotNull();
+    }
+
+// Temp로 이동    @Transactional
+//    public int countListByTemp(String writer){
+//        return freeBoardRepository.countAllByWriterAndIstempIsTrue(writer);
+//    }
+
+    //검색 기능
+    @Transactional
+    public List<FreeBoardDTO> getListByTitle(String title) {
+        List<FreeBoardEntity> tempEntities = freeBoardRepository.findAllByTitleIgnoreCaseIsContainingOrderByNumDesc(title);
         List<FreeBoardDTO> tempDTOList = new ArrayList<>();
 
         for (FreeBoardEntity tempEntity : tempEntities) {
@@ -79,9 +110,8 @@ public class FreeBoardService {
                     .title(tempEntity.getTitle())
                     .content(tempEntity.getContent())
                     .regdate(tempEntity.getRegdate())
-                    .editdate(tempEntity.getEditdate())
+                    .updatedate(tempEntity.getUpdatedate())
                     .readcount(tempEntity.getReadcount())
-                    .istemp(tempEntity.isIstemp())
                     .build();
 
             tempDTOList.add(tempDTO);
@@ -90,18 +120,111 @@ public class FreeBoardService {
     }
 
     @Transactional
-    public int countList(){
-        return freeBoardRepository.countAllByIstempIsFalse();
+    public int countListByTitle(String title){
+        return freeBoardRepository.countAllByTitleIgnoreCaseIsContaining(title);
     }
 
     @Transactional
-    public int countListByTemp(String writer){
-        return freeBoardRepository.countAllByWriterAndIstempIsTrue(writer);
+    public List<FreeBoardDTO> getListByTitleAndContent(String title, String content) {
+        List<FreeBoardEntity> tempEntities = freeBoardRepository.findAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingOrderByNumDesc(title, content);
+        List<FreeBoardDTO> tempDTOList = new ArrayList<>();
+
+        for (FreeBoardEntity tempEntity : tempEntities) {
+            FreeBoardDTO tempDTO = FreeBoardDTO.builder()
+                    .num(tempEntity.getNum())
+                    .writer(tempEntity.getWriter())
+                    .title(tempEntity.getTitle())
+                    .content(tempEntity.getContent())
+                    .regdate(tempEntity.getRegdate())
+                    .updatedate(tempEntity.getUpdatedate())
+                    .readcount(tempEntity.getReadcount())
+                    .build();
+
+            tempDTOList.add(tempDTO);
+        }
+        return tempDTOList;
+    }
+    @Transactional
+    public int countListByTitleAndContent(String title, String content){
+        return freeBoardRepository.countAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContaining(title, content);
+    }
+
+    //관리 기능
+    @Transactional
+    public List<FreeBoardDTO> getListByWriter(String writer) {
+        List<FreeBoardEntity> tempEntities = freeBoardRepository.findAllByWriterOrderByNumDesc(writer);
+        List<FreeBoardDTO> tempDTOList = new ArrayList<>();
+
+        for (FreeBoardEntity tempEntity : tempEntities) {
+            FreeBoardDTO tempDTO = FreeBoardDTO.builder()
+                    .num(tempEntity.getNum())
+                    .writer(tempEntity.getWriter())
+                    .title(tempEntity.getTitle())
+                    .content(tempEntity.getContent())
+                    .regdate(tempEntity.getRegdate())
+                    .updatedate(tempEntity.getUpdatedate())
+                    .readcount(tempEntity.getReadcount())
+                    .build();
+
+            tempDTOList.add(tempDTO);
+        }
+        return tempDTOList;
     }
 
     @Transactional
     public int countListByWriter(String writer){
-        return freeBoardRepository.countAllByWriterAndIstempIsFalse(writer);
+        return freeBoardRepository.countAllByWriter(writer);
     }
 
+    @Transactional
+    public List<FreeBoardDTO> getListByWriterAndTitle(String title, String writer) {
+        List<FreeBoardEntity> tempEntities = freeBoardRepository.findAllByTitleIgnoreCaseIsContainingAndWriterOrderByNumDesc(title, writer);
+        List<FreeBoardDTO> tempDTOList = new ArrayList<>();
+
+        for (FreeBoardEntity tempEntity : tempEntities) {
+            FreeBoardDTO tempDTO = FreeBoardDTO.builder()
+                    .num(tempEntity.getNum())
+                    .writer(tempEntity.getWriter())
+                    .title(tempEntity.getTitle())
+                    .content(tempEntity.getContent())
+                    .regdate(tempEntity.getRegdate())
+                    .updatedate(tempEntity.getUpdatedate())
+                    .readcount(tempEntity.getReadcount())
+                    .build();
+
+            tempDTOList.add(tempDTO);
+        }
+        return tempDTOList;
+    }
+
+    @Transactional
+    public int countListByWriterAndTitle(String title, String writer){
+        return freeBoardRepository.countAllByTitleIgnoreCaseIsContainingAndWriter(title, writer);
+    }
+
+    @Transactional
+    public List<FreeBoardDTO> getListByWriterAndTitleAndContent(String title, String content, String writer) {
+        List<FreeBoardEntity> tempEntities = freeBoardRepository.findAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndWriterOrderByNumDesc(title, content, writer);
+        List<FreeBoardDTO> tempDTOList = new ArrayList<>();
+
+        for (FreeBoardEntity tempEntity : tempEntities) {
+            FreeBoardDTO tempDTO = FreeBoardDTO.builder()
+                    .num(tempEntity.getNum())
+                    .writer(tempEntity.getWriter())
+                    .title(tempEntity.getTitle())
+                    .content(tempEntity.getContent())
+                    .regdate(tempEntity.getRegdate())
+                    .updatedate(tempEntity.getUpdatedate())
+                    .readcount(tempEntity.getReadcount())
+                    .build();
+
+            tempDTOList.add(tempDTO);
+        }
+        return tempDTOList;
+    }
+
+    @Transactional
+    public int countListByWriterAndTitleAndContent(String title, String content, String writer){
+        return freeBoardRepository.countAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndWriter(title, content, writer);
+    }
 }

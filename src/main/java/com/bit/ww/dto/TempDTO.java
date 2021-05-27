@@ -1,37 +1,40 @@
 package com.bit.ww.dto;
 
-import com.bit.ww.entity.FbCmntEntity;
-import com.bit.ww.entity.FreeBoardEntity;
+import com.bit.ww.entity.TempEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
+// 수정완료
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class FbCmntDTO {
+public class TempDTO {
     private int num;
     private int boardnum;
     private String writer;
+    private String title;
     private String content;
     private LocalDateTime regdate;
     private LocalDateTime editdate;
 
-    public FbCmntEntity toEntity() {
-        return FbCmntEntity.builder()
+    public TempEntity toEntity() {
+        return TempEntity.builder()
                 .num(this.num)
                 .boardnum(this.boardnum)
                 .writer(this.writer)
+                .title(this.title)
                 .content(this.content)
                 .build();
     }
 
     @Builder
-    public FbCmntDTO(int num, int boardnum, String writer, String content, LocalDateTime regdate, LocalDateTime editdate){
+    public TempDTO(int num, int boardnum, String writer, String title, String content, LocalDateTime regdate, LocalDateTime editdate){
         this.num = num;
         this.boardnum = boardnum;
         this.writer = writer;
+        this.title = title;
         this.content = content;
         this.regdate = regdate;
         this.editdate = editdate;

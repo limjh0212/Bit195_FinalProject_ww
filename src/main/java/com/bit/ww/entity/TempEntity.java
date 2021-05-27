@@ -7,30 +7,36 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+// 생성 완료
 @Entity
-@Table(name = "free_cmnts2")
+@Table(name = "board_temp")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FbCmnt2Entity extends TimeEntity {
+public class TempEntity extends TimeEntity{
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int num;
 
     @Column
-    private int cmntnum;
+    private int boardnum;
 
     @Column
     private String writer;
 
     @Column
+    private String title;
+
+    @Column
     private String content;
 
     @Builder
-    public FbCmnt2Entity(int num, int cmntnum, String writer, String content){
+    public TempEntity(int num, int boardnum, String writer, String title, String content){
         this.num = num;
-        this.cmntnum = cmntnum;
+        this.boardnum = boardnum;
         this.writer = writer;
+        this.title = title;
         this.content = content;
     }
+
 }
