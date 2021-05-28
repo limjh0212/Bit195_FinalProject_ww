@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
+// 수정 완료
 @Entity
 @Table(name = "free_board")
 @Getter
@@ -28,21 +30,20 @@ public class FreeBoardEntity extends TimeEntity{
     private String content;
 
     @Column
-    @ColumnDefault("0")
-    private int readcount;
+    private LocalDateTime updatedate;
 
     @Column
     @ColumnDefault("0")
-    private boolean istemp;
+    private int readcount;
 
     @Builder
-    public FreeBoardEntity(int num, String writer, String title, String content, int readcount, boolean istemp){
+    public FreeBoardEntity(int num, String writer, String title, String content, LocalDateTime updatedate, int readcount){
         this.num = num;
         this.writer = writer;
         this.title = title;
         this.content = content;
+        this.updatedate = updatedate;
         this.readcount = readcount;
-        this.istemp = istemp;
     }
 
 }
