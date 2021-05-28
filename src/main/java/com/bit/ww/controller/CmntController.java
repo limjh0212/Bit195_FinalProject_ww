@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 public class CmntController {
-    // Todo: 전체 확인 필요.
     private CmntService cmntService;
 
     // 댓글 등록(완료) - 확인용 - id 값은 필요 없음.
@@ -26,20 +25,20 @@ public class CmntController {
         return cmntService.saveCmnt(cmnt2DTO);
     }
 
-    // 댓글 수정 - 확인용 - 값 모두 필요.
+    // 댓글 수정(완료) - 확인용 - 값 모두 필요.
     @PutMapping("/cmntEdit/{num}")
     public String update(@RequestBody @Validated CmntDTO cmntDTO){
         cmntService.saveCmnt(cmntDTO);
         return "update ok!";
     }
-    // 댓글 삭제(대댓글이 없을 경우)
+    // 댓글 삭제(대댓글이 없을 경우) (완료)
     @DeleteMapping("/cmntDelete/{num}")
     public String deleteCmnt(@PathVariable("num") int num){
         cmntService.deleteCmnt(num);
         return "deleteCmnt ok!";
     }
 
-    // 댓글 삭제(대댓글이 있을 경우) - 값 변경
+    // 댓글 삭제(대댓글이 있을 경우) - 값 변경 (완료)
     @PutMapping("/cmntDelete/{num}")
     public String delete(@RequestBody @Validated CmntDTO cmntDTO){
         CmntDTO delCmntDTO = cmntDTO;

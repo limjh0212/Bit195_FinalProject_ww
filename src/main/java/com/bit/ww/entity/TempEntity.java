@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "board_temp")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TempEntity extends TimeEntity{
+public class TempEntity extends PostTimeEntity{
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)

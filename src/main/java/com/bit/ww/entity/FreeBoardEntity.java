@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "free_board")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FreeBoardEntity extends TimeEntity{
+public class FreeBoardEntity extends PostTimeEntity{
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,19 +30,19 @@ public class FreeBoardEntity extends TimeEntity{
     private String content;
 
     @Column
-    private LocalDateTime updatedate;
+    private LocalDateTime editdate;
 
     @Column
     @ColumnDefault("0")
     private int readcount;
 
     @Builder
-    public FreeBoardEntity(int num, String writer, String title, String content, LocalDateTime updatedate, int readcount){
+    public FreeBoardEntity(int num, String writer, String title, String content, LocalDateTime editdate, int readcount){
         this.num = num;
         this.writer = writer;
         this.title = title;
         this.content = content;
-        this.updatedate = updatedate;
+        this.editdate = editdate;
         this.readcount = readcount;
     }
 
