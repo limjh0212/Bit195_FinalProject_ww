@@ -3,6 +3,7 @@ package com.bit.ww.controller;
 import com.bit.ww.entity.MemberEntity;
 import com.bit.ww.mapper.MemberMapper;
 import com.bit.ww.repository.MemberRepository;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("member")
+@RequestMapping("/member")
 public class MemberController {
 
     @Autowired
@@ -22,6 +23,7 @@ public class MemberController {
     MemberMapper memberMapper;
 
     //회원 전체 조회
+    @ApiOperation(value = "사용자 조회", notes = "사용자 조회")
     @GetMapping("/findall")
     public List<MemberEntity> findall() {
         return memberRepository.findAll();
