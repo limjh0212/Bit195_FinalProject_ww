@@ -39,4 +39,5 @@ public class FreeBoardDTO {
         this.editdate = editdate;
         this.readcount = readcount;
     }
+
 }
