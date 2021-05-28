@@ -7,12 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-// 생성 완료
 @Entity
-@Table(name = "board_temp")
+@Table(name = "board_likes")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TempEntity extends PostTimeEntity{
+public class LikeEntity {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,21 +21,20 @@ public class TempEntity extends PostTimeEntity{
     private int boardnum;
 
     @Column
-    private String writer;
+    private int postnum;
 
     @Column
-    private String title;
+    private String userid;
 
     @Column
-    private String content;
+    private boolean isliked;
 
     @Builder
-    public TempEntity(int num, int boardnum, String writer, String title, String content){
+    public LikeEntity(int num, int boardnum, int postnum, String userid, boolean isliked){
         this.num = num;
         this.boardnum = boardnum;
-        this.writer = writer;
-        this.title = title;
-        this.content = content;
-    }
+        this.postnum = postnum;
+        this.userid = userid;
+        this.isliked = isliked;
+}}
 
-}

@@ -24,5 +24,4 @@ public interface FreeBoardRepository extends JpaRepository<FreeBoardEntity, Inte
     int countAllByTitleIgnoreCaseIsContainingAndWriter(String title, String writer);
     List<FreeBoardEntity> findAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndWriterOrderByNumDesc(String title, String content, String writer);
     int countAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndWriter(String title, String content, String writer);
-
 }

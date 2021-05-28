@@ -17,7 +17,6 @@ public class TempDTO {
     private String title;
     private String content;
     private LocalDateTime regdate;
-    private LocalDateTime editdate;
 
     public TempEntity toEntity() {
         return TempEntity.builder()
@@ -30,13 +29,12 @@ public class TempDTO {
     }
 
     @Builder
-    public TempDTO(int num, int boardnum, String writer, String title, String content, LocalDateTime regdate, LocalDateTime editdate){
+    public TempDTO(int num, int boardnum, String writer, String title, String content, LocalDateTime regdate){
         this.num = num;
         this.boardnum = boardnum;
         this.writer = writer;
         this.title = title;
         this.content = content;
         this.regdate = regdate;
-        this.editdate = editdate;
     }
 }

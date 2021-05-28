@@ -2,10 +2,9 @@ package com.bit.ww.controller;
 
 import com.bit.ww.dto.CmntDTO;
 import com.bit.ww.dto.FreeBoardDTO;
-import com.bit.ww.dto.TempDTO;
 import com.bit.ww.service.CmntService;
 import com.bit.ww.service.FreeBoardService;
-import com.bit.ww.service.TempService;
+import com.bit.ww.service.LikeService;
 import lombok.AllArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +19,7 @@ import java.util.List;
 public class FreeBoardController {
     private FreeBoardService freeBoardService;
     private CmntService cmntService;
-    private TempService tempService;
+    private LikeService likeService;
 
     // 조회 (완료)
     @GetMapping("/freeBoard")
@@ -31,58 +30,22 @@ public class FreeBoardController {
         model.addAttribute("count", count);
         return freeboardList;
     }
-
+    // Todo : 글 등록도 CmntyController에서 할 예정
     // 글 등록 (완료) - id 값은 필요 없음.
     @PostMapping("/freeBoard/post")
     public int write(@RequestBody @Validated FreeBoardDTO freeBoardDTO){
         return freeBoardService.savePost(freeBoardDTO);
     }
-    // 글 임시저장 등록 Todo: 확인필요.
-    @PostMapping("/freeBoard/post/temp")
-    public String tempWrite(@RequestBody @Validated TempDTO tempDTO){
-        TempDTO fbTemp = tempDTO;
-        fbTemp.setBoardnum(1);
-        tempService.saveTemp(fbTemp);
-        return "tempPost ok!";
-    }
 
-    // 글 임시저장 가져오기 Todo: 확인필요.
-    @GetMapping("/freeBoard/post")
-    public String getTemp(@RequestParam("tempnum") int tempnum, Model model){
-        TempDTO tempDTO = tempService.getTemp(tempnum);
-        model.addAttribute("tempDTO", tempDTO);
-        return "getTemp ok!";
-    }
-
-    // 글 임시저장한 목록 가져오기 Todo: 확인 필요
-    //  Todo: 로그인세션으로 작성자 id 가져오기 (writer=nickname) 추가 필요.
-    @GetMapping("/boards/post/tempList/{nickname}")
-    public List tempList(@PathVariable("nickname") String nickname, Model model){
-        List<TempDTO> tempList = tempService.getTempList(nickname);
-        model.addAttribute("tempList", tempList);
-        int tempCount = tempService.countTempList(nickname);
-        model.addAttribute("tempCount", tempCount);
-        return tempList;
-    }
-
-    // 글 임시저장 삭제 Todo: 확인 필요.
-    // Todo: 작성일로부터 일정 시간이 지나면 삭제되는 쿼리 작성 필요.
-    @DeleteMapping("/boards/tempDelete/{tempnum}")
-    public String tempDelete(@PathVariable("tempnum") int tempnum){
-        tempService.deleteTemp(tempnum);
-        return "tempDelete ok!";
-    }
-
-    // 글 수정 - 값 모두 필요. Todo: 확인 필요
+    // 글 수정 - 값 모두 필요. (완료)
     @PutMapping("/freeBoard/edit/{num}")
     public String update(@RequestBody @Validated FreeBoardDTO freeBoardDTO){
-        LocalDateTime now = LocalDateTime.now();
-        freeBoardDTO.setUpdatedate(now);
+        freeBoardDTO.setEditdate(LocalDateTime.now());
         freeBoardService.savePost(freeBoardDTO);
         return "update ok!";
     }
 
-    // 글 상세보기 - 해당하는 댓글 목록과 대댓글 목록도 함께 출력, 조회수 증가 Todo: 확인 필요
+    // 글 상세보기 - 해당하는 댓글 목록과 대댓글 목록도 함께 출력, 조회수 증가 (완료)
     @GetMapping("/freeBoard/detail/{num}")
     public String detail(@PathVariable("num") int num, Model model){
         FreeBoardDTO freeBoardDTO = freeBoardService.getPost(num);
@@ -90,6 +53,11 @@ public class FreeBoardController {
         freeBoardDTO.setReadcount(readcount);
         freeBoardService.savePost(freeBoardDTO);
         model.addAttribute("freeBoardDTO", freeBoardDTO);
+        //좋아요
+        int likecount = likeService.countLike(1, num);
+        model.addAttribute("likecount",likecount);
+        // Todo: Login된 아이디 필요.
+        // boolean isliked = likeService.existLikeColor(1,num,id);
         //댓글 Todo: fbCmntList.get(i).getNum() 이 부분 확인 필수.
         List<CmntDTO> fbCmntList = cmntService.getCmntList(1,num,0);
         model.addAttribute("fbCmntList", fbCmntList);
@@ -129,53 +97,15 @@ public class FreeBoardController {
         model.addAttribute("countListByTitleAndContent", countListByTitleAndContent);
         return searchList;
     }
-    // 관리 기능
-    // 마이페이지, 게시판 내글보기 - 내가 쓴 글 보기
+
+    // 자유게시판 내 글보기
     // Todo: 내가 쓴 글 보기는 동일한 메소드에 HttpServletRequest를 통해 nickname 가져오기
     @GetMapping("/freeBoard/myList")
-    public List myFBList(@RequestParam("nickname") String nickname, Model model){
-        List<FreeBoardDTO> myFbList = freeBoardService.getListByWriter(nickname);
+    public List myFBList(@RequestParam("writer") String writer, Model model){
+        List<FreeBoardDTO> myFbList = freeBoardService.getListByWriter(writer);
         model.addAttribute("myFbList", myFbList);
-        int countMyFbList = freeBoardService.countListByWriter(nickname);
+        int countMyFbList = freeBoardService.countListByWriter(writer);
         model.addAttribute("countMyFbList", countMyFbList);
         return myFbList;
     }
-    @GetMapping("/mypage/myPost")
-    public String myList(@RequestParam("nickname") String nickname, Model model){
-        List<FreeBoardDTO> myFBList = freeBoardService.getListByWriter(nickname);
-        model.addAttribute("myFBList", myFBList);
-        int countMyFbList = freeBoardService.countListByWriter(nickname);
-        model.addAttribute("countMyFbList", countMyFbList);
-        //댓글 Todo: 확인 필요
-        List<CmntDTO> myCmntList = cmntService.getMyCmntList(nickname);
-        return "mypage ok!";
-    }
-    @GetMapping("/mypage/myPost/searchByTitle")
-    public List searchMyPostByTitle(@RequestParam("search") String search, @RequestParam("nickname") String nickname, Model model){
-        List<FreeBoardDTO> searchList = freeBoardService.getListByWriterAndTitle(search, nickname);
-        model.addAttribute("searchList", searchList);
-        int countMySearchList = freeBoardService.countListByWriterAndTitle(search, nickname);
-        model.addAttribute("countMySearchList", countMySearchList);
-        return searchList;
-    }
-    @GetMapping("/mypage/myPost/searchByTitleAndContent")
-    public List searchMyPostByTitleAndContent(@RequestParam("search") String search, @RequestParam("nickname") String nickname, Model model){
-        List<FreeBoardDTO> searchList = freeBoardService.getListByWriterAndTitleAndContent(search, search, nickname);
-        model.addAttribute("searchList", searchList);
-        int countMySearchList = freeBoardService.countListByWriterAndTitleAndContent(search, search, nickname);
-        model.addAttribute("countMySearchList", countMySearchList);
-        return searchList;
-    }
-    // 관리자 - 글 검색 - 작성자 Todo: 확인 필요
-    @GetMapping("/main/admin/searchBy{writer}")
-    public List searchByWriter(@PathVariable("writer") String writer, Model model){
-        List<FreeBoardDTO> searchList = freeBoardService.getListByWriter(writer);
-        model.addAttribute("searchList", searchList);
-        int countListByWriter = freeBoardService.countListByWriter(writer);
-        model.addAttribute("countListByWriter", countListByWriter);
-        return searchList;
-    }
-
-
-
 }

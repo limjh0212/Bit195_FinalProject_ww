@@ -15,8 +15,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class FreeBoardService {
     private FreeBoardRepository freeBoardRepository;
-    // Todo: 전체에 editdate 없음. 주의
-    // Todo: Temp로 이동 2개 필요.
     // CRUD 메인 기능
     @Transactional
     public List<FreeBoardDTO> getFreeBoardList() {
@@ -30,7 +28,7 @@ public class FreeBoardService {
                     .title(freeBoardEntity.getTitle())
                     .content(freeBoardEntity.getContent())
                     .regdate(freeBoardEntity.getRegdate())
-                    .updatedate(freeBoardEntity.getUpdatedate())
+                    .editdate(freeBoardEntity.getEditdate())
                     .readcount(freeBoardEntity.getReadcount())
                     .build();
 
@@ -50,7 +48,7 @@ public class FreeBoardService {
                 .title(freeBoardEntity.getTitle())
                 .content(freeBoardEntity.getContent())
                 .regdate(freeBoardEntity.getRegdate())
-                .updatedate(freeBoardEntity.getUpdatedate())
+                .editdate(freeBoardEntity.getEditdate())
                 .readcount(freeBoardEntity.getReadcount())
                 .build();
 
@@ -67,35 +65,10 @@ public class FreeBoardService {
         freeBoardRepository.deleteById(num);
     }
 
-//   Temp로 이동   @Transactional
-//    public List<FreeBoardDTO> getTempList(String writer) {
-//        List<FreeBoardEntity> tempEntities = freeBoardRepository.findAllByWriterAndIstempIsTrueOrderByNumDesc(writer);
-//        List<FreeBoardDTO> tempDTOList = new ArrayList<>();
-//
-//        for (FreeBoardEntity tempEntity : tempEntities) {
-//            FreeBoardDTO tempDTO = FreeBoardDTO.builder()
-//                    .num(tempEntity.getNum())
-//                    .writer(tempEntity.getWriter())
-//                    .title(tempEntity.getTitle())
-//                    .content(tempEntity.getContent())
-//                    .regdate(tempEntity.getRegdate())
-//                    .readcount(tempEntity.getReadcount())
-//                    .build();
-//
-//            tempDTOList.add(tempDTO);
-//        }
-//        return tempDTOList;
-//    }
-
     @Transactional
     public int countList(){
         return freeBoardRepository.countAllByNumIsNotNull();
     }
-
-// Temp로 이동    @Transactional
-//    public int countListByTemp(String writer){
-//        return freeBoardRepository.countAllByWriterAndIstempIsTrue(writer);
-//    }
 
     //검색 기능
     @Transactional
@@ -110,7 +83,7 @@ public class FreeBoardService {
                     .title(tempEntity.getTitle())
                     .content(tempEntity.getContent())
                     .regdate(tempEntity.getRegdate())
-                    .updatedate(tempEntity.getUpdatedate())
+                    .editdate(tempEntity.getEditdate())
                     .readcount(tempEntity.getReadcount())
                     .build();
 
@@ -136,7 +109,7 @@ public class FreeBoardService {
                     .title(tempEntity.getTitle())
                     .content(tempEntity.getContent())
                     .regdate(tempEntity.getRegdate())
-                    .updatedate(tempEntity.getUpdatedate())
+                    .editdate(tempEntity.getEditdate())
                     .readcount(tempEntity.getReadcount())
                     .build();
 
@@ -162,7 +135,7 @@ public class FreeBoardService {
                     .title(tempEntity.getTitle())
                     .content(tempEntity.getContent())
                     .regdate(tempEntity.getRegdate())
-                    .updatedate(tempEntity.getUpdatedate())
+                    .editdate(tempEntity.getEditdate())
                     .readcount(tempEntity.getReadcount())
                     .build();
 
@@ -188,7 +161,7 @@ public class FreeBoardService {
                     .title(tempEntity.getTitle())
                     .content(tempEntity.getContent())
                     .regdate(tempEntity.getRegdate())
-                    .updatedate(tempEntity.getUpdatedate())
+                    .editdate(tempEntity.getEditdate())
                     .readcount(tempEntity.getReadcount())
                     .build();
 
@@ -214,7 +187,7 @@ public class FreeBoardService {
                     .title(tempEntity.getTitle())
                     .content(tempEntity.getContent())
                     .regdate(tempEntity.getRegdate())
-                    .updatedate(tempEntity.getUpdatedate())
+                    .editdate(tempEntity.getEditdate())
                     .readcount(tempEntity.getReadcount())
                     .build();
 
