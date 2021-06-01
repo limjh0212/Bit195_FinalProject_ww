@@ -13,7 +13,6 @@ public class LikeDTO {
     private int boardnum;
     private int postnum;
     private String userid;
-    private boolean isliked;
 
 
     public LikeEntity toEntity() {
@@ -22,16 +21,14 @@ public class LikeDTO {
                 .boardnum(this.boardnum)
                 .postnum(this.postnum)
                 .userid(this.userid)
-                .isliked(this.isliked)
                 .build();
     }
 
     @Builder
-    public LikeDTO(int num, int boardnum, int postnum, String userid, boolean isliked){
+    public LikeDTO(int num, int boardnum, int postnum, String userid){
         this.num = num;
         this.boardnum = boardnum;
         this.postnum = postnum;
         this.userid = userid;
-        this.isliked = isliked;
     }
 }

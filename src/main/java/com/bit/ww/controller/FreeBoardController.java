@@ -58,7 +58,7 @@ public class FreeBoardController {
         model.addAttribute("likecount",likecount);
         // Todo: Login된 아이디 필요.
         // boolean isliked = likeService.existLikeColor(1,num,id);
-        //댓글 Todo: fbCmntList.get(i).getNum() 이 부분 확인 필수.
+        //댓글
         List<CmntDTO> fbCmntList = cmntService.getCmntList(1,num,0);
         model.addAttribute("fbCmntList", fbCmntList);
         //대댓글

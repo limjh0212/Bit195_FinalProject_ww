@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -38,7 +39,17 @@ public class LikeService {
     }
 
     @Transactional
-    public boolean existLikeColor(int boardnum, int postnum, String userid){
-        return likeRepository.existsByBoardnumAndPostnumAndUseridAndIslikedIsTrue(boardnum, postnum, userid);
+    public int findLikeNum(int boardnum, int postnum, String userid){
+        Optional<LikeEntity> likeEntityWrapper = likeRepository.findByBoardnumAndPostnumAndUserid(boardnum, postnum, userid);
+        LikeEntity likeEntity = likeEntityWrapper.get();
+
+        LikeDTO likeDTO = LikeDTO.builder()
+                .num(likeEntity.getNum())
+                .boardnum(likeEntity.getBoardnum())
+                .postnum(likeEntity.getPostnum())
+                .userid(likeEntity.getUserid())
+                .build();
+
+        return likeDTO.getNum();
     }
 }

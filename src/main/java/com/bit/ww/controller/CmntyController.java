@@ -2,6 +2,7 @@ package com.bit.ww.controller;
 
 import com.bit.ww.dto.CmntDTO;
 import com.bit.ww.dto.FreeBoardDTO;
+import com.bit.ww.dto.LikeDTO;
 import com.bit.ww.dto.TempDTO;
 import com.bit.ww.service.CmntService;
 import com.bit.ww.service.FreeBoardService;
@@ -62,8 +63,47 @@ public class CmntyController {
         return "tempDelete ok!";
     }
 
-    // 좋아요
+    // 좋아요 조회
+    @GetMapping("/{boardname}/like/{num}") // "/{boardname}/detail/{num}"
+    public String existlike(@PathVariable("boardname") String boardname, @PathVariable("num") int num, Model model){
+        int boardnum = 0;
+        if (boardname=="freeBoard"){
+            boardnum = 1;
+        }
+        int existLike = 0;
+        // Todo: userid는 로그인 세션으로 가져올 것. 우선 임의로 배정
+        if (likeService.existLike(boardnum,num,"ww") ==true){
+            existLike =1;
+        }
+        model.addAttribute("existLike", existLike);
+        int countLike = likeService.countLike(boardnum,num);
+        model.addAttribute("countLike", countLike);
+        return "like ok!";
 
+    }
+    // 좋아요 버튼 클릭 // Todo: ajax로 실시간 반영 - 수정 필요
+    @PostMapping("/clickLikeBtn")
+    public String checkLike(@RequestBody @Validated LikeDTO likeDTO){
+        boolean existLike = likeService.existLike(likeDTO.getBoardnum(), likeDTO.getPostnum(), "ww");
+        if (existLike==true){
+            deleteLike(likeDTO.getBoardnum(),likeDTO.getPostnum(),"ww");
+        }else{
+            createLike(likeDTO);
+        }
+        return "checkLike ok!";
+    }
+    // 좋아요 생성
+    @PostMapping("/createLike")
+    public int createLike(@RequestBody @Validated LikeDTO likeDTO){
+        return likeService.saveLike(likeDTO);
+    }
+    // 좋아요 삭제 Todo: 굳이 두번 쿼리문 실행하지 말고, delete 쿼리문을 만들 것!
+    @PostMapping("/deleteLike")
+    public String deleteLike(@RequestParam("boardnum") int boardnum, @RequestParam("postnum")int postnum, @RequestParam("userid") String userid){
+        int num = likeService.findLikeNum(boardnum, postnum, "ww");
+        likeService.deleteLike(num);
+        return "deleteLike ok!";
+    }
     // 마이페이지, 게시판 내글보기 - 내가 쓴 글 보기
 
     @GetMapping("/mypage/myPost")
@@ -105,7 +145,7 @@ public class CmntyController {
         return fbSearchList;
     }
 
-    // 관리자 페이지
+    // 관리자  Todo: 생성 필요 - 대시보드 형태
 
     // 글 검색 - 작성자 검색
     @GetMapping("/admin/searchByWriter")
