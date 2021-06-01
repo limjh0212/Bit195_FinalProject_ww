@@ -26,15 +26,11 @@ public class LikeEntity {
     @Column
     private String userid;
 
-    @Column
-    private boolean isliked;
-
     @Builder
-    public LikeEntity(int num, int boardnum, int postnum, String userid, boolean isliked){
+    public LikeEntity(int num, int boardnum, int postnum, String userid){
         this.num = num;
         this.boardnum = boardnum;
         this.postnum = postnum;
         this.userid = userid;
-        this.isliked = isliked;
 }}
 
