@@ -1,11 +1,10 @@
 package com.bit.ww.controller;
 
 import com.bit.ww.entity.MemberEntity;
-import com.bit.ww.mapper.MemberMapper;
-import com.bit.ww.repository.MemberRepository;
+import com.bit.ww.service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,51 +12,43 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 public class MemberController {
 
-    @Autowired
-    MemberRepository memberRepository;
-
-    @Autowired
-    MemberMapper memberMapper;
+    private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
     //회원 전체 조회
-    @ApiOperation(value = "사용자 조회", notes = "사용자 조회")
+    @ApiOperation(value = "회원 조회", notes = "회원 조회")
     @GetMapping("/findall")
-    public List<MemberEntity> findall() {
-        return memberRepository.findAll();
+    public List<MemberEntity> findAll() {
+        return memberService.findAll();
     }
 
     //회원 ID 조회
+    @ApiOperation(value = "회원 ID조회", notes = "회원 ID조회")
     @GetMapping("/findbyid/{id}")
     public Optional<MemberEntity> findbyid(@PathVariable String id) {
-//        return memberMapper.findById(id);
-        return memberRepository.findById(id);
-    }
-
-
-    //회원 등록
-    @PostMapping("/save")
-    public String save(@RequestBody MemberEntity member) {
-        memberRepository.save(member);
-        return "save ok!";
+        return memberService.findbyId(id);
     }
 
     //회원 삭제
+    //TODO: JPA 삭제 -> 수정 변경할 것
+    @ApiOperation(value = "회원 삭제", notes = "회원 삭제")
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable String id) {
-        memberRepository.deleteById(id);
+        memberService.deleteById(id);
         return "delete ok!";
     }
 
     //회원 수정
+    @ApiOperation(value = "회원 수정", notes = "회원 수정")
     @PatchMapping("/update")
-    public String delete(@RequestBody MemberEntity member) {
-        memberMapper.update(member);
+    public String update(@RequestBody MemberEntity member) {
+        member.setPw(passwordEncoder.encode((member.getPw()))); // PW 암호화
+        memberService.save(member);
         return "update ok!";
     }
-
 }
 
 

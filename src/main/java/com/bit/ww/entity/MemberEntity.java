@@ -1,7 +1,9 @@
 package com.bit.ww.entity;
 
-import lombok.Getter;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -11,34 +13,49 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "member")
-@Getter
-public class MemberEntity {
+@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class MemberEntity extends TimeEntity{
+    @ApiModelProperty(example = "ID")
     @Id
     @Column(name = "id", unique = true, nullable = false)
     private String id;
+    @ApiModelProperty(example = "Password")
     @Column
     private String pw;
+    @ApiModelProperty(example = "NickName")
     @Column
     private String nickname;
+    @ApiModelProperty(hidden = true)
     @Column
     private String email;
-    @Column
-    private boolean gender;
-    @Column(name = "age", nullable = true)
-    private Integer age;
-    @Column
-    private String img;
-    @Column //등록일자
-    @CreationTimestamp
-    private Timestamp regdate;
-    @Column //수정일자
-    @UpdateTimestamp
-    private Timestamp editdate;
-    @Column //탈퇴일자
-    private Timestamp wthdrdate;
-    @Column //탈퇴여부
-    private boolean iswithdrawal;
+    @ApiModelProperty(example = "ROLE_USER")
     @Column //접근권한
     private String role;
+    @ApiModelProperty(hidden = true)
+    @Column
+    private boolean gender;
+    @ApiModelProperty(hidden = true)
+    @Column
+    private Integer age;
+    @ApiModelProperty(hidden = true)
+    @Column
+    private String img;
+    @ApiModelProperty(hidden = true)
+    @Column //탈퇴여부
+    private boolean iswithdrawal;
+
+    @Builder
+    public MemberEntity(String id, String pw, String nickname, String email, String role, boolean gender, Integer age, String img, boolean iswithdrawal) {
+        this.id = id;
+        this.pw = pw;
+        this.nickname = nickname;
+        this.email = email;
+        this.role = role;
+        this.gender = gender;
+        this.age = age;
+        this.img = img;
+        this.iswithdrawal = iswithdrawal;
+    }
 
 }
