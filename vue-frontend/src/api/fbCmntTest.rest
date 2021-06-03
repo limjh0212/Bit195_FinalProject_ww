@@ -1,0 +1,68 @@
+GET http://localhost:8080/boards/cmnt/1
+
+###
+
+GET http://localhost:8080/boards/detail/1
+
+###
+
+POST http://localhost:8080/boards/cmntPost 
+Content-Type: application/json;charset=UTF-8
+
+{
+    "boardnum": "1",
+    "writer": "ww",
+    "content": "testtest"
+}
+###
+
+POST http://localhost:8080/boards/cmntPost 
+Content-Type: application/json;charset=UTF-8
+
+{
+    "boardnum": "4",
+    "writer": "ww",
+    "content": "testtest"
+}
+###
+PUT http://localhost:8080/boards/cmntEdit/2
+Content-Type: application/json;charset=UTF-8
+
+{
+    "num": "2",
+    "boardnum":"1",
+    "writer": "ww",
+    "content": "editTest"
+}
+###
+DELETE http://localhost:8080/boards/cmntDelete/3
+
+###
+
+
+PUT http://localhost:8080/boards/cmntDelete/4
+Content-Type: application/json;charset=UTF-8
+
+{
+    "num": "4",
+    "boardnum":"4"
+}
+###
+
+PUT http://localhost:8080/boards/cmntDelete/7
+Content-Type: application/json;charset=UTF-8
+
+{
+    "num": "7",
+    "boardnum":"1"
+}
+###
+
+PUT http://localhost:8080/boards/cmntDelete/2
+Content-Type: application/json;charset=UTF-8
+
+{
+    "num": "2",
+    "boardnum":"1"
+}
+###

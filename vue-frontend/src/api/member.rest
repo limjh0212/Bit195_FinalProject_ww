@@ -1,0 +1,9 @@
+POST http://localhost:8080/member/save
+Content-Type: application/json;charset=UTF-8
+
+{
+  "id": "3sdfa4ww",
+  "pw": "tasdfest",
+  "nickname": "teasdfssdggttest",
+  "email": "aasdfsdf"
+}

@@ -1,0 +1,45 @@
+GET http://localhost:8080/boards/comments2
+
+###
+POST http://localhost:8080/boards/cmnt2 
+Content-Type: application/json;charset=UTF-8
+
+{
+    "cmntnum": "1",
+    "writer": "ww",
+    "content": "testtest"
+}
+###
+
+POST http://localhost:8080/boards/cmnt2 
+Content-Type: application/json;charset=UTF-8
+
+{
+    "cmntnum": "2",
+    "writer": "ww2",
+    "content": "testtest2"
+}
+###
+POST http://localhost:8080/boards/cmnt2 
+Content-Type: application/json;charset=UTF-8
+
+{
+    "cmntnum": "1",
+    "writer": "ww",
+    "content": "testtest3"
+}
+###
+PUT http://localhost:8080/boards/cmnt2Edit/2
+Content-Type: application/json;charset=UTF-8
+
+{
+    "num": "2",
+    "cmntnum":"2",
+    "writer": "ww2",
+    "content": "editTest"
+}
+###
+DELETE http://localhost:8080/boards/cmnt2Delete/4
+
+###
+

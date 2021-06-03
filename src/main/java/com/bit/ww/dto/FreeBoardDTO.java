@@ -18,6 +18,7 @@ public class FreeBoardDTO {
     private LocalDateTime editdate;
     private int readcount;
 
+
     public FreeBoardEntity toEntity() {
         return FreeBoardEntity.builder()
                 .num(this.num)
