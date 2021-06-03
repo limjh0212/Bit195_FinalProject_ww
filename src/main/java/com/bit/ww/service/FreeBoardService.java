@@ -56,8 +56,8 @@ public class FreeBoardService {
     }
 
     @Transactional
-    public int savePost(FreeBoardDTO freeBoardDTO){
-        return freeBoardRepository.save(freeBoardDTO.toEntity()).getNum();
+    public FreeBoardEntity savePost(FreeBoardDTO freeBoardDTO){
+        return freeBoardRepository.save(freeBoardDTO.toEntity());
     }
 
     @Transactional
