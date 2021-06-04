@@ -1,33 +1,33 @@
 import axios from "axios";
+import {setInterceptors} from "@/api/common/interceptors";
 
-
-function fetchMemberList() {
-    return axios.get('/member/findall')
+function createInstance() {
+    return axios.create({
+        // baseURL: process.env.VUE_APP_API_URL,
+    });
 }
 
-function fetchBoardList() {
-    return axios.get('/boards')
+// 액시오스 초기화 함수
+function createInstanceWithAuth() {
+    const instance = axios.create({
+        // baseURL: `${process.env.VUE_APP_API_URL}${url}`,
+    });
+    return setInterceptors(instance);
 }
 
-function fetchUser(userId) {
-    return axios.get('/member/findbyid/${userId}')
-}
-
-// 게시글 저장 API
-function createPost(postData) {
-    return axios.post('/boards/post', postData);
-}
-
-// 회원가입 API
-function signupMember(Data) {
-    return axios.post('/member/save', Data);
-}
+export const instance = createInstance();
+export const api = createInstanceWithAuth();
 
 
-export {
-    fetchMemberList,
-    fetchUser,
-    fetchBoardList,
-    createPost,
-    signupMember
-}
+// function fetchBoardList() {
+//     return axios.get('/boards')
+// }
+//
+// function fetchUser(userId) {
+//     return axios.get('/member/findbyid/${userId}')
+// }
+//
+// // 게시글 저장 API
+// function createPost(postData) {
+//     return axios.post('/boards/post', postData);
+// }

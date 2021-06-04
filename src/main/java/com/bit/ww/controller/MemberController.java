@@ -4,6 +4,7 @@ import com.bit.ww.entity.MemberEntity;
 import com.bit.ww.service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,14 +13,15 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
+@Secured({"ROLE_USER"})
 @RequestMapping("/api/member")
 public class MemberController {
-
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
     //회원 전체 조회
     @ApiOperation(value = "회원 조회", notes = "회원 조회")
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/findall")
     public List<MemberEntity> findAll() {
         return memberService.findAll();

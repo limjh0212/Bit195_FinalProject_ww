@@ -33,6 +33,9 @@ public class MemberEntity extends TimeEntity{
     @Column //접근권한
     private String role;
     @ApiModelProperty(hidden = true)
+    @Column //token
+    private String token;
+    @ApiModelProperty(hidden = true)
     @Column
     private boolean gender;
     @ApiModelProperty(hidden = true)

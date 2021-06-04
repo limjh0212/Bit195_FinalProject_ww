@@ -1,50 +1,60 @@
 import Vuex from 'vuex'
 import Vue from "vue";
-import {fetchMemberList, fetchUser, fetchBoardList} from "@/api";
+import {loginUser} from "@/api/auth";
+import {getAuthFromCookie, getUserFromCookie, saveAuthToCookie, saveUserToCookie,} from '@/utils/cookies';
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state    : {
-        memberList: [],
-        userList  : [],
-        boardList : []
+        id      : getUserFromCookie() || '',
+        token   : getAuthFromCookie() || '',
+        nickname: '',
+        role    : '',
+    },
+    getters  : {
+        isLogin(state) {
+            return state.username !== '';
+        },
     },
     mutations: {
-        SET_MEMBER(state, memberList) {
-            state.memberList = memberList;
+        setId(state, id) {
+            state.id = id;
         },
-        SET_USER(state, userList) {
-            state.userList = userList;
+        clearId(state) {
+            state.id = '';
         },
-        SET_BOARD(state, boardList) {
-            state.boardList = boardList;
+        setToken(state, token) {
+            state.token = token;
         },
+        clearToken(state) {
+            state.token = '';
+        },
+        setNickname(state, nickname) {
+            state.nickname = nickname;
+        },
+        clearNickname(state) {
+            state.nickname = '';
+        },
+        setRole(state, role) {
+            state.role = role;
+        },
+        clearRole(state) {
+            state.role = '';
+        }
     },
     actions  : {
-        //회원목록 조회
-        FETCH_MEMBER({commit}) {
-            fetchMemberList()
-                .then(({data}) => commit('SET_MEMBER', data))
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        FETCH_USER({commit}, userId) {
-            fetchUser(userId)
-                .then(({data}) => commit('SET_USER', data))
-                .then(({data}) => console.log(data))
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        //게시글 조회
-        FETCH_BOARD({commit}) {
-            fetchBoardList()
-                .then(({data}) => commit('SET_BOARD', data))
-                .catch(function (error) {
-                    console.log(error)
-                });
+        //로그인
+        async LOGIN({commit}, userData) {
+            const {data} = await loginUser(userData);
+            console.log(data)
+            commit('setToken', data.token);
+            commit('setId', data.id);
+            commit('setNickname', data.nickname)
+            commit('setRole', data.role)
+            saveAuthToCookie(data);
+            saveUserToCookie(userData.id);
+            return data;
         },
     }
 });
