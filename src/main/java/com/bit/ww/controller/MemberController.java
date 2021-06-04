@@ -35,9 +35,9 @@ public class MemberController {
     }
 
     //회원 삭제
-    //TODO: JPA 삭제 -> 수정 변경할 것
     @ApiOperation(value = "회원 삭제", notes = "회원 삭제")
     @DeleteMapping("/delete/{id}")
+    @Secured({"ROLE_USER"})
     public String delete(@PathVariable String id) {
         memberService.deleteById(id);
         return "delete ok!";

@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import Vue from "vue";
-import {loginUser} from "@/api/auth";
+import {loginUser, registerUser} from "@/api/auth";
 import {getAuthFromCookie, getUserFromCookie, saveAuthToCookie, saveUserToCookie,} from '@/utils/cookies';
 
 Vue.use(Vuex);
@@ -56,5 +56,6 @@ export const store = new Vuex.Store({
             saveUserToCookie(userData.id);
             return data;
         },
+
     }
 });

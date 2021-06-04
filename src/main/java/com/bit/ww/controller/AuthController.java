@@ -8,10 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -48,5 +45,12 @@ public class AuthController {
         // 토큰 생성
         member.get().setToken(jwtTokenProvider.createToken(member.get().getId(), member.get().getRole()));
         return member;
+    }
+
+    //회원 ID 조회
+    @ApiOperation(value = "ID 중복확인", notes = "ID 중복확인")
+    @PostMapping("/checkId")
+    public boolean checkId(String id) {
+        return memberService.checkId(id);
     }
 }
