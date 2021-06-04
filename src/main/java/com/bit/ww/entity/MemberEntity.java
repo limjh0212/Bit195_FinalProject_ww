@@ -1,5 +1,6 @@
 package com.bit.ww.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +16,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "member")
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // PostEntity에서 User와의 관계를 Json으로 변환할 때 오류를 방지하기 위함.
 public class MemberEntity extends TimeEntity{
     @ApiModelProperty(example = "ID")
     @Id
