@@ -54,8 +54,8 @@ public class TempService {
     }
 
     @Transactional
-    public int saveTemp(TempDTO tempDTO){
-        return tempRepository.save(tempDTO.toEntity()).getNum();
+    public TempEntity saveTemp(TempDTO tempDTO){
+        return tempRepository.save(tempDTO.toEntity());
     }
 
     @Transactional

@@ -4,25 +4,26 @@ import com.bit.ww.dto.CmntDTO;
 import com.bit.ww.dto.FreeBoardDTO;
 import com.bit.ww.dto.LikeDTO;
 import com.bit.ww.dto.TempDTO;
-import com.bit.ww.service.CmntService;
-import com.bit.ww.service.FreeBoardService;
-import com.bit.ww.service.LikeService;
-import com.bit.ww.service.TempService;
+import com.bit.ww.entity.TempEntity;
+import com.bit.ww.service.*;
 import lombok.AllArgsConstructor;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/cmnty")
 public class CmntyController {
     private FreeBoardService freeBoardService;
     // OOTD
     // 핫딜
-    // 문의사항
+    private QuestionService questionService;
     private CmntService cmntService;
     private TempService tempService;
     private LikeService likeService;
@@ -30,40 +31,37 @@ public class CmntyController {
     // 인기글 조회
     // 글 등록 (ajax로 화면 전환)
     // 글 임시저장 등록
-    @PostMapping("/community/tempPost")
-    public String tempWrite(@RequestParam("boardnum") int boardnum, @RequestBody @Validated TempDTO tempDTO){
+    @PostMapping("/tempPost")
+    public TempEntity tempWrite(@RequestParam("boardnum") int boardnum, @RequestBody @Validated TempDTO tempDTO){
         TempDTO fbTemp = tempDTO;
         fbTemp.setBoardnum(boardnum);
-        tempService.saveTemp(fbTemp);
-        return "tempPost ok!";
+        return tempService.saveTemp(fbTemp);
     }
     //글 임시저장 값 가져오기
-    @GetMapping("/community/post")
-    public String getTemp(@RequestParam("tempnum") int tempnum, Model model){
-        TempDTO tempDTO = tempService.getTemp(tempnum);
-        model.addAttribute("tempDTO", tempDTO);
-        return "getTemp ok!";
+    @GetMapping("/getTempPost")
+    public TempDTO getTemp(@RequestParam("tempnum") int tempnum, Model model){
+        return tempService.getTemp(tempnum);
     }
     // 글 임시저장한 목록 가져오기
     //  Todo: 로그인세션으로 작성자 id 가져오기 (writer=nickname) 추가 필요.
-    @GetMapping("/community/tempList/{writer}")
-    public List tempList(@PathVariable("writer") String writer, Model model){
-        List<TempDTO> tempList = tempService.getTempList(writer);
-        model.addAttribute("tempList", tempList);
-        int tempCount = tempService.countTempList(writer);
-        model.addAttribute("tempCount", tempCount);
-        return tempList;
+    @GetMapping("/tempList/{writer}")
+    public List tempList(@PathVariable("writer") String writer){
+        return tempService.getTempList(writer);
     }
-
+    // 글 임시저장한 목록 개수 가져오기
+    @GetMapping("/cntTempList/{writer}")
+    public int cntTempList(@PathVariable("writer") String writer){
+        return tempService.countTempList(writer);
+    }
     // 글 임시저장 삭제
     // Todo: 작성일로부터 일정 시간이 지나면 삭제되는 쿼리 작성 필요.
-    @DeleteMapping("/community/tempList/delete/{tempnum}")
+    @DeleteMapping("/tempList/delete/{tempnum}")
     public String tempDelete(@PathVariable("tempnum") int tempnum){
         tempService.deleteTemp(tempnum);
         return "tempDelete ok!";
     }
 
-    // 좋아요 조회
+    // 좋아요 조회 Todo: 수정 필요.
     @GetMapping("/{boardname}/like/{num}") // "/{boardname}/detail/{num}"
     public String existlike(@PathVariable("boardname") String boardname, @PathVariable("num") int num, Model model){
         int boardnum = 0;
@@ -104,58 +102,85 @@ public class CmntyController {
         likeService.deleteLike(num);
         return "deleteLike ok!";
     }
+
     // 마이페이지, 게시판 내글보기 - 내가 쓴 글 보기
-
-    @GetMapping("/mypage/myPost")
-    public String myList(@RequestParam("writer") String writer, Model model){
-        // 자유게시판
-        List<FreeBoardDTO> myFBList = freeBoardService.getListByWriter(writer);
-        model.addAttribute("myFBList", myFBList);
-        int countMyFbList = freeBoardService.countListByWriter(writer);
-        model.addAttribute("countMyFbList", countMyFbList);
-        // OOTD
-        // 핫딜
-        // 문의사항
-        //댓글 Todo: boardnum을 boardname으로 가져와야 함. 클릭 시 상세보기로 이동.
-        List<CmntDTO> myCmntList = cmntService.getMyCmntList(writer);
-        return "mypage ok!";
-    }
-    @GetMapping("/mypage/myPost/searchByTitle")
-    public List searchMyPostByTitle(@RequestParam("title") String title, @RequestParam("writer") String writer, Model model){
-        // 자유게시판
-        List<FreeBoardDTO> fbSearchList = freeBoardService.getListByWriterAndTitle(title, writer);
-        model.addAttribute("fbSearchList", fbSearchList);
-        int countMyFbSearchList = freeBoardService.countListByWriterAndTitle(title, writer);
-        model.addAttribute("countMyFbSearchList", countMyFbSearchList);
-        // OOTD
-        // 핫딜
-        // 문의사항
-        return fbSearchList;
-    }
-    @GetMapping("/mypage/myPost/searchByTitleAndContent")
-    public List searchMyPostByTitleAndContent(@RequestParam("search") String search, @RequestParam("nickname") String nickname, Model model){
-        // 자유게시판
-        List<FreeBoardDTO> fbSearchList = freeBoardService.getListByWriterAndTitleAndContent(search, search, nickname);
-        model.addAttribute("fbSearchList", fbSearchList);
-        int countMyFbSearchList = freeBoardService.countListByWriterAndTitleAndContent(search, search, nickname);
-        model.addAttribute("countMyFbSearchList", countMyFbSearchList);
-        // OOTD
-        // 핫딜
-        // 문의사항
-        return fbSearchList;
+    @GetMapping("/mypage/myPost/myList")
+    public HashMap myList(@RequestParam("writer") String writer){
+        HashMap<String,List> myList = new HashMap<String, List>();
+        myList.put("myFBList", freeBoardService.getListByWriter(writer));
+        //myList.put("myOOTDList", );
+        //myList.put("myHotDealList", );
+        myList.put("myQnAList", questionService.getListByWriter(writer));
+        // Todo: boardnum을 boardname으로 가져와야 함. 클릭 시 상세보기로 이동.
+        myList.put("myCmntList", cmntService.getMyCmntList(writer));
+        return myList;
     }
 
+    // 마이페이지, 게시판 내글보기 - 내가 쓴 글 개수 보기
+    @GetMapping("/mypage/myPost/cntMyList")
+    public HashMap cntMyList(@RequestParam("writer") String writer){
+        HashMap<String,Integer> cntMyList = new HashMap<String, Integer>();
+        cntMyList.put("cntMyFBList", freeBoardService.countListByWriter(writer));
+        // OOTD
+        // 핫딜
+        cntMyList.put("cntMyQnAList", questionService.countListByWriter(writer));
+        return cntMyList;
+    }
+    @GetMapping("/mypage/myPost/searchByTitle")  // = 자유게시판 버전만 존재
+    public HashMap searchMyPostByTitle(@RequestParam("search") String search, @RequestParam("writer") String writer){
+        HashMap<String,List> searchMyPostByTitleList = new HashMap<String, List>();
+        searchMyPostByTitleList.put("fBResult", freeBoardService.getListByWriterAndTitle(search, writer));
+        // OOTD
+        // 핫딜
+        return searchMyPostByTitleList;
+    }
+    @GetMapping("/mypage/myPost/cntSearchByTitle") // = 자유게시판 버전만 존재
+    public HashMap cntSearchMyPostByTitle(@RequestParam("search") String search, @RequestParam("writer") String writer){
+        HashMap<String,Integer> cntSearchMyPostByTitleList = new HashMap<String, Integer>();
+        cntSearchMyPostByTitleList.put("cntFBResult", freeBoardService.countListByWriterAndTitle(search, writer));
+        // OOTD
+        // 핫딜
+        return cntSearchMyPostByTitleList;
+    }
+    // Todo : HashMap 형태로 변경필요.
+    @GetMapping("/mypage/myPost/searchByTitleAndContent") // = 자유게시판 버전만 존재
+    public List searchMyPostByTitleAndContent(@RequestParam("search") String search, @RequestParam("writer") String writer){
+        // 자유게시판
+        // OOTD
+        // 핫딜
+        // 문의사항
+        return freeBoardService.getListByWriterAndTitleAndContent(search, search, writer);
+    }
+    // Todo : HashMap 형태로 변경필요.
+    @GetMapping("/mypage/myPost/cntSearchByTitleAndContent")
+    public int cntSearchMyPostByTitleAndContent(@RequestParam("search") String search, @RequestParam("writer") String writer){
+        // 자유게시판
+        // OOTD
+        // 핫딜
+        // 문의사항
+        return freeBoardService.countListByWriterAndTitleAndContent(search, search, writer);
+    }
     // 관리자  Todo: 생성 필요 - 대시보드 형태
 
-    // 글 검색 - 작성자 검색
+    // 글 검색 - 작성자 검색 // = 자유게시판 버전만 존재
     @GetMapping("/admin/searchByWriter")
-    public List searchByWriter(@RequestParam("writer") String writer, Model model){
-        List<FreeBoardDTO> writerSearchList = freeBoardService.getListByWriter(writer);
-        model.addAttribute("writerSearchList", writerSearchList);
-        int countWriterSearchList = freeBoardService.countListByWriter(writer);
-        model.addAttribute("countWriterSearchList", countWriterSearchList);
+    public HashMap searchByWriter(@RequestParam("writer") String writer){
+        HashMap<String,List> writerSearchList = new HashMap<String, List>();
+        writerSearchList.put("fBResult",freeBoardService.getListByWriter(writer));
+        //OOTD
+        //핫딜
+        writerSearchList.put("QnAResult",questionService.getListByWriter(writer));
         return writerSearchList;
     }
-
+    // 글 검색 - 작성자 검색 개수 // = 자유게시판 버전만 존재
+    @GetMapping("/admin/cntSearchByWriter")
+    public HashMap cntSearchByWriter(@RequestParam("writer") String writer){
+        HashMap<String,Integer> cntWriterSearchList = new HashMap<String, Integer>();
+        cntWriterSearchList.put("cntFBResult", freeBoardService.countListByWriter(writer));
+        //OOTD
+        //핫딜
+        cntWriterSearchList.put("cntQnAResult", questionService.countListByWriter(writer));
+        return cntWriterSearchList;
+    }
 
 }

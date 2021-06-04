@@ -1,7 +1,9 @@
 package com.bit.ww.service;
 
 import com.bit.ww.dto.CmntDTO;
+import com.bit.ww.dto.FreeBoardDTO;
 import com.bit.ww.entity.CmntEntity;
+import com.bit.ww.entity.FreeBoardEntity;
 import com.bit.ww.repository.CmntRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -60,8 +63,8 @@ public class CmntService {
         return cmnt2DTOList;
     }
     @Transactional
-    public int saveCmnt(CmntDTO cmntDTO){
-        return cmntRepository.save(cmntDTO.toEntity()).getNum();
+    public CmntEntity saveCmnt(CmntDTO cmntDTO){
+        return cmntRepository.save(cmntDTO.toEntity());
     }
 
     @Transactional
@@ -94,5 +97,24 @@ public class CmntService {
             cmntDTOList.add(cmntDTO);
         }
         return cmntDTOList;
+    }
+
+    public CmntDTO getAnswer(int boardnum, int postnum) {
+        Optional<CmntEntity> cmntEntityWrapper = cmntRepository.findByBoardnumAndPostnum(boardnum, postnum);
+        CmntEntity cmntEntity = cmntEntityWrapper.get();
+
+        CmntDTO cmntDTO = CmntDTO.builder()
+                .num(cmntEntity.getNum())
+                .boardnum(cmntEntity.getBoardnum())
+                .postnum(cmntEntity.getPostnum())
+                .cmntnum(cmntEntity.getCmntnum())
+                .depth(cmntEntity.getDepth())
+                .writer(cmntEntity.getWriter())
+                .content(cmntEntity.getContent())
+                .regdate(cmntEntity.getRegdate())
+                .editdate(cmntEntity.getEditdate())
+                .build();
+
+        return cmntDTO;
     }
 }

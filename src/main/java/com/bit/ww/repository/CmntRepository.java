@@ -4,6 +4,7 @@ import com.bit.ww.entity.CmntEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CmntRepository extends JpaRepository<CmntEntity, Integer> {
     // 댓글
@@ -14,4 +15,6 @@ public interface CmntRepository extends JpaRepository<CmntEntity, Integer> {
     List<CmntEntity> findAllByBoardnumAndPostnumAndCmntnumAndDepthOrderByNumAsc(int boardnum, int postnum, int cmntnum, int depth);
     // 내가쓴댓글
     List<CmntEntity> findAllByWriterOrderByNumDesc(String writer);
+    // QnA게시판 답변 찾기
+    Optional<CmntEntity> findByBoardnumAndPostnum(int boardnum, int postnum);
 }
