@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import {deleteCookie} from "@/utils/cookies";
 
 export default {
     computed: {
@@ -33,12 +32,7 @@ export default {
     },
     methods : {
         logoutUser() {
-            this.$store.commit('clearId');
-            this.$store.commit('clearToken');
-            this.$store.commit('clearNickname');
-            this.$store.commit('clearRole');
-            deleteCookie('ww_auth');
-            deleteCookie('ww_user');
+            this.$store.commit('clearUserData');
             this.$router.push('/login');
         },
     }

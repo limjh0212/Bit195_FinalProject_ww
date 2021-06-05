@@ -24,6 +24,16 @@ export const router = new VueRouter({
             component: () => import('@/view/member/MemberList'),
         },
 
+        {
+            path: '/posts',
+            // component: () => import('@/view/member/MemberList'),
+        },
+        {
+            //게시글 작성
+            path     : '/post',
+            component: () => import('@/view/post/WritePage'),
+        },
+
 
         // },
         // // Member 조회
