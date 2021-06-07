@@ -1,50 +1,29 @@
 <template>
-    <el-tiptap :extensions="extensions" :content="content" placeholder="Write something ..."/>
+    <div>
+        <form @submit.prevent="c">
+    <el-tiptap :extensions="extensions" :content="content" v-model="content" :width="700"
+               height="100%" placeholder="Write something ..."/>
+        <button type="submit">저장</button>
+        </form>
+    </div>
 </template>
 
 <script>
 import {
-    // all extensions
-    Doc,
-    Text,
-    Paragraph,
-    Heading,
-    Bold,
-    Italic,
-    Strike,
-    Underline,
-    Link,
-    Image,
     Blockquote,
-    ListItem,
-    BulletList, // use with ListItem
-    OrderedList, // use with ListItem
-    TodoItem,
-    TodoList, // use with TodoItem
-    TextAlign,
-    Indent,
-    HorizontalRule,
-    HardBreak,
+    Bold,
+    Doc,
+    Heading,
     History,
-    // LineHeight,
-    // Iframe,
-    // CodeBlock,
-    // TrailingNode,
-    // Table, // use with TableHeader, TableCell, TableRow
-    // TableHeader,
-    // TableCell,
-    // TableRow,
-    // FormatClear,
-    // TextColor,
-    // TextHighlight,
-    // Preview,
-    // Print,
-    Fullscreen,
-    CodeView
-    // SelectAll,
+    HorizontalRule,
+    Image,
+    Italic,
+    Link,
+    Paragraph,
+    Strike,
+    Text,
+    Underline
 } from "element-tiptap";
-
-import codemirror from "codemirror";
 import "codemirror/lib/codemirror.css"; // import base style
 import "codemirror/mode/xml/xml.js"; // language
 import "codemirror/addon/selection/active-line.js"; // require active-line.js
@@ -63,30 +42,19 @@ export default {
             new Underline({bubble: true}),
             new Italic({bubble: true}),
             new Strike({bubble: true}),
-            // new Link({ bubble: true }),
+            new Link({ bubble: true }),
             new Image(),
-            // new Blockquote(),
-            new TextAlign(),
-            new ListItem(),
-            new BulletList({bubble: true}),
-            new OrderedList({bubble: true}),
-            new TodoItem(),
-            new TodoList(),
-            // new Indent(),
-            new HardBreak(),
+            new Blockquote(),
             new HorizontalRule({bubble: true}),
-            // new Fullscreen(),
-            // new CodeView({
-            //     codemirror,
-            //     codemirrorOptions: {
-            //         styleActiveLine: true,
-            //         autoCloseTags: true
-            //     }
-            // }),
             new History()
         ],
 
         content: ``
-    })
+    }),
+    methods:{
+        c(){
+            console.log(this.content);
+        }
+    }
 };
 </script>

@@ -1,18 +1,20 @@
 package com.bit.ww.entity;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Getter
 @Entity
 @Table(name = "board_info")
 @NoArgsConstructor
-@DynamicUpdate
 public class BoardEntity {
     @Id
     @Column
@@ -25,9 +27,10 @@ public class BoardEntity {
     @ColumnDefault("0")
     private int lastnum;
 
-    public BoardEntity setLastnum(int lastnum){
+    @Builder
+    public BoardEntity(int boardnum, String boardname, int lastnum){
+        this.boardnum = boardnum;
+        this.boardname = boardname;
         this.lastnum = lastnum;
-        return this;
     }
-
 }

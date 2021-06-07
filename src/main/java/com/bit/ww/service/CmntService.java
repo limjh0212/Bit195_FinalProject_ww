@@ -1,9 +1,7 @@
 package com.bit.ww.service;
 
 import com.bit.ww.dto.CmntDTO;
-import com.bit.ww.dto.FreeBoardDTO;
 import com.bit.ww.entity.CmntEntity;
-import com.bit.ww.entity.FreeBoardEntity;
 import com.bit.ww.repository.CmntRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
