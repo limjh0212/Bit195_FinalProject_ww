@@ -119,5 +119,267 @@ public class BoardService {
     public void deletePost(int num){
         postRepository.deleteById(num);
     }
+    //검색 기능
+    //제목
+    @Transactional
+    public List<PostDTO> searchTitle(String search, String boardname){
+        List<PostEntity> postEntities = postRepository.findByTitleIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(search, boardname);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public int cntSearchTitle(String search, String boardname){
+        return postRepository.countAllByTitleIgnoreCaseIsContainingAndBoardname(search, boardname);
+    }
+    // 제목+내용
+    @Transactional
+    public List<PostDTO> searchTitleOrContent(String search, String boardname){
+        List<PostEntity> postEntities = postRepository.findByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(search, search, boardname);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public int cntSearchTitleOrContent(String search, String boardname){
+        return postRepository.countAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardname(search, search, boardname);
+    }
+    // 내글보기
+    @Transactional
+    public List<PostDTO> searchUid(String boardname, String uid){
+        List<PostEntity> postEntities = postRepository.findByBoardnameAndUidOrderByNumDesc(boardname, uid);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public int cntSearchUid(String boardname, String uid){
+        return postRepository.countAllByBoardnameAndUid(boardname, uid);
+    }
+    // 내글보기 - 검색 - 제목
+    @Transactional
+    public List<PostDTO> searchUidAndTitle(String boardname, String uid, String search){
+        List<PostEntity> postEntities = postRepository.findByBoardnameAndUidAndTitleIgnoreCaseOrderByNumDesc(boardname, uid, search);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public int cntSearchUidAndTitle(String boardname, String uid, String search){
+        return postRepository.countAllByBoardnameAndUidAndTitleIgnoreCase(boardname, uid, search);
+    }
+    // 내글보기 - 검색 - 제목
+    @Transactional
+    public List<PostDTO> searchUidAndTitleOrContent(String boardname, String uid, String search){
+        List<PostEntity> postEntities = postRepository.findByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingOrderByNumDesc(boardname, uid, search,search);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public int cntSearchUidAndTitleOrContent(String boardname, String uid, String search){
+        return postRepository.countAllByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContaining(boardname, uid, search,search);
+    }
+    // 인기글
+    @Transactional
+    public List<PostDTO> findPopularPosts(String boardname){
+        List<PostEntity> postEntities = postRepository.findByBoardnameOrderByReadcountDesc(boardname);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    // 관리자 및 마이페이지
+    // uid가 쓴 모든 글
+    @Transactional
+    public List<PostDTO> findUidPosts(String uid){
+        List<PostEntity> postEntities = postRepository.findByUidOrderByNumDesc(uid);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public int cntUidPosts(String uid){
+        return postRepository.countAllByUid(uid);
+    }
+    // writer가 쓴 모든 글
+    @Transactional
+    public List<PostDTO> findWriterPosts(String writer){
+        List<PostEntity> postEntities = postRepository.findByWriterOrderByNumDesc(writer);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public int cntWriterPosts(String writer){
+        return postRepository.countAllByWriter(writer);
+    }
 
 }

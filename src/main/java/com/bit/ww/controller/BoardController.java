@@ -26,6 +26,7 @@ public class BoardController {
     private final CmntService cmntService;
     private final LikeService likeService;
 
+    // 게시판
     @ApiOperation(value = "게시판 정보 조회", notes = "게시판 정보 조회")
     @GetMapping("/{boardname}")
     public BoardDTO boardInfo(@PathVariable String boardname){
@@ -127,6 +128,54 @@ public class BoardController {
         cmntDTO.setPostnum(questionDTO.getPostnum());
         return cmntService.saveCmnt(cmntDTO);
     }
+    // 검색
+    @ApiOperation(value = "게시판 검색 리스트 - 제목", notes = "게시판 글 리스트 - 제목")
+    @GetMapping("/{boardname}/searchTitle/{search}")
+    public HashMap searchTitle(@PathVariable String boardname, @PathVariable String search){
+        HashMap<String, Object> posts = new HashMap<>();
+        posts.put("posts", boardService.searchTitle(search, boardname));
+        posts.put("cntPosts", boardService.cntSearchTitle(search, boardname));
+        return posts;
+    }
+    @ApiOperation(value = "게시판 검색 리스트 - 제목+내용", notes = "게시판 글 리스트 - 제목+내용")
+    @GetMapping("/{boardname}/searchTitleOrContent/{search}")
+    public HashMap searchTitleOrContent(@PathVariable String boardname, @PathVariable String search){
+        HashMap<String, Object> posts = new HashMap<>();
+        posts.put("posts", boardService.searchTitleOrContent(search, boardname));
+        posts.put("cntPosts", boardService.cntSearchTitleOrContent(search, boardname));
+        return posts;
+    }
+    // 각 게시판별 내글보기
+    @ApiOperation(value = "내글보기", notes = "내글보기")
+    @GetMapping("/{boardname}/searchUid/{uid}")
+    public HashMap searchUid(@PathVariable String boardname, @PathVariable String uid){
+        HashMap<String, Object> posts = new HashMap<>();
+        posts.put("posts", boardService.searchUid(boardname, uid));
+        posts.put("cntPosts", boardService.cntSearchUid(boardname, uid));
+        return posts;
+    }
+    @ApiOperation(value = "내글보기 - 검색 리스트 - 제목", notes = "내글보기 - 검색 리스트 - 제목")
+    @GetMapping("/{boardname}/searchUidAndTitle/{uid}/{search}")
+    public HashMap searchUidAndTitle(@PathVariable String boardname, @PathVariable String uid, @PathVariable String search){
+        HashMap<String, Object> posts = new HashMap<>();
+        posts.put("posts", boardService.searchUidAndTitle(boardname, uid, search));
+        posts.put("cntPosts", boardService.cntSearchUidAndTitle(boardname, uid, search));
+        return posts;
+    }
+    @ApiOperation(value = "내글보기 - 검색 리스트 - 제목+내용", notes = "내글보기 - 검색 리스트 - 제목+내용")
+    @GetMapping("/{boardname}/searchUidAndTitleOrContent/{uid}/{search}")
+    public HashMap searchUidAndTitleOrContent(@PathVariable String boardname, @PathVariable String uid, @PathVariable String search){
+        HashMap<String, Object> posts = new HashMap<>();
+        posts.put("posts", boardService.searchUidAndTitleOrContent(boardname, uid, search));
+        posts.put("cntPosts", boardService.cntSearchUidAndTitleOrContent(boardname, uid, search));
+        return posts;
+    }
+    // 메인 - 인기글
+    @ApiOperation(value = "인기글", notes = "인기글")
+    @GetMapping("/main/{boardname}")
+    public List findPopularPosts(@PathVariable String boardname){
+        return boardService.findPopularPosts(boardname);
+    }
     // 댓글
     @ApiOperation(value = "댓글 등록", notes = "댓글 등록")
     @PostMapping(value ="/cmnt/post")
@@ -159,7 +208,6 @@ public class BoardController {
         return "delete - deleteCmnt ok!";
     }
 
-    // 댓글 삭제(대댓글이 있을 경우) - 값 변경
     @ApiOperation(value = "댓글 삭제(대댓글이 있을 경우)", notes = "댓글 삭제(대댓글이 있을 경우)")
     @PutMapping("/cmnt/{cmntId}")
     public String delete(@PathVariable("cmntId") int num, @RequestBody @Validated CmntDTO cmntDTO){
