@@ -20,7 +20,19 @@ public class PostEntity extends PostTimeEntity{
     private int num;
 
     @Column
+    private String boardname;
+
+    @Column
+    private int boardnum;
+
+    @Column
     private int postnum;
+
+    @Column
+    private String uid;
+
+    @Column
+    private String writer;
 
     @Column
     private String title;
@@ -50,29 +62,15 @@ public class PostEntity extends PostTimeEntity{
     @Column
     private LocalDateTime editdate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "boardnum", referencedColumnName = "boardnum")
-    private BoardEntity board;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumns({
-            @JoinColumn(name="uid", referencedColumnName="id"),
-            @JoinColumn(name="writer", referencedColumnName="nickname")
-    })
-    private MemberEntity member;
-
-    // Join테이블이 Json결과에 표시되지 않도록 처리
-    protected BoardEntity getBoardEntity(){
-        return board;
-    }
-
     // 생성자
     @Builder
-    public PostEntity (MemberEntity member, BoardEntity board, int num, int postnum, String title, String content, String img, int readcount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime editdate){
-        this.member = member;
-        this.board = board;
+    public PostEntity (int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, String img, int readcount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime editdate){
         this.num = num;
+        this.boardname = boardname;
+        this.boardnum = boardnum;
         this.postnum = postnum;
+        this.uid = uid;
+        this.writer = writer;
         this.title = title;
         this.content = content;
         this.img = img;
@@ -81,53 +79,6 @@ public class PostEntity extends PostTimeEntity{
         this.istemp = istemp;
         this.tempnum = tempnum;
         this.editdate = editdate;
-    }
-    // 생성
-    public PostEntity(MemberEntity member, BoardEntity board, int postnum, String title, String content, String img) {
-        super();
-    }
-
-    // 수정
-    public PostEntity setUpdate(String title, String content, String img, LocalDateTime editdate){
-        this.title = title;
-        this.content = content;
-        this.img = img;
-        this.editdate = editdate;
-        return this;
-    }
-    // temp 임시저장 생성자
-    public PostEntity setTemp(MemberEntity member, BoardEntity board, int postnum, String title, String content, String img, boolean istemp, int tempnum){
-        this.member = member;
-        this.board = board;
-        this.postnum = postnum;
-        this.title = title;
-        this.content = content;
-        this.img = img;
-        this.istemp = istemp;
-        this.tempnum = tempnum;
-        return this;
-    }
-
-    // QnA 생성자
-    public PostEntity setQnA(MemberEntity member, BoardEntity board, int postnum, String title, String content, String img, boolean isanswered){
-        this.member = member;
-        this.board = board;
-        this.postnum = postnum;
-        this.title = title;
-        this.content = content;
-        this.img = img;
-        this.isanswered = isanswered;
-        return this;
-    }
-    // QnA 답변 완료시 수정
-    public PostEntity setQnAAnswered(boolean isanswered){
-        this.isanswered = isanswered;
-        return this;
-    }
-    // 조회수
-    public PostEntity setReadCount(int readCount){
-        this.readcount = readCount;
-        return this;
     }
 
 }

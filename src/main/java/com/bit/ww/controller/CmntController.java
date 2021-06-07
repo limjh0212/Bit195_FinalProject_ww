@@ -1,10 +1,8 @@
 package com.bit.ww.controller;
 
 import com.bit.ww.dto.CmntDTO;
-import com.bit.ww.dto.QuestionDTO;
 import com.bit.ww.entity.CmntEntity;
 import com.bit.ww.service.CmntService;
-import com.bit.ww.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/cmnt")
 public class CmntController {
     private CmntService cmntService;
-    private QuestionService questionService;
     // Todo: 확인필요.
     // 댓글 등록 - 확인용 - id 값은 필요 없음.
     @PostMapping(value ="/post")
@@ -30,17 +27,17 @@ public class CmntController {
         return cmntService.saveCmnt(cmnt2DTO);
     }
     // QnA 게시판 답변 등록
-    @PatchMapping("/answer")
-    public void questionIsAnswered (int postnum){
-        QuestionDTO questionDTO = questionService.getPost(postnum);
-        questionDTO.setIsanswered(true);
-        questionService.savePost(questionDTO);
-    }
-    @PostMapping(value ="/answer")
-    public CmntEntity answer(@RequestBody @Validated CmntDTO cmntDTO){
-        questionIsAnswered(cmntDTO.getPostnum());
-        return cmntService.saveCmnt(cmntDTO);
-    }
+//    @PatchMapping("/answer")
+//    public void questionIsAnswered (int postnum){
+//        QuestionDTO questionDTO = questionService.getPost(postnum);
+//        questionDTO.setIsanswered(true);
+//        questionService.savePost(questionDTO);
+//    }
+//    @PostMapping(value ="/answer")
+//    public CmntEntity answer(@RequestBody @Validated CmntDTO cmntDTO){
+//        questionIsAnswered(cmntDTO.getPostnum());
+//        return cmntService.saveCmnt(cmntDTO);
+//    }
     // 댓글 수정
     @PatchMapping("/update/{num}")
     public String update(@RequestBody @Validated CmntDTO cmntDTO){

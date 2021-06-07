@@ -1,70 +1,123 @@
 package com.bit.ww.service;
 
+import com.bit.ww.dto.BoardDTO;
 import com.bit.ww.dto.PostDTO;
 import com.bit.ww.entity.BoardEntity;
-import com.bit.ww.entity.MemberEntity;
 import com.bit.ww.entity.PostEntity;
 import com.bit.ww.repository.BoardRepository;
-import com.bit.ww.repository.MemberRepository;
 import com.bit.ww.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@DynamicUpdate
 public class BoardService {
     private final BoardRepository boardRepository;
     private final PostRepository postRepository;
-    private final MemberRepository memberRepository;
 
     // 게시판 이름으로 게시판 조회
-    public BoardEntity findBoard(String boardname){
-        return Optional.ofNullable(boardRepository.findByBoardname(boardname)).orElseThrow(RuntimeException::new);
+    @Transactional
+    public BoardDTO findBoard(String boardname){
+        Optional<BoardEntity> boardEntityWrapper = boardRepository.findByBoardname(boardname);
+        BoardEntity boardEntity = boardEntityWrapper.get();
+        BoardDTO boardDTO= BoardDTO.builder()
+                .boardnum(boardEntity.getBoardnum())
+                .boardname(boardEntity.getBoardname())
+                .lastnum(boardEntity.getLastnum())
+                .build();
+        return boardDTO;
     }
 
     // 게시판 이름으로 게시물 리스트 조회
-    public List<PostEntity> findPosts(String boardname){
-        return postRepository.findByBoardOrderByNumDesc(findBoard((boardname)));
-    }
+    @Transactional
+    public List<PostDTO> findPosts(String boardname){
+        List<PostEntity> postEntities = postRepository.findByBoardnameOrderByNumDesc(boardname);
+        List<PostDTO> postDTOList = new ArrayList<>();
 
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public int cntPosts(String boardname){
+        return postRepository.countAllByBoardname(boardname);
+    }
     // 게시물 단건 조회
-    public PostEntity getPost(int num){
-       return postRepository.findByNum(num);
+    @Transactional
+    public PostDTO getPost(int num){
+        Optional<PostEntity> postEntityWrapper = postRepository.findById(num);
+        PostEntity postEntity = postEntityWrapper.get();
+
+        PostDTO postDTO = PostDTO.builder()
+                .num(postEntity.getNum())
+                .boardname(postEntity.getBoardname())
+                .boardnum(postEntity.getBoardnum())
+                .postnum(postEntity.getPostnum())
+                .uid(postEntity.getUid())
+                .writer(postEntity.getWriter())
+                .title(postEntity.getTitle())
+                .content(postEntity.getContent())
+                .img(postEntity.getImg())
+                .readcount(postEntity.getReadcount())
+                .isanswered(postEntity.isIsanswered())
+                .istemp(postEntity.isIstemp())
+                .tempnum(postEntity.getTempnum())
+                .regdate(postEntity.getRegdate())
+                .editdate(postEntity.getEditdate())
+                .build();
+        return postDTO;
     }
     // 게시물 등록 - 게시물 등록 시 해당 게시판의 마지막 번호에 +1
-    public PostEntity writePost(String uid, String boardname, PostDTO postDTO){
-        BoardEntity board = findBoard(boardname);
-        int lastnum = board.getLastnum()+1;
-        postDTO.setPostnum(lastnum);
-        PostEntity post = new PostEntity(memberRepository.findOneById(uid), board, postDTO.getPostnum(), postDTO.getTitle(), postDTO.getContent(), postDTO.getImg());
-        board.setLastnum(lastnum);
-        boardRepository.save(board);
-        return postRepository.save(post);
-    }
-    // 게시물 수정 - 게시물 등록자와 로그인 회원정보가 다르면 실패
-    public PostEntity updatePost(int num, String uid, PostDTO postDTO){
-        PostEntity post = postRepository.findByNum(num);
-        MemberEntity member = post.getMember();
-        if(!uid.equals(member.getId())){
-            throw new RuntimeException();
+    @Transactional
+    public PostEntity savePost(PostDTO postDTO){
+        if (postDTO.getBoardname().equals("freeBoard")){
+            postDTO.setBoardnum(1);
+        }else if (postDTO.getBoardname().equals("OOTD")){
+            postDTO.setBoardnum(2);
+        }else if (postDTO.getBoardname().equals("hotDeal")){
+            postDTO.setBoardnum(3);
+        }else if (postDTO.getBoardname().equals("qna")){
+            postDTO.setBoardnum(4);
+        }else if (postDTO.getBoardname().equals("temp")){
+            postDTO.setBoardnum(5);
         }
-        postDTO.setEditdate(LocalDateTime.now());
-        post.setUpdate(postDTO.getTitle(), postDTO.getContent(), postDTO.getImg(), postDTO.getEditdate());
-        return postRepository.save(post);
+        return postRepository.save(postDTO.toEntity());
+    }
+    // 게시물 등록 시 마지막 번호 수정 용
+    @Transactional
+    public BoardEntity saveBoard(BoardDTO boardDTO){
+        return boardRepository.save(boardDTO.toEntity());
     }
     // 게시물 삭제 - 게시물 등록자와 로그인 회원정보가 다르면 실패
-    public void deletePost(int num, String uid){
-        PostEntity post = postRepository.findByNum(num);
-        MemberEntity member = post.getMember();
-        if(!uid.equals(member.getId())){
-            throw new RuntimeException();
-        }
-        postRepository.deleteById(post.getNum());
+    @Transactional
+    public void deletePost(int num){
+        postRepository.deleteById(num);
     }
+
 }
