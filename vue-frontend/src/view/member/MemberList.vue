@@ -1,16 +1,3 @@
-<!--<template>-->
-<!--    <div class="memberList">-->
-<!--        <h1>Member List</h1>-->
-
-<!--        <LoadingSpinner v-if="isLoading"></LoadingSpinner>-->
-
-
-<!--        <p class="post" v-for="(item, idx) in members" v-bind:key="idx">-->
-<!--            <a v-bind:href="`member/${item.id}`">-->
-<!--                {{ item.id }}</a></p>-->
-<!--    </div>-->
-<!--</template>-->
-
 <template>
     <v-simple-table>
         <template v-slot:default>
@@ -23,12 +10,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr
-                    v-for="item in members"
-                    :key="item.id"
-                >
+                <tr v-for="item in members" :key="item.id" >
                     <td>{{ item.id }}</td>
-<!--                    <td>{{ item.calories }}</td>-->
+                    <!--                    <td>{{ item.calories }}</td>-->
                 </tr>
             </tbody>
         </template>
