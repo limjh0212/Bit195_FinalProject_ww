@@ -8,7 +8,6 @@ import {formatDate} from '@/utils/filters';
 import ElementUI from 'element-ui';
 import {ElementTiptapPlugin} from 'element-tiptap';
 import 'element-tiptap/lib/index.css';
-import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 Vue.use(ElementTiptapPlugin, {});
@@ -17,12 +16,7 @@ Vue.use(ElementTiptapPlugin, {});
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
-Vue.use(Vuetify, {
-    theme: {
-        primary: '#7957d5',
-    },
-});
-
+Vue.use(Vuetify);
 
 Vue.filter('formatDate', formatDate);
 Vue.config.productionTip = false
