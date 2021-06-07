@@ -1,33 +1,14 @@
 import axios from "axios";
+import {setInterceptors} from "@/api/common/interceptors";
 
-
-function fetchMemberList() {
-    return axios.get('/member/findall')
+function createInstance() {
+    return axios.create({});
 }
 
-function fetchBoardList() {
-    return axios.get('/boards')
+function createInstanceWithAuth() {
+    const instance = axios.create({});
+    return setInterceptors(instance);
 }
 
-function fetchUser(userId) {
-    return axios.get('/member/findbyid/${userId}')
-}
-
-// 게시글 저장 API
-function createPost(postData) {
-    return axios.post('/boards/post', postData);
-}
-
-// 회원가입 API
-function signupMember(Data) {
-    return axios.post('/member/save', Data);
-}
-
-
-export {
-    fetchMemberList,
-    fetchUser,
-    fetchBoardList,
-    createPost,
-    signupMember
-}
+export const instance = createInstance();
+export const api = createInstanceWithAuth();

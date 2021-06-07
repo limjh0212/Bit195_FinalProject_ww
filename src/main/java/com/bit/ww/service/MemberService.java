@@ -43,6 +43,11 @@ public class MemberService implements UserDetailsService {
         return memberRepository.findById(id);
     }
 
+    //회원 가입 확인
+    public boolean checkId(String id) {
+        return memberRepository.existsById(id);
+    }
+
     //회원 삭제
     public void deleteById(String id) {
         memberRepository.deleteById(id);

@@ -6,11 +6,9 @@ import com.bit.ww.security.JwtTokenProvider;
 import com.bit.ww.service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -28,7 +26,8 @@ public class AuthController {
     @ApiOperation(value = "회원 등록", notes = "회원 등록")
     @PostMapping("/signup")
     public String signup(@RequestBody MemberEntity member) {
-        member.setPw(passwordEncoder.encode((member.getPw()))); // PW 암호화
+        // PW 암호화
+        member.setPw(passwordEncoder.encode((member.getPw())));
         memberService.save(member);
         return "save ok";
     }
@@ -36,13 +35,22 @@ public class AuthController {
     //로그인
     @ApiOperation(value = "로그인", notes = "로그인")
     @PostMapping("/login")
-    public String login(@RequestBody LoginDTO loginDto) {
+    public Optional<MemberEntity> login(@RequestBody LoginDTO loginDto) {
         // ID 회원조회
         Optional<MemberEntity> member = memberService.findbyId(loginDto.getId());
         // PW 확인
         if (!passwordEncoder.matches(loginDto.getPw(), member.get().getPw()))
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+
         // 토큰 생성
-        return jwtTokenProvider.createToken(member.get().getId(), member.get().getRole());
+        member.get().setToken(jwtTokenProvider.createToken(member.get().getId(), member.get().getRole()));
+        return member;
+    }
+
+    //회원 ID 조회
+    @ApiOperation(value = "ID 중복확인", notes = "ID 중복확인")
+    @PostMapping("/checkId")
+    public boolean checkId(String id) {
+        return memberService.checkId(id);
     }
 }

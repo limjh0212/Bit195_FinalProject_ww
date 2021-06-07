@@ -1,50 +1,47 @@
 import Vuex from 'vuex'
 import Vue from "vue";
-import {fetchMemberList, fetchUser, fetchBoardList} from "@/api";
+import createPersistedState from 'vuex-persistedstate';
+import {loginUser} from "@/api/auth";
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+    plugins  : [createPersistedState()],
     state    : {
-        memberList: [],
-        userList  : [],
-        boardList : []
+        id      : '',
+        token   : '',
+        nickname: '',
+        role    : '',
+    },
+    getters  : {
+        isLogin(state) {
+            return state.username !== '';
+        },
     },
     mutations: {
-        SET_MEMBER(state, memberList) {
-            state.memberList = memberList;
+        setUserData(state, userData) {
+            state.id = userData.id;
+            state.token = userData.token;
+            state.nickname = userData.nickname;
+            state.role = userData.role;
         },
-        SET_USER(state, userList) {
-            state.userList = userList;
-        },
-        SET_BOARD(state, boardList) {
-            state.boardList = boardList;
+        clearUserData(state) {
+            state.id = '';
+            state.token = '';
+            state.nickname = '';
+            state.role = '';
         },
     },
     actions  : {
-        //회원목록 조회
-        FETCH_MEMBER({commit}) {
-            fetchMemberList()
-                .then(({data}) => commit('SET_MEMBER', data))
-                .catch(function (error) {
-                    console.log(error)
-                });
+        //로그인
+        async LOGIN({commit}, userData) {
+            const {data} = await loginUser(userData);
+            commit('setUserData', data);
+            return data;
+
         },
-        FETCH_USER({commit}, userId) {
-            fetchUser(userId)
-                .then(({data}) => commit('SET_USER', data))
-                .then(({data}) => console.log(data))
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        //게시글 조회
-        FETCH_BOARD({commit}) {
-            fetchBoardList()
-                .then(({data}) => commit('SET_BOARD', data))
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-    }
+
+
+    },
+
 });
