@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class LikeService {
-    private LikeRepository likeRepository;
+    private final LikeRepository likeRepository;
     // 좋아요 조건 - 한 사람당 한 게시물에 한 번만 좋아요를 누를 수 있음.
     // 다시 누르면 취소
     // 또다시 누르면 좋아요
