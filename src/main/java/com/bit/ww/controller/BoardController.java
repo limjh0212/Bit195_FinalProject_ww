@@ -36,13 +36,14 @@ public class BoardController {
     public BoardDTO boardInfo(@PathVariable String boardname){
         return boardService.findBoard(boardname);
     }
-
-    @ApiOperation(value = "게시판 글 리스트", notes = "게시판 글 리스트")
+    // 페이징 완료
+    @ApiOperation(value = "게시판 글 리스트 - 페이징", notes = "게시판 글 리스트 - 페이징")
     @GetMapping("/{boardname}/posts")
-    public HashMap posts(@PathVariable String boardname){
+    public HashMap posts(@PathVariable String boardname, @RequestParam(value = "page", defaultValue = "1") int pagenum){
         HashMap<String, Object> posts = new HashMap<>();
-        posts.put("posts", boardService.findPosts(boardname));
+        posts.put("posts", boardService.findPosts(boardname, pagenum));
         posts.put("cntPosts", boardService.cntPosts(boardname));
+        posts.put("pageList", boardService.findPageList(boardname, pagenum));
         return posts;
     }
 
@@ -96,8 +97,8 @@ public class BoardController {
         // 댓글, 대댓글
         List<CmntDTO> cmntList = cmntService.getCmntList(boardnum, num, 0);
         List<List<CmntDTO>> cmnt2List = new ArrayList<>();
-        for(int i = 0; i<cmntList.size();i++){
-            List<CmntDTO> temp = cmntService.getCmnt2List(boardnum,num,cmntList.get(i).getNum(),1);
+        for (CmntDTO cmntDTO : cmntList) {
+            List<CmntDTO> temp = cmntService.getCmnt2List(boardnum, num, cmntDTO.getNum(), 1);
             cmnt2List.add(temp);
         }
         post.put("cmntList", cmntList);
@@ -179,12 +180,12 @@ public class BoardController {
     }
     // 메인 - 인기글 - 조회수
     @ApiOperation(value = "인기글 - 조회수", notes = "인기글 - 조회수")
-    @GetMapping("/main/{boardname}")
+    @GetMapping("/main/view/{boardname}")
     public List findReadcountPosts(@PathVariable String boardname){
         return boardService.findReadcountPosts(boardname);
     }
     @ApiOperation(value = "인기글 - 좋아요", notes = "인기글 - 좋아요")
-    @GetMapping("/main/{boardname}")
+    @GetMapping("/main/like/{boardname}")
     public List findLikecountPosts(@PathVariable String boardname){
         return boardService.findLikecountPosts(boardname);
     }
@@ -225,7 +226,7 @@ public class BoardController {
     public String delete(@PathVariable("cmntId") int num, @RequestBody @Validated CmntDTO cmntDTO){
         CmntDTO delCmntDTO = cmntDTO;
         boolean existCmnt2 = cmntService.existCmnt2(delCmntDTO.getNum());
-        if(existCmnt2 == true) {
+        if(existCmnt2) {
             delCmntDTO.setWriter("deleted");
             delCmntDTO.setContent("deleted");
             cmntService.saveCmnt(delCmntDTO);
