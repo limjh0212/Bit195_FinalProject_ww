@@ -11,6 +11,7 @@ import com.bit.ww.service.CmntService;
 import com.bit.ww.service.LikeService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
@@ -126,6 +127,7 @@ public class BoardController {
     // QnA 게시판
     @ApiOperation(value = "QnA 답변 작성", notes = "QnA 답변 작성")
     @PostMapping(value ="/answer/{postId}")
+    @Secured({"ROLE_ADMIN"})
     public CmntEntity answer(@PathVariable("postId") int num, @RequestBody @Validated CmntDTO cmntDTO){
         PostDTO questionDTO = boardService.getPost(num);
         questionDTO.setIsanswered(true);

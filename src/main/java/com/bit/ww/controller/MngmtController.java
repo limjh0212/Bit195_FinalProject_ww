@@ -5,6 +5,7 @@ import com.bit.ww.service.CmntService;
 import com.bit.ww.service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,7 @@ public class MngmtController {
     // 관리자 페이지
     @ApiOperation(value = "관리자 메인 페이지", notes = "총 회원수, 성별 연령별 회원 수, 총 게시물 수")
     @GetMapping("/admin")
+    @Secured({"ROLE_ADMIN"})
     public HashMap infos(){
         HashMap<String, Object> infos = new HashMap<>();
         infos.put("cntMembers", memberService.cntMembers());
@@ -43,6 +45,7 @@ public class MngmtController {
     }
     @ApiOperation(value = "멤버관리 페이지", notes = "총 회원수, 가입회원 수, 탈퇴 회원수, 일주일간 각 날짜별 가입 및 탈퇴 회원수")
     @GetMapping("/member")
+    @Secured({"ROLE_ADMIN"})
     public HashMap memberInfos(){
         HashMap<String, Object> infos = new HashMap<>();
         infos.put("cntMembers", memberService.cntMembers());
@@ -54,6 +57,7 @@ public class MngmtController {
     // 회원 목록은 MemberController에 있음.
     @ApiOperation(value = "커뮤니티 관리 페이지", notes = "총 게시물수, 각 게시판 별 게시물수, 최근게시물 수, 최근 각 게시판별 게시물 수")
     @GetMapping("/cmnty")
+    @Secured({"ROLE_ADMIN"})
     public HashMap cmntyInfos(){
         HashMap<String, Object> infos = new HashMap<>();
         infos.put("cntTotalPosts", boardService.cntTotalPosts(5));
@@ -71,6 +75,7 @@ public class MngmtController {
     // 게시글 목록은 BoardController에 있음.
     @ApiOperation(value = "문의 관리 페이지", notes = "최근 문의 수, 미해결문의 수, 미해결문의리스트")
     @GetMapping("/qna")
+    @Secured({"ROLE_ADMIN"})
     public HashMap qnaInfos(){
         HashMap<String, Object> infos = new HashMap<>();
         LocalDateTime start = LocalDateTime.of(LocalDate.now().minusDays(7), LocalTime.of(0, 0, 0));
