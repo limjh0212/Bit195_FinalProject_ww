@@ -20,6 +20,7 @@ public class PostDTO {
     private String content;
     private String img;
     private int readcount;
+    private int likecount;
     private boolean isanswered;
     private boolean istemp;
     private int tempnum;
@@ -38,6 +39,7 @@ public class PostDTO {
                 .content(this.content)
                 .img(this.img)
                 .readcount(this.readcount)
+                .likecount(this.likecount)
                 .isanswered(this.isanswered)
                 .istemp(this.istemp)
                 .tempnum(this.tempnum)
@@ -46,7 +48,7 @@ public class PostDTO {
     }
 
     @Builder
-    public PostDTO(int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, String img, int readcount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime regdate, LocalDateTime editdate){
+    public PostDTO(int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, String img, int readcount, int likecount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime regdate, LocalDateTime editdate){
         this.num = num;
         this.boardname = boardname;
         this.boardnum = boardnum;
@@ -57,6 +59,7 @@ public class PostDTO {
         this.content = content;
         this.img = img;
         this.readcount = readcount;
+        this.likecount = likecount;
         this.isanswered = isanswered;
         this.istemp = istemp;
         this.tempnum = tempnum;

@@ -242,8 +242,12 @@ public class BoardController {
             likeDTO.setPostnum(num);
             likeDTO.setUid(authId);
             likeService.saveLike(likeDTO);
+            postDTO.setLikecount(postDTO.getLikecount()+1);
+            boardService.savePost(postDTO);
         }else{
             likeService.deleteLike(likeService.findLikeNum(boardnum,num,authId));
+            postDTO.setLikecount(postDTO.getLikecount()-1);
+            boardService.savePost(postDTO);
         }
         return "like ok!";
     }

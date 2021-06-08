@@ -50,6 +50,10 @@ public class PostEntity extends PostTimeEntity{
     @ApiModelProperty(hidden = true)
     @Column
     @ColumnDefault("0")
+    private int likecount;
+    @ApiModelProperty(hidden = true)
+    @Column
+    @ColumnDefault("0")
     private boolean isanswered;
     @ApiModelProperty(hidden = true)
     @Column
@@ -65,7 +69,7 @@ public class PostEntity extends PostTimeEntity{
 
     // 생성자
     @Builder
-    public PostEntity (int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, String img, int readcount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime editdate){
+    public PostEntity (int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, String img, int readcount, int likecount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime editdate){
         this.num = num;
         this.boardname = boardname;
         this.boardnum = boardnum;
@@ -76,6 +80,7 @@ public class PostEntity extends PostTimeEntity{
         this.content = content;
         this.img = img;
         this.readcount = readcount;
+        this.likecount = likecount;
         this.isanswered = isanswered;
         this.istemp = istemp;
         this.tempnum = tempnum;
