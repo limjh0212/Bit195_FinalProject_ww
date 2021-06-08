@@ -17,6 +17,7 @@
     "tiptap": "^1.32.2",
     "tiptap-extensions": "^1.35.2",
     "vue": "^2.6.11",
+    "vue-moment": "^4.1.0",
     "vuetify": "^2.5.3",
     "vuex-persistedstate": "^4.0.0-beta.3"
   },

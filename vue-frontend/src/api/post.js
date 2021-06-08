@@ -5,13 +5,13 @@ export function savePost(postData) {
 }
 
 export function freeboardList() {
-    return api.get('/api/freeBoard/post')
+    return api.get('/api/cmnty/freeBoard/posts')
 }
 
 export function OOTDList() {
-    return api.get('/api/OOTD/post')
+    return api.get('/api/cmnty/OOTD/posts')
 }
 
 export function qnaList() {
-    return api.get('/api/qna/post')
+    return api.get('/api/cmnty/qna/posts')
 }

@@ -1,23 +1,22 @@
 <template>
-    <v-simple-table>
-        <template v-slot:default>
-            <thead>
-                <tr>
-                    <th class="text-left">
-                        Name
-                    </th>
+    <table>
+        <thead>
+            <tr>
+                <th class="text-left">
+                    Name
+                </th>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in members" :key="item.id" >
-                    <td>{{ item.id }}</td>
-                    <!--                    <td>{{ item.calories }}</td>-->
-                </tr>
-            </tbody>
-        </template>
-    </v-simple-table>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in members" :key="item.id">
+                <td>{{ item.id }}</td>
+                <!--                    <td>{{ item.calories }}</td>-->
+            </tr>
+        </tbody>
+    </table>
 </template>
+
 
 <script>
 import {fetchMemberList} from "@/api/member";

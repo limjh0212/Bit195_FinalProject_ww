@@ -2,10 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import {router} from "@/router";
 import {store} from "@/store";
-import {formatDate} from '@/utils/filters';
 import {Editor} from '@/utils/editor'
+import {moment} from "@/utils/moment";
 
-Vue.filter('formatDate', formatDate);
 Vue.config.productionTip = false
 
 new Vue({
@@ -13,4 +12,5 @@ new Vue({
     router,
     store,
     Editor,
+    moment,
 }).$mount('#app')
