@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "board_likes")
+@Table(name = "board_like")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LikeEntity {
@@ -24,13 +24,13 @@ public class LikeEntity {
     private int postnum;
 
     @Column
-    private String userid;
+    private String uid;
 
     @Builder
-    public LikeEntity(int num, int boardnum, int postnum, String userid){
+    public LikeEntity(int num, int boardnum, int postnum, String uid){
         this.num = num;
         this.boardnum = boardnum;
         this.postnum = postnum;
-        this.userid = userid;
+        this.uid = uid;
 }}
 

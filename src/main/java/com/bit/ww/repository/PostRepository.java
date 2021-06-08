@@ -3,6 +3,7 @@ package com.bit.ww.repository;
 import com.bit.ww.entity.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<PostEntity,Integer> {
@@ -20,6 +21,14 @@ public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     int countAllByUid(String uid);
     List<PostEntity> findByWriterOrderByNumDesc(String writer);
     int countAllByWriter(String writer);
+    // 관리 - 총 게시물 수
+    int countAllByBoardnumIsNot(int boardnum);
+    // 관리 - 최근 게시물 수
+    int countAllByRegdateIsBetweenAndBoardnumIsNot(LocalDateTime start, LocalDateTime end, int boardnum);
+    int countAllByRegdateIsBetweenAndBoardnum(LocalDateTime start, LocalDateTime end, int boardnum);
+    // 관리 - 미해결 문의 수
+    List<PostEntity> findByBoardnumAndIsansweredIsFalseOrderByNumDesc(int boardnum);
+    int countAllByBoardnumAndIsansweredIsFalse(int boadrnum);
     // 마이페이지 - 각 게시판 별 내가 작성한 글
     List<PostEntity> findByBoardnameAndUidOrderByNumDesc(String boardname, String uid);
     int countAllByBoardnameAndUid(String boardname, String uid);
@@ -31,5 +40,4 @@ public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     int countAllByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContaining(String boardname, String uid, String title, String content);
     // 인기글 찾기
     List<PostEntity> findByBoardnameOrderByReadcountDesc(String boardname);
-
 }

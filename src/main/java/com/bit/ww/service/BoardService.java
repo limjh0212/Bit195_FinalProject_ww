@@ -11,6 +11,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -381,5 +382,53 @@ public class BoardService {
     public int cntWriterPosts(String writer){
         return postRepository.countAllByWriter(writer);
     }
+    // 총 게시물 수
+    @Transactional
+    public int cntTotalPosts(int boardnum){
+        return postRepository.countAllByBoardnumIsNot(boardnum);
+    }
+    // 최근 게시물 수
+    @Transactional
+    public int cntRecentPosts(LocalDateTime start, LocalDateTime end, int boardnum){
+        return postRepository.countAllByRegdateIsBetweenAndBoardnumIsNot(start, end, boardnum);
+    }
+    @Transactional
+    public int cntRecentBoard(LocalDateTime start, LocalDateTime end, int boardnum){
+        return postRepository.countAllByRegdateIsBetweenAndBoardnum(start, end, boardnum);
+    }
+    // 미해결 문의
+    @Transactional
+    public List<PostDTO> findNotAnswered(){
+        int boardnum = 4;
+        List<PostEntity> postEntities = postRepository.findByBoardnumAndIsansweredIsFalseOrderByNumDesc(boardnum);
+        List<PostDTO> postDTOList = new ArrayList<>();
 
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public int cntNotAnswered() {
+        int boardnum = 4;
+        return postRepository.countAllByBoardnumAndIsansweredIsFalse(boardnum);
+    }
 }

@@ -8,10 +8,11 @@ import java.util.Optional;
 
 public interface LikeRepository extends JpaRepository<LikeEntity, Integer> {
     // 생성할 지에 대한 여부 확인을 위해
-    boolean existsByBoardnumAndPostnumAndUserid(int boardnum, int postnum, String userid);
+    boolean existsByBoardnumAndPostnumAndUid(int boardnum, int postnum, String uid);
     // 좋아요 수
     int countAllByBoardnumAndPostnum(int boardnum, int postnum);
     // 좋아요 취소
-    Optional<LikeEntity> findByBoardnumAndPostnumAndUserid(int boardnum, int postnum, String userid);
-
+    Optional<LikeEntity> findByBoardnumAndPostnumAndUid(int boardnum, int postnum, String uid);
+    // 좋아요한 리스트 출력
+    List<LikeEntity> findByBoardnumAndUidOrderByNumDesc(int boardnum, String uid);
 }
