@@ -43,11 +43,11 @@ public class BoardController {
     }
 
     @ApiOperation(value = "게시판 글 작성", notes = "게시판 글 작성")
-    @PostMapping("/{boardname}")
-    public PostEntity post(@PathVariable String boardname, @Validated @RequestBody PostDTO postDTO){
-        BoardDTO boardDTO = boardService.findBoard(boardname);
+    @PostMapping("/post")
+    public PostEntity post(@Validated @RequestBody PostDTO postDTO){
+        BoardDTO boardDTO = boardService.findBoard(postDTO.getBoardname());
         int lastnum = boardDTO.getLastnum()+1;
-        postDTO.setBoardname(boardname);
+        postDTO.setBoardname(postDTO.getBoardname());
         postDTO.setPostnum(lastnum);
         boardDTO.setLastnum(lastnum);
         boardService.saveBoard(boardDTO);

@@ -1,12 +1,19 @@
 import Vuex from 'vuex'
 import Vue from "vue";
 import createPersistedState from 'vuex-persistedstate';
+import Cookies from 'js-cookie';
 import {loginUser} from "@/api/auth";
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-    plugins  : [createPersistedState()],
+    plugins  : [createPersistedState({
+        storage : {
+            getItem: key => Cookies.get(key),
+            setItem: (key, value) => Cookies.set(key, value, { expires: 3, secure: true }),
+            removeItem: key => Cookies.remove(key)
+        }
+    })],
     state    : {
         id      : '',
         token   : '',

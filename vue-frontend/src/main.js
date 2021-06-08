@@ -3,26 +3,7 @@ import App from './App.vue'
 import {router} from "@/router";
 import {store} from "@/store";
 import {formatDate} from '@/utils/filters';
-
-//element-tiptap
-import ElementUI from 'element-ui';
-import {ElementTiptapPlugin} from 'element-tiptap';
-import 'element-tiptap/lib/index.css';
-import 'element-ui/lib/theme-chalk/index.css';
-
-Vue.use(ElementUI);
-Vue.use(ElementTiptapPlugin, {});
-
-//Vuetify
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
-
-Vue.use(Vuetify, {
-    theme: {
-        primary: '#7957d5',
-    },
-});
-
+import {Editor} from '@/utils/editor'
 
 Vue.filter('formatDate', formatDate);
 Vue.config.productionTip = false
@@ -31,4 +12,5 @@ new Vue({
     render: h => h(App),
     router,
     store,
+    Editor,
 }).$mount('#app')
