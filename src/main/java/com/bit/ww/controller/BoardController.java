@@ -2,6 +2,7 @@ package com.bit.ww.controller;
 
 import com.bit.ww.dto.BoardDTO;
 import com.bit.ww.dto.CmntDTO;
+import com.bit.ww.dto.LikeDTO;
 import com.bit.ww.dto.PostDTO;
 import com.bit.ww.entity.CmntEntity;
 import com.bit.ww.entity.PostEntity;
@@ -10,6 +11,9 @@ import com.bit.ww.service.CmntService;
 import com.bit.ww.service.LikeService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,26 +72,28 @@ public class BoardController {
         }else if (boardname.equals("qna")){
             postDTO.setTempnum(4);
         }
-        postDTO.setPostnum(lastnum);
         postDTO.setBoardname("temp");
         postDTO.setIstemp(true);
+        postDTO.setPostnum(lastnum);
         boardDTO.setLastnum(lastnum);
         boardService.saveBoard(boardDTO);
         return boardService.savePost(postDTO);
     }
-    // 게시물 상세보기 Todo: 좋아요 여부 추가필요.
+    // 게시물 상세보기
     @ApiOperation(value = "게시물 상세보기", notes = "게시물 상세보기")
     @GetMapping("/post/{postId}")
-    public HashMap post(@PathVariable("postId") int num){
+    public HashMap post(@PathVariable("postId") int num, String uid){
         HashMap<String, Object> post = new HashMap<>();
         PostDTO postDTO = boardService.getPost(num);
         int readcount = postDTO.getReadcount()+1;
         postDTO.setReadcount(readcount);
         boardService.savePost(postDTO);
+        // 포스트
         post.put("post", postDTO);
         int boardnum = postDTO.getBoardnum();
-        //post.put("likecount", likeService.countLike(boardnum, num));
-
+        // 좋아요
+        post.put("existLike", likeService.existLike(boardnum, num, uid));
+        // 댓글, 대댓글
         List<CmntDTO> cmntList = cmntService.getCmntList(boardnum, num, 0);
         List<List<CmntDTO>> cmnt2List = new ArrayList<>();
         for(int i = 0; i<cmntList.size();i++){
@@ -120,6 +126,7 @@ public class BoardController {
     // QnA 게시판
     @ApiOperation(value = "QnA 답변 작성", notes = "QnA 답변 작성")
     @PostMapping(value ="/answer/{postId}")
+    @Secured({"ROLE_ADMIN"})
     public CmntEntity answer(@PathVariable("postId") int num, @RequestBody @Validated CmntDTO cmntDTO){
         PostDTO questionDTO = boardService.getPost(num);
         questionDTO.setIsanswered(true);
@@ -170,11 +177,16 @@ public class BoardController {
         posts.put("cntPosts", boardService.cntSearchUidAndTitleOrContent(boardname, uid, search));
         return posts;
     }
-    // 메인 - 인기글
-    @ApiOperation(value = "인기글", notes = "인기글")
+    // 메인 - 인기글 - 조회수
+    @ApiOperation(value = "인기글 - 조회수", notes = "인기글 - 조회수")
     @GetMapping("/main/{boardname}")
-    public List findPopularPosts(@PathVariable String boardname){
-        return boardService.findPopularPosts(boardname);
+    public List findReadcountPosts(@PathVariable String boardname){
+        return boardService.findReadcountPosts(boardname);
+    }
+    @ApiOperation(value = "인기글 - 좋아요", notes = "인기글 - 좋아요")
+    @GetMapping("/main/{boardname}")
+    public List findLikecountPosts(@PathVariable String boardname){
+        return boardService.findLikecountPosts(boardname);
     }
     // 댓글
     @ApiOperation(value = "댓글 등록", notes = "댓글 등록")
@@ -221,5 +233,28 @@ public class BoardController {
         } else {
             return deleteCmnt(delCmntDTO.getNum());
         }
+    }
+    // 좋아요
+    @ApiOperation(value = "좋아요 생성 및 삭제", notes = "좋아요 생성 및 삭제")
+    @PostMapping(value ="/like/{postId}")
+    public String like(@PathVariable("postId") int num, @RequestBody @Validated LikeDTO likeDTO){
+        // 일단 테스트 용으로
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String authId = auth.getName();
+        PostDTO postDTO = boardService.getPost(num);
+        int boardnum = postDTO.getBoardnum();
+        if (!likeService.existLike(boardnum, num, authId)){
+            likeDTO.setBoardnum(boardnum);
+            likeDTO.setPostnum(num);
+            likeDTO.setUid(authId);
+            likeService.saveLike(likeDTO);
+            postDTO.setLikecount(postDTO.getLikecount()+1);
+            boardService.savePost(postDTO);
+        }else{
+            likeService.deleteLike(likeService.findLikeNum(boardnum,num,authId));
+            postDTO.setLikecount(postDTO.getLikecount()-1);
+            boardService.savePost(postDTO);
+        }
+        return "like ok!";
     }
 }

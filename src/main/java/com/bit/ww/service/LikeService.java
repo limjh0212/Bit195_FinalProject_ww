@@ -20,8 +20,8 @@ public class LikeService {
 
     // 게시물 마다의 좋아요 수
     @Transactional
-    public boolean existLike(int boardnum, int postnum, String userid){
-        return likeRepository.existsByBoardnumAndPostnumAndUserid(boardnum, postnum, userid);
+    public boolean existLike(int boardnum, int postnum, String uid){
+        return likeRepository.existsByBoardnumAndPostnumAndUid(boardnum, postnum, uid);
     }
     @Transactional
     public int saveLike(LikeDTO likeDTO){
@@ -34,22 +34,18 @@ public class LikeService {
     }
 
     @Transactional
-    public int countLike(int boardnum, int postnum){
-        return likeRepository.countAllByBoardnumAndPostnum(boardnum, postnum);
-    }
-
-    @Transactional
     public int findLikeNum(int boardnum, int postnum, String userid){
-        Optional<LikeEntity> likeEntityWrapper = likeRepository.findByBoardnumAndPostnumAndUserid(boardnum, postnum, userid);
+        Optional<LikeEntity> likeEntityWrapper = likeRepository.findByBoardnumAndPostnumAndUid(boardnum, postnum, userid);
         LikeEntity likeEntity = likeEntityWrapper.get();
 
         LikeDTO likeDTO = LikeDTO.builder()
                 .num(likeEntity.getNum())
                 .boardnum(likeEntity.getBoardnum())
                 .postnum(likeEntity.getPostnum())
-                .userid(likeEntity.getUserid())
+                .uid(likeEntity.getUid())
                 .build();
 
         return likeDTO.getNum();
     }
+
 }
