@@ -1,4 +1,5 @@
 <template>
+
     <table>
         <thead>
             <tr>
@@ -16,8 +17,6 @@
         </tbody>
     </table>
 </template>
-
-
 <script>
 import {fetchMemberList} from "@/api/member";
 import LoadingSpinner from "@/components/common/LoadingSpinner";

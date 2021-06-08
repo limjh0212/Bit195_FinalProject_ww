@@ -184,7 +184,7 @@ public class BoardController {
         return boardService.findReadcountPosts(boardname);
     }
     @ApiOperation(value = "인기글 - 좋아요", notes = "인기글 - 좋아요")
-    @GetMapping("/main/{boardname}")
+    @GetMapping("/main/{test}")
     public List findLikecountPosts(@PathVariable String boardname){
         return boardService.findLikecountPosts(boardname);
     }
@@ -237,7 +237,7 @@ public class BoardController {
     // 좋아요
     @ApiOperation(value = "좋아요 생성 및 삭제", notes = "좋아요 생성 및 삭제")
     @PostMapping(value ="/like/{postId}")
-    public String like(@PathVariable("postId") int num, @RequestBody @Validated LikeDTO likeDTO){
+    public String like(@PathVariable("postId") int num, String id, @RequestBody @Validated LikeDTO likeDTO){
         // 일단 테스트 용으로
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String authId = auth.getName();

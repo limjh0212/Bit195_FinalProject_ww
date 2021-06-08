@@ -35,36 +35,15 @@ export const router = new VueRouter({
             component: () => import('@/view/post/WritePage'),
         },
         {
-            //게시글 조회
-            path     : '/board/:boardname',
+            //게시글 목록조회
+            path     : '/list/:boardname',
             component: () => import('@/view/post/ListPage'),
-
+        },
+        {
+            //게시글 상세조회
+            path     : '/post/:boardname/:postnum',
+            component: () => import('@/view/post/PostPage'),
         },
 
-        // },
-        // // Member 조회
-        // {
-        //     path     : '/member',
-        //     component: () => import('@/view/member/MemberPage'),
-        // },
-        // // FreeBoard 게시글 조회
-        // {
-        //     path     : '/board',
-        //     component: () => import('@/view/post/FreeBoardPage'),
-        // },
-        // // FreeBoard 게시글 작성
-        // {
-        //     path     : '/post',
-        //     component: () => import('@/view/post/FreeBoardPost'),
-        // },
-        // // Member 로그인
-        // {
-        //     path     : '/login',
-        //     component: () => import('@/view/member/LoginPage'),
-        // },
-        // // Member 회원가입
-        // {
-        //     path     : '/signup',
-        //     component: () => import('@/view/member/SignupPage'),
     ]
 });
