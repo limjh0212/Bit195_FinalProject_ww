@@ -40,4 +40,5 @@ public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     int countAllByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContaining(String boardname, String uid, String title, String content);
     // 인기글 찾기
     List<PostEntity> findByBoardnameOrderByReadcountDesc(String boardname);
+    List<PostEntity> findByBoardnameOrderByLikecountDesc(String boardname);
 }

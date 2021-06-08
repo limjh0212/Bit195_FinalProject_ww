@@ -92,7 +92,6 @@ public class BoardController {
         post.put("post", postDTO);
         int boardnum = postDTO.getBoardnum();
         // 좋아요
-        post.put("likecount", likeService.countLike(boardnum, num));
         post.put("existLike", likeService.existLike(boardnum, num, uid));
         // 댓글, 대댓글
         List<CmntDTO> cmntList = cmntService.getCmntList(boardnum, num, 0);
@@ -181,8 +180,13 @@ public class BoardController {
     // 메인 - 인기글 - 조회수
     @ApiOperation(value = "인기글 - 조회수", notes = "인기글 - 조회수")
     @GetMapping("/main/{boardname}")
-    public List findPopularPosts(@PathVariable String boardname){
-        return boardService.findPopularPosts(boardname);
+    public List findReadcountPosts(@PathVariable String boardname){
+        return boardService.findReadcountPosts(boardname);
+    }
+    @ApiOperation(value = "인기글 - 좋아요", notes = "인기글 - 좋아요")
+    @GetMapping("/main/{boardname}")
+    public List findLikecountPosts(@PathVariable String boardname){
+        return boardService.findLikecountPosts(boardname);
     }
     // 댓글
     @ApiOperation(value = "댓글 등록", notes = "댓글 등록")

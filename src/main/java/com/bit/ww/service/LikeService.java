@@ -34,11 +34,6 @@ public class LikeService {
     }
 
     @Transactional
-    public int countLike(int boardnum, int postnum){
-        return likeRepository.countAllByBoardnumAndPostnum(boardnum, postnum);
-    }
-
-    @Transactional
     public int findLikeNum(int boardnum, int postnum, String userid){
         Optional<LikeEntity> likeEntityWrapper = likeRepository.findByBoardnumAndPostnumAndUid(boardnum, postnum, userid);
         LikeEntity likeEntity = likeEntityWrapper.get();

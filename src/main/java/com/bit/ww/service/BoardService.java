@@ -295,8 +295,37 @@ public class BoardService {
     }
     // 인기글
     @Transactional
-    public List<PostDTO> findPopularPosts(String boardname){
+    public List<PostDTO> findReadcountPosts(String boardname){
         List<PostEntity> postEntities = postRepository.findByBoardnameOrderByReadcountDesc(boardname);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            PostDTO postDTO = PostDTO.builder()
+                    .num(postEntity.getNum())
+                    .boardname(postEntity.getBoardname())
+                    .boardnum(postEntity.getBoardnum())
+                    .postnum(postEntity.getPostnum())
+                    .uid(postEntity.getUid())
+                    .writer(postEntity.getWriter())
+                    .title(postEntity.getTitle())
+                    .content(postEntity.getContent())
+                    .img(postEntity.getImg())
+                    .readcount(postEntity.getReadcount())
+                    .likecount(postEntity.getLikecount())
+                    .isanswered(postEntity.isIsanswered())
+                    .istemp(postEntity.isIstemp())
+                    .tempnum(postEntity.getTempnum())
+                    .regdate(postEntity.getRegdate())
+                    .editdate(postEntity.getEditdate())
+                    .build();
+
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public List<PostDTO> findLikecountPosts(String boardname){
+        List<PostEntity> postEntities = postRepository.findByBoardnameOrderByLikecountDesc(boardname);
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
