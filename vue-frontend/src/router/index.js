@@ -27,6 +27,11 @@ export const router = new VueRouter({
             path     : '/member',
             component: () => import('@/view/member/MemberList'),
         },
+        {
+            //회원 상세조회
+            path     : '/member/:id',
+            component: () => import('@/view/member/MemberList'),
+        },
 
 
         {

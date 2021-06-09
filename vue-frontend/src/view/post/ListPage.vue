@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="this.$route.params.boardname === 'freeboard'">
+        <div v-if="this.$route.params.boardname === 'freeBoard'">
             <ListForm></ListForm>
         </div>
         <div v-if="this.$route.params.boardname === 'OOTD'">

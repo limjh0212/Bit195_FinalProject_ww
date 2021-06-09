@@ -12,10 +12,11 @@
             <tbody>
                 <tr v-for="(item, idx) in items" :key="idx">
                     <td>{{ item.postnum }}</td>
-                    <td><a :href="`/post/freeboard/${item.postnum}`">{{ item.title }}</a></td>
+                    <td><a :href="`/post/freeBoard/${item.num}`">{{ item.title }}</a></td>
                     <td>{{ item.writer }}</td>
-                    <td v-if="$moment(item.regdate).format('YYYY-MM-DD')===$moment().format('YYYY-MM-DD')">
-                        {{ $moment(item.regdate).format('HH:mm:ss') }}</td>
+                    <td v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')">
+                        {{ $moment(item.regdate).format('HH:mm:ss') }}
+                    </td>
                     <td v-else>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
                 </tr>
             </tbody>
@@ -27,6 +28,7 @@
 <script>
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {freeboardList} from "@/api/post";
+
 
 export default {
     components: {LoadingSpinner},
