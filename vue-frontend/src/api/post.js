@@ -5,6 +5,11 @@ export function savePost(postData) {
     return api.post('/api/cmnty/post', postData)
 }
 
+//게시글 수정
+export function updatePost(postId, postData) {
+    return api.patch(`/api/cmnty/post/${postId}`, postData)
+}
+
 //자유게시판 목록 조회
 export function freeboardList() {
     return api.get('/api/cmnty/freeBoard/posts')
@@ -20,6 +25,7 @@ export function qnaList() {
     return api.get('/api/cmnty/qna/posts')
 }
 
+//게시글 상세 조회
 export function freeBoardView(postId, uid) {
     return api.get(`/api/cmnty/post/${postId}?uid=${uid}`);
 }

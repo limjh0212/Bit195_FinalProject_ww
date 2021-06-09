@@ -1,7 +1,8 @@
 <template>
     <div>
         <form @submit.prevent="save">
-            <el-tiptap :extensions="extensions" :content="content" v-model="content" :width="700"
+            <el-tiptap :extensions="extensions" class="editor__content" :content="content" v-model="content"
+                       :width="700"
                        height="100%" placeholder="Write something ..."/>
             <button type="submit">저장</button>
         </form>
@@ -67,3 +68,4 @@ export default {
     }
 };
 </script>
+<style ></style>
