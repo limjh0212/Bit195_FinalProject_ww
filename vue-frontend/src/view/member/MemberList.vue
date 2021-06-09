@@ -1,16 +1,22 @@
 <template>
-    <div class="memberList">
-        <h1>Member List</h1>
 
-        <LoadingSpinner v-if="isLoading"></LoadingSpinner>
+    <table>
+        <thead>
+            <tr>
+                <th class="text-left">
+                    Name
+                </th>
 
-
-        <p class="post" v-for="(item, idx) in members" v-bind:key="idx">
-            <a v-bind:href="`member/${item.id}`">
-                {{ item.id }}</a></p>
-    </div>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in members" :key="item.id">
+                <td>{{ item.id }}</td>
+                <!--                    <td>{{ item.calories }}</td>-->
+            </tr>
+        </tbody>
+    </table>
 </template>
-
 <script>
 import {fetchMemberList} from "@/api/member";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
