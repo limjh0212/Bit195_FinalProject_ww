@@ -7,13 +7,13 @@
             |
             <span v-if="isAdmin">
             <router-link class="toolbar" to="/member">회원 조회</router-link> | </span>
-            <router-link class="toolbar" to="/list/freeboard">자유게시판 조회</router-link>
+            <router-link class="toolbar" to="/list/freeBoard">자유게시판 조회</router-link>
             |
             <router-link class="toolbar" to="/list/OOTD">OOTD 조회</router-link>
             |
             <router-link class="toolbar" to="/list/qna">Q&A 조회</router-link>
             |
-            <router-link class="toolbar" to="/post/freeboard">자유게시판 작성</router-link>
+            <router-link class="toolbar" to="/post/freeBoard">자유게시판 작성</router-link>
             |
             <router-link class="toolbar" to="/post/OOTD">OOTD 작성</router-link>
             |

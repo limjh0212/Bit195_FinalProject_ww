@@ -9,5 +9,6 @@ import Vue from "vue";
 // use ElementUI's plugin
 Vue.use(ElementUI);
 // use this package's plugin
-export const Editor = Vue.use(ElementTiptapPlugin, { /* plugin options */ });
+export const Editor = Vue.use(ElementTiptapPlugin, {
+     /* plugin options */ });
 // Now you register `'el-tiptap'` component globally.
