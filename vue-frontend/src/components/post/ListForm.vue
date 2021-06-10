@@ -41,7 +41,7 @@ export default {
     methods: {
         async fetchData() {
             this.isLoading = true;
-            const {data} = await freeboardList();
+            const {data} = await freeboardList(1);
             this.isLoading = false;
             this.items = data.posts;
         },

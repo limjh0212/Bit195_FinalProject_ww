@@ -18,7 +18,7 @@
     </table>
 </template>
 <script>
-import {fetchMemberList} from "@/api/member";
+import {fetchMemberList} from "@/api/admin";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default {

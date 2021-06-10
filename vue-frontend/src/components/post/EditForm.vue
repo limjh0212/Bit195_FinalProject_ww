@@ -4,9 +4,7 @@
         <form v-if="isEdit===false">
             <h1>{{ this.title }}</h1>
             <el-tiptap :extensions="extensions" class="editor__content" :readonly="true" :charCounterCount="false"
-                       :spellcheck="false" :tooltip="false"
-                       :showMenubar="false"
-                       :content="content" v-model="content"
+                       v-model="content" :content="content" :showMenubar="false" :spellcheck="false" :tooltip="false"
                        :width="700" height="100%" placeholder="Write something ..."/>
         </form>
 
@@ -14,20 +12,19 @@
         <form v-else>
             <h1 v-text="post.title"></h1>
             <el-tiptap :extensions="extensions" class="editor__content" :spellcheck="false" :content="content"
-                       v-model="content"
-                       :width="700"
+                       v-model="content" :width="700"
                        height="100%" placeholder="Write something ..."/>
         </form>
 
         <!--수정 Btn-->
         <div v-if="isEdit===false">
-            <button v-if="post.uid===checkNicname" @click="doEdit">수정</button>
+            <button v-if="post.uid===checkUid" @click="doEdit">수정</button>
         </div>
 
         <!--저장/취소 Btn-->
         <div v-if="isEdit===true">
-            <button v-if="post.uid===checkNicname" @click="update">저장</button>
-            <button v-if="post.uid===checkNicname" @click="goBack">취소</button>
+            <button v-if="post.uid===checkUid" @click="update">저장</button>
+            <button v-if="post.uid===checkUid" @click="goBack">취소</button>
         </div>
 
         <!--댓글-->
@@ -61,7 +58,7 @@ import "codemirror/lib/codemirror.css"; // import base style
 import "codemirror/mode/xml/xml.js"; // language
 import "codemirror/addon/selection/active-line.js"; // require active-line.js
 import "codemirror/addon/edit/closetag.js";
-import {freeBoardView, savePost, updatePost} from "@/api/post";
+import {freeBoardView, updatePost} from "@/api/post";
 
 
 export default {
@@ -123,7 +120,7 @@ export default {
         }
     },
     computed: {
-        checkNicname() {
+        checkUid() {
             return this.$store.state.id;
         }
     }

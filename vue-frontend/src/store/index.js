@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
     plugins  : [createPersistedState({
         storage : {
             getItem: key => Cookies.get(key),
-            setItem: (key, value) => Cookies.set(key, value, { expires: 3, secure: true }),
+            setItem: (key, value) => Cookies.set(key, value, { expires: 1, secure: true }),
             removeItem: key => Cookies.remove(key)
         }
     })],
@@ -22,7 +22,10 @@ export const store = new Vuex.Store({
     },
     getters  : {
         isLogin(state) {
-            return state.username !== '';
+            return state.id !== '';
+        },
+        isAdmin(state) {
+            return state.role === 'ROLE_ADMIN';
         },
     },
     mutations: {
@@ -40,7 +43,7 @@ export const store = new Vuex.Store({
         },
     },
     actions  : {
-        //로그인
+        //로그인 정보 저장
         async LOGIN({commit}, userData) {
             const {data} = await loginUser(userData);
             commit('setUserData', data);

@@ -16,7 +16,7 @@ import java.util.Optional;
 public class CmntService {
     private final CmntRepository cmntRepository;
 
-    public CmntDTO convertEntityToDTO(CmntEntity cmntEntity){
+    public CmntDTO convertEntityToDTO(CmntEntity cmntEntity) {
         return CmntDTO.builder()
                 .num(cmntEntity.getNum())
                 .boardnum(cmntEntity.getBoardnum())
@@ -29,9 +29,10 @@ public class CmntService {
                 .editdate(cmntEntity.getEditdate())
                 .build();
     }
+
     @Transactional
     public List<CmntDTO> getCmntList(int boardnum, int postnum, int depth) {
-        List<CmntEntity> cmntEntities = cmntRepository.findAllByBoardnumAndPostnumAndDepthOrderByNumAsc(boardnum,postnum,depth);
+        List<CmntEntity> cmntEntities = cmntRepository.findAllByBoardnumAndPostnumAndDepthOrderByNumAsc(boardnum, postnum, depth);
         List<CmntDTO> cmntDTOList = new ArrayList<>();
 
         for (CmntEntity cmntEntity : cmntEntities) {
@@ -42,7 +43,7 @@ public class CmntService {
 
     @Transactional
     public List<CmntDTO> getCmnt2List(int boardnum, int postnum, int cmntnum, int depth) {
-        List<CmntEntity> cmntEntities = cmntRepository.findAllByBoardnumAndPostnumAndCmntnumAndDepthOrderByNumAsc(boardnum,postnum,cmntnum,depth);
+        List<CmntEntity> cmntEntities = cmntRepository.findAllByBoardnumAndPostnumAndCmntnumAndDepthOrderByNumAsc(boardnum, postnum, cmntnum, depth);
         List<CmntDTO> cmntDTOList = new ArrayList<>();
 
         for (CmntEntity cmntEntity : cmntEntities) {
@@ -50,20 +51,22 @@ public class CmntService {
         }
         return cmntDTOList;
     }
+
     @Transactional
-    public CmntEntity saveCmnt(CmntDTO cmntDTO){
+    public CmntEntity saveCmnt(CmntDTO cmntDTO) {
         return cmntRepository.save(cmntDTO.toEntity());
     }
 
     @Transactional
-    public void deleteCmnt(int num){
+    public void deleteCmnt(int num) {
         cmntRepository.deleteById(num);
     }
 
     @Transactional
-    public boolean existCmnt2(int cmntnum){
+    public boolean existCmnt2(int cmntnum) {
         return cmntRepository.existsByCmntnum(cmntnum);
     }
+
     @Transactional
     public List<CmntDTO> getMyCmntList(String writer) {
         List<CmntEntity> cmntEntities = cmntRepository.findAllByWriterOrderByNumDesc(writer);

@@ -5,8 +5,7 @@
         <router-link class="toolbar" to="/main">Main</router-link>
         </span>
             |
-            <span v-if="isAdmin">
-            <router-link class="toolbar" to="/member">회원 조회</router-link> | </span>
+            <span v-if="isAdmin"><router-link class="toolbar" to="/admin">관리자 페이지</router-link> |</span>
             <router-link class="toolbar" to="/list/freeBoard">자유게시판 조회</router-link>
             |
             <router-link class="toolbar" to="/list/OOTD">OOTD 조회</router-link>
@@ -35,7 +34,7 @@ export default {
             return this.$store.getters.isLogin;
         },
         isAdmin() {
-            return this.$store.state.role === "ROLE_ADMIN";
+            return this.$store.getters.isAdmin;
         }
     },
     methods : {

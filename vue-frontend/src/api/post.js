@@ -11,8 +11,8 @@ export function updatePost(postId, postData) {
 }
 
 //자유게시판 목록 조회
-export function freeboardList() {
-    return api.get('/api/cmnty/freeBoard/posts')
+export function freeboardList(page) {
+    return api.get(`/api/cmnty/freeBoard/posts?page=${page}`)
 }
 
 //OOTD 목록 조회
