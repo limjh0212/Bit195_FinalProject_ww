@@ -13,6 +13,11 @@ export const router = new VueRouter({
                 component: () => import('@/view/WelcomeView'),
             },
             {
+                //MainPage
+                path     : '/weather',
+                component: () => import('@/view/weather/WeatherPage'),
+            },
+            {
                 //로그인
                 path     : '/login',
                 component: () => import('@/view/member/LoginPage'),

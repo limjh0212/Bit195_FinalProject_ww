@@ -4,16 +4,14 @@
         <router-link to="/login">Log in</router-link>
         |
         <router-link to="/Signup">Sign up</router-link>
-      <MainForm></MainForm>
+
     </div>
 </template>
 
 <script>
-import MainForm from "@/components/MainForm";
 
 export default {
-    name: "WelcomeView",
-    components: {MainForm},
+    components: {},
     methods:{
     },
 }

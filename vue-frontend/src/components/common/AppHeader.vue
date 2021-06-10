@@ -2,7 +2,7 @@
     <div>
         <div>
         <span>
-        <router-link class="toolbar" to="/main">Main</router-link>
+        <router-link class="toolbar" to="/weather">Weather</router-link>
         </span>
             |
             <span v-if="isAdmin"><router-link class="toolbar" to="/admin">관리자 페이지</router-link> |</span>
