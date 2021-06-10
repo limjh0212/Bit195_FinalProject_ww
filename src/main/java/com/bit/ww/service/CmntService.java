@@ -14,51 +14,41 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class CmntService {
-    private CmntRepository cmntRepository;
+    private final CmntRepository cmntRepository;
+
+    public CmntDTO convertEntityToDTO(CmntEntity cmntEntity){
+        return CmntDTO.builder()
+                .num(cmntEntity.getNum())
+                .boardnum(cmntEntity.getBoardnum())
+                .postnum(cmntEntity.getPostnum())
+                .cmntnum(cmntEntity.getCmntnum())
+                .depth(cmntEntity.getDepth())
+                .writer(cmntEntity.getWriter())
+                .content(cmntEntity.getContent())
+                .regdate(cmntEntity.getRegdate())
+                .editdate(cmntEntity.getEditdate())
+                .build();
+    }
     @Transactional
     public List<CmntDTO> getCmntList(int boardnum, int postnum, int depth) {
         List<CmntEntity> cmntEntities = cmntRepository.findAllByBoardnumAndPostnumAndDepthOrderByNumAsc(boardnum,postnum,depth);
         List<CmntDTO> cmntDTOList = new ArrayList<>();
 
         for (CmntEntity cmntEntity : cmntEntities) {
-            CmntDTO cmntDTO = CmntDTO.builder()
-                    .num(cmntEntity.getNum())
-                    .boardnum(cmntEntity.getBoardnum())
-                    .postnum(cmntEntity.getPostnum())
-                    .cmntnum(cmntEntity.getCmntnum())
-                    .depth(cmntEntity.getDepth())
-                    .writer(cmntEntity.getWriter())
-                    .content(cmntEntity.getContent())
-                    .regdate(cmntEntity.getRegdate())
-                    .editdate(cmntEntity.getEditdate())
-                    .build();
-
-            cmntDTOList.add(cmntDTO);
+            cmntDTOList.add(this.convertEntityToDTO(cmntEntity));
         }
         return cmntDTOList;
     }
 
     @Transactional
     public List<CmntDTO> getCmnt2List(int boardnum, int postnum, int cmntnum, int depth) {
-        List<CmntEntity> cmnt2Entities = cmntRepository.findAllByBoardnumAndPostnumAndCmntnumAndDepthOrderByNumAsc(boardnum,postnum,cmntnum,depth);
-        List<CmntDTO> cmnt2DTOList = new ArrayList<>();
+        List<CmntEntity> cmntEntities = cmntRepository.findAllByBoardnumAndPostnumAndCmntnumAndDepthOrderByNumAsc(boardnum,postnum,cmntnum,depth);
+        List<CmntDTO> cmntDTOList = new ArrayList<>();
 
-        for (CmntEntity cmnt2Entity : cmnt2Entities) {
-            CmntDTO cmnt2DTO = CmntDTO.builder()
-                    .num(cmnt2Entity.getNum())
-                    .boardnum(cmnt2Entity.getBoardnum())
-                    .postnum(cmnt2Entity.getPostnum())
-                    .cmntnum(cmnt2Entity.getCmntnum())
-                    .depth(cmnt2Entity.getDepth())
-                    .writer(cmnt2Entity.getWriter())
-                    .content(cmnt2Entity.getContent())
-                    .regdate(cmnt2Entity.getRegdate())
-                    .editdate(cmnt2Entity.getEditdate())
-                    .build();
-
-            cmnt2DTOList.add(cmnt2DTO);
+        for (CmntEntity cmntEntity : cmntEntities) {
+            cmntDTOList.add(this.convertEntityToDTO(cmntEntity));
         }
-        return cmnt2DTOList;
+        return cmntDTOList;
     }
     @Transactional
     public CmntEntity saveCmnt(CmntDTO cmntDTO){
@@ -80,19 +70,7 @@ public class CmntService {
         List<CmntDTO> cmntDTOList = new ArrayList<>();
 
         for (CmntEntity cmntEntity : cmntEntities) {
-            CmntDTO cmntDTO = CmntDTO.builder()
-                    .num(cmntEntity.getNum())
-                    .boardnum(cmntEntity.getBoardnum())
-                    .postnum(cmntEntity.getPostnum())
-                    .cmntnum(cmntEntity.getCmntnum())
-                    .depth(cmntEntity.getDepth())
-                    .writer(cmntEntity.getWriter())
-                    .content(cmntEntity.getContent())
-                    .regdate(cmntEntity.getRegdate())
-                    .editdate(cmntEntity.getEditdate())
-                    .build();
-
-            cmntDTOList.add(cmntDTO);
+            cmntDTOList.add(this.convertEntityToDTO(cmntEntity));
         }
         return cmntDTOList;
     }
@@ -101,18 +79,6 @@ public class CmntService {
         Optional<CmntEntity> cmntEntityWrapper = cmntRepository.findByBoardnumAndPostnum(boardnum, postnum);
         CmntEntity cmntEntity = cmntEntityWrapper.get();
 
-        CmntDTO cmntDTO = CmntDTO.builder()
-                .num(cmntEntity.getNum())
-                .boardnum(cmntEntity.getBoardnum())
-                .postnum(cmntEntity.getPostnum())
-                .cmntnum(cmntEntity.getCmntnum())
-                .depth(cmntEntity.getDepth())
-                .writer(cmntEntity.getWriter())
-                .content(cmntEntity.getContent())
-                .regdate(cmntEntity.getRegdate())
-                .editdate(cmntEntity.getEditdate())
-                .build();
-
-        return cmntDTO;
+        return convertEntityToDTO(cmntEntity);
     }
 }

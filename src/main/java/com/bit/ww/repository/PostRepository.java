@@ -1,6 +1,8 @@
 package com.bit.ww.repository;
 
 import com.bit.ww.entity.PostEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -8,7 +10,7 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     // 게시판 이름으로 게시물 목록 찾기
-    List<PostEntity> findByBoardnameOrderByNumDesc(String boardname);
+    Page<PostEntity> findAllByBoardname(String boardname, Pageable pageable);
     int countAllByBoardname(String boardname);
     // 각 게시판 별 제목 검색
     List<PostEntity> findByTitleIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(String title, String boardname);

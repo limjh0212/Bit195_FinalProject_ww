@@ -8,6 +8,9 @@ import com.bit.ww.repository.BoardRepository;
 import com.bit.ww.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,61 +25,23 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final PostRepository postRepository;
+    // 페이징
+    private static final int CNTPAGENUM = 5; // 화면에서 보이는 페이지 번호 개수
+    private static final int CNTPAGEPOST = 10; // 한 페이지에서 보이는 게시글 개수
 
     // 게시판 이름으로 게시판 조회
     @Transactional
     public BoardDTO findBoard(String boardname){
         Optional<BoardEntity> boardEntityWrapper = boardRepository.findByBoardname(boardname);
         BoardEntity boardEntity = boardEntityWrapper.get();
-        BoardDTO boardDTO= BoardDTO.builder()
+        return BoardDTO.builder()
                 .boardnum(boardEntity.getBoardnum())
                 .boardname(boardEntity.getBoardname())
                 .lastnum(boardEntity.getLastnum())
                 .build();
-        return boardDTO;
     }
-
-    // 게시판 이름으로 게시물 리스트 조회
-    @Transactional
-    public List<PostDTO> findPosts(String boardname){
-        List<PostEntity> postEntities = postRepository.findByBoardnameOrderByNumDesc(boardname);
-        List<PostDTO> postDTOList = new ArrayList<>();
-
-        for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
-        }
-        return postDTOList;
-    }
-    @Transactional
-    public int cntPosts(String boardname){
-        return postRepository.countAllByBoardname(boardname);
-    }
-    // 게시물 단건 조회
-    @Transactional
-    public PostDTO getPost(int num){
-        Optional<PostEntity> postEntityWrapper = postRepository.findById(num);
-        PostEntity postEntity = postEntityWrapper.get();
-
-        PostDTO postDTO = PostDTO.builder()
+    public PostDTO convertEntityToDTO(PostEntity postEntity){
+        return PostDTO.builder()
                 .num(postEntity.getNum())
                 .boardname(postEntity.getBoardname())
                 .boardnum(postEntity.getBoardnum())
@@ -94,7 +59,53 @@ public class BoardService {
                 .regdate(postEntity.getRegdate())
                 .editdate(postEntity.getEditdate())
                 .build();
-        return postDTO;
+    }
+    // 게시판 이름으로 게시물 리스트 조회 + 페이징
+    @Transactional
+    public List<PostDTO> findPosts(String boardname, int pagenum){
+        Page<PostEntity> pagePosts = postRepository.findAllByBoardname(boardname, PageRequest.of(pagenum-1, CNTPAGEPOST, Sort.by(Sort.Direction.DESC, "num")));
+        List<PostEntity> postEntities = pagePosts.getContent();
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            postDTOList.add(this.convertEntityToDTO(postEntity));
+        }
+        return postDTOList;
+    }
+    @Transactional
+    public Integer[] findPageList(String boardname, int pagenum){ // pagenum = 현재페이지
+        Integer[] pageList = new Integer[CNTPAGENUM];
+        // 총 게시글 수
+        Double cntPosts = (double) this.cntPosts(boardname);
+        // 총 게시글 수 기준 마지막 페이지 번호 계산 (올림)
+        int lastPagenum = (int)(Math.ceil((cntPosts/CNTPAGEPOST)));
+        // 현재 페이지 기준으로 화면에서 보이는 마지막 페이지 번호 계산
+        int lastCntPagenum = (lastPagenum > pagenum + CNTPAGENUM)
+                ? pagenum + CNTPAGENUM
+                : lastPagenum;
+        // 페이지 시작 번호 조정
+        if (!(lastPagenum > CNTPAGENUM)){
+            pagenum = 1;
+        }else{
+            pagenum = (pagenum<=3) ?1 : pagenum-2;
+        }
+        // 페이지 번호 할당
+        for(int value = pagenum, i=0; value<=lastCntPagenum; value++, i++){
+            pageList[i] = value;
+        }
+        return pageList;
+    }
+    @Transactional
+    public int cntPosts(String boardname){
+        return postRepository.countAllByBoardname(boardname);
+    }
+    // 게시물 단건 조회
+    @Transactional
+    public PostDTO getPost(int num){
+        Optional<PostEntity> postEntityWrapper = postRepository.findById(num);
+        PostEntity postEntity = postEntityWrapper.get();
+
+        return convertEntityToDTO(postEntity);
     }
     // 게시물 등록 - 게시물 등록 시 해당 게시판의 마지막 번호에 +1
     @Transactional
@@ -130,26 +141,7 @@ public class BoardService {
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
+            postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
     }
@@ -164,26 +156,7 @@ public class BoardService {
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
+            postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
     }
@@ -198,26 +171,7 @@ public class BoardService {
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
+            postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
     }
@@ -232,26 +186,7 @@ public class BoardService {
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
+            postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
     }
@@ -266,26 +201,7 @@ public class BoardService {
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
+            postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
     }
@@ -300,26 +216,7 @@ public class BoardService {
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
+            postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
     }
@@ -329,26 +226,7 @@ public class BoardService {
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
+            postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
     }
@@ -360,26 +238,7 @@ public class BoardService {
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
+            postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
     }
@@ -394,26 +253,7 @@ public class BoardService {
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
+            postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
     }
@@ -443,26 +283,7 @@ public class BoardService {
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
-            PostDTO postDTO = PostDTO.builder()
-                    .num(postEntity.getNum())
-                    .boardname(postEntity.getBoardname())
-                    .boardnum(postEntity.getBoardnum())
-                    .postnum(postEntity.getPostnum())
-                    .uid(postEntity.getUid())
-                    .writer(postEntity.getWriter())
-                    .title(postEntity.getTitle())
-                    .content(postEntity.getContent())
-                    .img(postEntity.getImg())
-                    .readcount(postEntity.getReadcount())
-                    .likecount(postEntity.getLikecount())
-                    .isanswered(postEntity.isIsanswered())
-                    .istemp(postEntity.isIstemp())
-                    .tempnum(postEntity.getTempnum())
-                    .regdate(postEntity.getRegdate())
-                    .editdate(postEntity.getEditdate())
-                    .build();
-
-            postDTOList.add(postDTO);
+            postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
     }
