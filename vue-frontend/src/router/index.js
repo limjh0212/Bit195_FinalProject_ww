@@ -49,6 +49,10 @@ export const router = new VueRouter({
             path     : '/post/:boardname/:postnum',
             component: () => import('@/view/post/PostPage'),
         },
-
+        {
+            //MainPage
+            path     : '/main',
+            component: () => import('@/view/MainPage'),
+        },
     ]
 });
