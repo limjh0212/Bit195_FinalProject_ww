@@ -35,7 +35,7 @@ export default {
                     pw: this.pw,
                 };
                 await this.$store.dispatch('LOGIN', userData);
-                await this.$router.push('/main');
+                await this.$router.push('/weather');
             } catch (error) {
                 this.logMessage = '로그인에 실패했습니다. 다시 시도해주세요.';
             } finally {
