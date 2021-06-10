@@ -18,14 +18,14 @@
             <tbody>
                 <tr>
                     <td>{{ $moment().format('YYYY-DD-MM') }}</td>
-                    <td>{{ this.weatherInfo.name }}</td>
-                    <td>{{ }}</td>
-                    <td>{{ }}</td>
-                    <td>{{ }}</td>
-                    <td>{{ }}</td>
-                    <td>{{ }}</td>
-                    <td>{{ }}</td>
-                    <td>{{ }}</td>
+                    <td>{{ this.weatherInfo['name'] }}</td>
+                    <td>{{ this.weatherInfo['weather'][0].main }}</td>
+                    <td>{{ this.weatherInfo['weather'][0].description }}</td>
+                    <td>{{ this.weatherInfo.main.temp }}</td>
+                    <td>{{ this.weatherInfo.main.temp_max }}</td>
+                    <td>{{ this.weatherInfo.main.temp_min }}</td>
+                    <td>{{ this.weatherInfo.main.humidity }}</td>
+                    <td>{{ this.weatherInfo.wind.speed }}</td>
                 </tr>
             </tbody>
         </table>
@@ -38,7 +38,7 @@ import {loadCoords, weatherData} from "@/api/weather";
 export default {
     data() {
         return {
-            weatherInfo: {},
+            weatherInfo   : {},
         }
     },
     methods: {
@@ -50,8 +50,7 @@ export default {
     },
     created() {
         this.fetchWeather();
-    }
-    ,
+    },
 }
 ;
 </script>

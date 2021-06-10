@@ -76,7 +76,15 @@ public class BoardReadController {
         posts.put("pageList", boardService.pageListSearchTitle(search, boardname, pagenum));
         return posts;
     }
-
+    @ApiOperation(value = "게시판 검색 리스트 - 제목+내용 - 페이징", notes = "게시판 글 리스트 - 제목+내용")
+    @GetMapping("/{boardname}/searchTitleOrContent/{search}")
+    public HashMap searchTitleOrContent(@PathVariable String boardname, @PathVariable String search, @RequestParam(value = "page", defaultValue = "1") int pagenum) {
+        HashMap<String, Object> posts = new HashMap<>();
+        posts.put("posts", boardService.searchTitleOrContent(search, boardname, pagenum));
+        posts.put("cntPosts", boardService.cntSearchTitleOrContent(search, boardname));
+        posts.put("pageList", boardService.pageListSearchTitleOrContent(search, boardname, pagenum));
+        return posts;
+    }
     // 각 게시판별 내글보기
     @ApiOperation(value = "내글보기", notes = "내글보기")
     @GetMapping("/{boardname}/searchUid/{uid}")
@@ -105,7 +113,7 @@ public class BoardReadController {
         return posts;
     }
 
-    // 메인 - 인기글 - 조회수
+    // 메인 - 인기글
     @ApiOperation(value = "인기글 - 조회수", notes = "인기글 - 조회수")
     @GetMapping("/main/{boardname}")
     public List findReadcountPosts(@PathVariable String boardname) {
@@ -118,12 +126,4 @@ public class BoardReadController {
         return boardService.findLikecountPosts(boardname);
     }
 
-    @ApiOperation(value = "게시판 검색 리스트 - 제목+내용", notes = "게시판 글 리스트 - 제목+내용")
-    @GetMapping("/{boardname}/searchTitleOrContent/{search}")
-    public HashMap searchTitleOrContent(@PathVariable String boardname, @PathVariable String search) {
-        HashMap<String, Object> posts = new HashMap<>();
-        posts.put("posts", boardService.searchTitleOrContent(search, boardname));
-        posts.put("cntPosts", boardService.cntSearchTitleOrContent(search, boardname));
-        return posts;
-    }
 }

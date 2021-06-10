@@ -169,16 +169,22 @@ public class BoardService {
         return postRepository.countAllByTitleIgnoreCaseIsContainingAndBoardname(search, boardname);
     }
 
-    // 제목+내용
+    // 제목+내용+ 페이징
     @Transactional
-    public List<PostDTO> searchTitleOrContent(String search, String boardname) {
-        List<PostEntity> postEntities = postRepository.findByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(search, search, boardname);
+    public List<PostDTO> searchTitleOrContent(String search, String boardname, int pagenum) {
+        Page<PostEntity> pagePosts = postRepository.findByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(search, search, boardname, PageRequest.of(pagenum - 1, CNTPAGEPOST, Sort.by(Sort.Direction.DESC, "num")));
+        List<PostEntity> postEntities = pagePosts.getContent();
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
             postDTOList.add(this.convertEntityToDTO(postEntity));
         }
         return postDTOList;
+    }
+    @Transactional
+    public Integer[] pageListSearchTitleOrContent(String search, String boardname, int pagenum) {
+        cntPosts = (double) cntSearchTitleOrContent(search, boardname);
+        return pageList(pagenum);
     }
 
     @Transactional

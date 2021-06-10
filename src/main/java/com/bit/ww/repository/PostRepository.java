@@ -16,7 +16,7 @@ public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     Page<PostEntity> findByTitleIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(String title, String boardname, Pageable pageable);
     int countAllByTitleIgnoreCaseIsContainingAndBoardname(String title, String boardname);
     // 각 게시판 별 제목+내용 검색
-    List<PostEntity> findByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(String title, String content, String boardname);
+    Page<PostEntity> findByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(String title, String content, String boardname, Pageable pageable);
     int countAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardname(String title, String content, String boardname);
     // 관리 - 작성자 검색 (Id, 닉네임)
     List<PostEntity> findByUidOrderByNumDesc(String uid);
