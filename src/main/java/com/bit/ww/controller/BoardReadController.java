@@ -36,7 +36,7 @@ public class BoardReadController {
         HashMap<String, Object> posts = new HashMap<>();
         posts.put("posts", boardService.findPosts(boardname, pagenum));
         posts.put("cntPosts", boardService.cntPosts(boardname));
-        posts.put("pageList", boardService.findPageList(boardname, pagenum));
+        posts.put("pageList", boardService.pageListFindPosts(boardname, pagenum));
         return posts;
     }
 
@@ -67,12 +67,13 @@ public class BoardReadController {
     }
 
     // 검색
-    @ApiOperation(value = "게시판 검색 리스트 - 제목", notes = "게시판 글 리스트 - 제목")
+    @ApiOperation(value = "게시판 검색 리스트 - 제목 - 페이징", notes = "게시판 글 리스트 - 제목")
     @GetMapping("/{boardname}/searchTitle/{search}")
-    public HashMap searchTitle(@PathVariable String boardname, @PathVariable String search) {
+    public HashMap searchTitle(@PathVariable String boardname, @PathVariable String search, @RequestParam(value = "page", defaultValue = "1") int pagenum) {
         HashMap<String, Object> posts = new HashMap<>();
-        posts.put("posts", boardService.searchTitle(search, boardname));
+        posts.put("posts", boardService.searchTitle(search, boardname, pagenum));
         posts.put("cntPosts", boardService.cntSearchTitle(search, boardname));
+        posts.put("pageList", boardService.pageListSearchTitle(search, boardname, pagenum));
         return posts;
     }
 

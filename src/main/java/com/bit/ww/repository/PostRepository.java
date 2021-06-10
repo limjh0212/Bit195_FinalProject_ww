@@ -13,7 +13,7 @@ public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     Page<PostEntity> findAllByBoardname(String boardname, Pageable pageable);
     int countAllByBoardname(String boardname);
     // 각 게시판 별 제목 검색
-    List<PostEntity> findByTitleIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(String title, String boardname);
+    Page<PostEntity> findByTitleIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(String title, String boardname, Pageable pageable);
     int countAllByTitleIgnoreCaseIsContainingAndBoardname(String title, String boardname);
     // 각 게시판 별 제목+내용 검색
     List<PostEntity> findByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(String title, String content, String boardname);
