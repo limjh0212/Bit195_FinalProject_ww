@@ -60,17 +60,35 @@ public class BoardService {
         // 총 게시글 수 기준 마지막 페이지 번호 계산 (올림)
         int lastPagenum = (int) (Math.ceil((cntPosts / CNTPAGEPOST)));
         // 현재 페이지 기준으로 화면에서 보이는 마지막 페이지 번호 계산
-        int lastCntPagenum = (lastPagenum > pagenum + CNTPAGENUM)
-                ? pagenum + CNTPAGENUM
-                : lastPagenum;
-        // 페이지 시작 번호 조정
-        if (!(lastPagenum > CNTPAGENUM)) {
+        int lastViewPagenum = 0;
+        if (lastPagenum <= 5){
+            lastViewPagenum = lastPagenum;
             pagenum = 1;
-        } else {
-            pagenum = (pagenum <= 3) ? 1 : pagenum - 2;
+        }else {
+            if (pagenum <=3){
+                pagenum = 1;
+                lastViewPagenum = 5;
+            }else {
+                if(pagenum+2 <= lastPagenum){
+                    lastViewPagenum = pagenum+2;
+                    pagenum = pagenum-2;
+                }else {
+                    lastViewPagenum = lastPagenum;
+                    pagenum = lastPagenum-4;
+                }
+            }
         }
-        // 페이지 번호 할당
-        for (int value = pagenum, i = 0; value <= lastCntPagenum; value++, i++) {
+        // Todo: 코드 좀더 간결하게. "0<pagenum<lastPagenum" 범위 지정해서 이외의 값은 호출 불가능하도록.
+//        int lastCntPagenum = (lastPagenum > pagenum + CNTPAGENUM) ? pagenum+CNTPAGENUM : lastPagenum;
+//        // 페이지 시작 번호 조정
+//        pagenum = (pagenum <= 3) ? 1 : pagenum-2;
+////        if (!(lastPagenum > CNTPAGENUM)) {
+////            pagenum = 1;
+////        } else {
+////            pagenum = (pagenum <= 3) ? 1 : pagenum - 2;
+////        }
+        // 페이지 번호 할당 - 보이는 페이지 수 5개 안에 들어갈 숫자 범위
+        for (int value = pagenum, i = 0; value <= lastViewPagenum; value++, i++) {
             pageList[i] = value;
         }
         return pageList;
