@@ -4,6 +4,8 @@ import {router} from "@/router";
 import {store} from "@/store";
 import {Editor} from '@/utils/editor'
 import {moment} from "@/utils/moment";
+import vuetify from "@/utils/vuetify";
+
 
 Vue.config.productionTip = false
 
@@ -13,4 +15,5 @@ new Vue({
     store,
     Editor,
     moment,
+    vuetify
 }).$mount('#app')

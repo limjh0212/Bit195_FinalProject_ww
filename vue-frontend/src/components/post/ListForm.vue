@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <table>
+    <v-simple-table style="width: 70%">
+        <template v-slot:default>
             <thead>
                 <tr>
                     <th class="text-left">No.</th>
@@ -20,9 +20,8 @@
                     <td v-else>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
                 </tr>
             </tbody>
-        </table>
-        <LoadingSpinner v-if="isLoading"></LoadingSpinner>
-    </div>
+        </template>
+    </v-simple-table>
 </template>
 
 <script>
