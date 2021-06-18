@@ -48,7 +48,8 @@ dependencies {
     implementation 'cglib:cglib:3.3.0'
 //    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 //    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-
+    // img
+    implementation 'commons-io:commons-io:2.8.0'
 }
 
 apply plugin: 'idea'

@@ -1,14 +1,14 @@
 <template>
   <div>
-      <ImgForm></ImgForm>
+      <PostImgForm></PostImgForm>
   </div>
 </template>
 
 <script>
-import ImgForm from "@/components/post/imgForm";
+import PostImgForm from "@/components/post/PostImgForm";
 
 export default {
-  components: {ImgForm}
+  components: {PostImgForm}
 }
 </script>
 

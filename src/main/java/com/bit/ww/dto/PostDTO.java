@@ -27,6 +27,14 @@ public class PostDTO {
     private LocalDateTime regdate;
     private LocalDateTime editdate;
 
+    // Todo: 사용하지 않으면 삭제 예정.
+//    public PostDTO(String boardname, String uid, String title, String content) {
+//        this.boardname = boardname;
+//        this.uid = uid;
+//        this.title = title;
+//        this.content = content;
+//    }
+
     public PostEntity toEntity() {
         return PostEntity.builder()
                 .num(this.num)
