@@ -1,29 +1,35 @@
 <template>
-    <div>
-        <div>
-        <span>
-        <router-link class="toolbar" to="/weather">Weather</router-link>
-        </span>
-            |
-            <span v-if="isAdmin"><router-link class="toolbar" to="/admin">관리자 페이지</router-link> |</span>
-            <router-link class="toolbar" to="/list/freeBoard">자유게시판 조회</router-link>
-            |
-            <router-link class="toolbar" to="/list/OOTD">OOTD 조회</router-link>
-            |
-            <router-link class="toolbar" to="/list/qna">Q&A 조회</router-link>
-            |
-            <router-link class="toolbar" to="/post/freeBoard">자유게시판 작성</router-link>
-            |
-            <router-link class="toolbar" to="/post/OOTD">OOTD 작성</router-link>
-            |
-            <router-link class="toolbar" to="/post/qna">Q&A 작성</router-link>
-            |
-            <a class="logout-button" href="javascript:;" @click="logoutUser">Logout</a>
+    <header>
+        <h1><a href="/weather" class="logo">Weather</a></h1>
+        <div class="menuWrap">
+            <ul class="menu">
+                <!--<span v-if="isUserLogin">{{ this.$store.state.id }}님 환영합니다.</span>-->
+                <li v-if="isAdmin">
+                    <router-link class="toolbar" to="/admin">관리자 페이지</router-link>
+                </li>
+                <li>
+                    <router-link class="toolbar" to="/list/freeBoard">자유게시판 조회</router-link>
+                </li>
+                <li>
+                    <router-link class="toolbar" to="/list/OOTD">OOTD 조회</router-link>
+                </li>
+                <li>
+                    <router-link class="toolbar" to="/list/qna">Q&A 조회</router-link>
+                </li>
+                <li>
+                    <router-link class="toolbar" to="/post/freeBoard">자유게시판 작성</router-link>
+                </li>
+                <li>
+                    <router-link class="toolbar" to="/post/OOTD">OOTD 작성</router-link>
+                </li>
+                <li>
+                    <router-link class="toolbar" to="/post/qna">Q&A 작성</router-link>
+                </li>
+                <li><a class="logout-button" href="javascript:;" @click="logoutUser">Logout</a></li>
+            </ul>
         </div>
-        <div>
-            <span v-if="isUserLogin">{{ this.$store.state.id }}님 환영합니다.</span>
-        </div>
-    </div>
+
+    </header>
 </template>
 
 <script>
@@ -48,5 +54,40 @@ export default {
 </script>
 
 <style scoped>
+header {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    height: 100px;
+    border-bottom: 1px solid #35495e
+}
 
+header h1 {
+    position: absolute;
+    top: 0;
+    left: 100px;
+}
+
+header ul.menu:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+header ul.menu {
+    position: absolute;
+    top: 20px;
+    right: 50px;
+}
+
+header ul.menu li {
+    float: left;
+    padding: 10px 20px;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
 </style>

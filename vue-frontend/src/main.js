@@ -6,7 +6,6 @@ import {Editor} from '@/utils/editor'
 import {moment} from "@/utils/moment";
 import vuetify from "@/utils/vuetify";
 
-
 Vue.config.productionTip = false
 
 new Vue({
@@ -15,5 +14,6 @@ new Vue({
     store,
     Editor,
     moment,
-    vuetify
+    vuetify,
+
 }).$mount('#app')

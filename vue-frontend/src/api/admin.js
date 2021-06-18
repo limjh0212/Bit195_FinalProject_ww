@@ -25,6 +25,7 @@ export function fetchQna() {
     return api.get('/api/mngmt/qna')
 }
 
+//회우너 삭제
 export function deleteId(id) {
     return api.delete(`/api/member/delete/${id}`);
 }
