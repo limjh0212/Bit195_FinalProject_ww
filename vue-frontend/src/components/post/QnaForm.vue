@@ -1,5 +1,6 @@
 <template>
     <div>
+        <SearchLocation></SearchLocation>
         <table>
             <thead>
                 <tr>
@@ -27,11 +28,12 @@
 
 <script>
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {freeboardList, qnaList} from "@/api/post";
+import {qnaList} from "@/api/post";
+import SearchLocation from "@/components/weather/SearchLocation";
 
 
 export default {
-    components: {LoadingSpinner},
+    components: {SearchLocation, LoadingSpinner},
     data() {
         return {
             items    : [],

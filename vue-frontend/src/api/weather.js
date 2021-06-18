@@ -41,3 +41,19 @@ export function loadCoords() {
     }
 }
 
+export function searchLo(keyword) {
+    return instance.get(`/api/weather/location?keyword=${keyword}`);
+}
+
+export function saveLo(userData) {
+    return instance.post('/api/weather/savelocation',userData);
+}
+
+export function userLo(userid) {
+    return instance.get(`/api/weather/userlocation?userid=${userid}`);
+}
+
+export function countLo(userid) {
+    return instance.get(`/api/weather/countlocation?userid=${userid}`);
+}
+
