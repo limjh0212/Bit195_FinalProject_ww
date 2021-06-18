@@ -1,11 +1,11 @@
 <template>
   <div>
-<!--    <p><v-img :src="this.src"></v-img></p>-->
+     <p><v-img :src="this.src"></v-img></p>
   </div>
 </template>
 
 <script>
-import {getImg, byteToSrc} from "@/api/img";
+import {getImg} from "@/api/img";
 
 export default {
   name: "GetImgForm",
@@ -17,8 +17,12 @@ export default {
   methods : {
     async fetchData(){
         const num = 1;
-        const byteArray = getImg(num);
-        const imgsrc = byteToSrc(byteArray);
+        var bytes, blob;
+        bytes = new Uint8Array(getImg(num));
+        console.log(bytes);
+        blob = new Blob([bytes],{type:'image/bmp'});
+        const imgsrc = URL.createObjectURL(blob);
+        console.log(imgsrc);
         this.src = imgsrc;
     }
   },
