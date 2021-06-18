@@ -24,3 +24,7 @@ export function fetchMember() {
 export function fetchQna() {
     return api.get('/api/mngmt/qna')
 }
+
+export function deleteId(id) {
+    return api.delete(`/api/member/delete/${id}`);
+}

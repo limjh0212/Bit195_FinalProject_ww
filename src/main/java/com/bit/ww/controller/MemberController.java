@@ -37,7 +37,7 @@ public class MemberController {
     //회원 삭제
     @ApiOperation(value = "회원 삭제", notes = "회원 삭제")
     @DeleteMapping("/delete/{id}")
-    @Secured({"ROLE_USER"})
+    @Secured({"ROLE_ADMIN"})
     public String delete(@PathVariable String id) {
         memberService.deleteById(id);
         return "delete ok!";
