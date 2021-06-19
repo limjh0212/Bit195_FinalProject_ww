@@ -1,6 +1,6 @@
 <template>
   <div>
-     <p><v-img :src="this.src"></v-img></p>
+    <img :src="src">
   </div>
 </template>
 
@@ -15,19 +15,18 @@ export default {
     }
   },
   methods : {
-    async fetchData(){
-        const num = 1;
-        var bytes, blob;
-        bytes = new Uint8Array(getImg(num));
-        console.log(bytes);
-        blob = new Blob([bytes],{type:'image/bmp'});
-        const imgsrc = URL.createObjectURL(blob);
-        console.log(imgsrc);
-        this.src = imgsrc;
-    }
+    async getImg(){
+      var base = this;
+      await getImg(1)
+          .then(function (response) {
+            let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(response.data)));
+            base.src = "data:image/png;base64,"+base64String;
+          });
+    },
+
   },
   created() {
-    this.fetchData();
+      this.getImg();
   }
 };
 </script>
