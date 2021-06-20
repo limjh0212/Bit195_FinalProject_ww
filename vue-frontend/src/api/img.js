@@ -8,3 +8,11 @@ export function saveImg(formData){
 export function getImg(num){
     return api.get(`/api/cmnty/getimg/${num}`, {responseType : "arraybuffer"});
 }
+// 이미지 + 포스트 : OOTD 저장
+export function saveOotdPost(ootdData){
+    return api.post('/api/cmnty/ootdpost', ootdData);
+}
+// 이미지 리스트 출력
+export function getImgList(num){
+    return api.get(`/api/cmnty/getimglist/${num}`);
+}

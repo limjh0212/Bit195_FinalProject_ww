@@ -4,7 +4,9 @@ import com.bit.ww.dto.ImgDTO;
 import com.bit.ww.dto.PostDTO;
 import com.bit.ww.entity.ImgEntity;
 import com.bit.ww.entity.PostEntity;
+import com.bit.ww.repository.BoardRepository;
 import com.bit.ww.repository.ImgRepository;
+import com.bit.ww.repository.MemberRepository;
 import com.bit.ww.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ import java.util.Optional;
 public class ImgService {
     private final ImgRepository imgRepository;
     private final PostRepository postRepository;
+    private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
     private final FileHandler fileHandler;
 
     public ImgDTO convertEntityToDTO(ImgEntity imgEntity) {
@@ -72,27 +76,33 @@ public class ImgService {
     @Transactional
     public PostEntity addPost(PostDTO postDTO, List<MultipartFile> files) throws Exception{
         // 파일을 저장하고 그 img에 대한 리스트를 저장
-        List<ImgDTO> list = fileHandler.parseFileInfo(files);
-        System.out.println(list);
-        if(list.isEmpty()){
-            postDTO.setImg(0);
-            System.out.println("null");
-        }else{
-            List<ImgDTO> imgBeans = new ArrayList<>();
-            for(ImgDTO imgDTO : list) {
-                ImgEntity temp = imgRepository.save(imgDTO.toEntity());
-                imgBeans.add(this.convertEntityToDTO(temp));
-                System.out.println("ok");
-            }
-            // Todo: 배열로 저장하기 보다는 각 postid에 조인?
-            int imgnum = 0;
-            for ( int i = 0; i<list.size(); i++){
-                imgnum = list.get(i).getNum();
-                System.out.println(imgnum);
-            };
-            postDTO.setImg(imgnum);
-            System.out.println(imgnum);
+        List<ImgDTO> imgList = null;
+        try {
+            imgList = fileHandler.parseFileInfo(files);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        if(!imgList.isEmpty()){
+            List<ImgDTO> beans = new ArrayList<>();
+            for(ImgDTO imgDTO : imgList){
+                imgDTO.setPostid(postDTO.getPostnum());
+                ImgEntity temp = imgRepository.save(imgDTO.toEntity());
+                beans.add(convertEntityToDTO(temp));
+            }
+        }
+        //postDTO.setBoardnum(boardRepository.findByBoardname(postDTO.getBoardname()).get().getBoardnum());
+        postDTO.setBoardnum(2);
+        postDTO.setWriter(memberRepository.findOneById(postDTO.getUid()).getNickname());
         return postRepository.save(postDTO.toEntity());
+    }
+    @Transactional
+    public List<ImgDTO> findPostImgs(int postid) {
+        List<ImgEntity> imgEntities = imgRepository.findAllByPostid(postid);
+        List<ImgDTO> imgDTOList = new ArrayList<>();
+
+        for (ImgEntity imgEntity : imgEntities) {
+            imgDTOList.add(this.convertEntityToDTO(imgEntity));
+        }
+        return imgDTOList;
     }
 }
