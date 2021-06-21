@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -69,17 +72,20 @@ public class MemberService implements UserDetailsService {
     public int cntWthdrTrue(){
         return memberRepository.countAllByIswithdrawalIsTrue();
     }
-//    // 일주일 간 일일 가입 탈퇴 수
-//    public List cntToday(){
-//        List<Object> info = new ArrayList<>();
-//        for(int i=0 ;i<8; i++){
-//            LocalDate date = LocalDate.now().minusDays(i);
-//            LocalDateTime start = LocalDateTime.of(date, LocalTime.of(0, 0, 0));
-//            LocalDateTime end = LocalDateTime.of(date, LocalTime.of(23, 59, 59));
-//            info.add(date);
-//            info.add(memberRepository.countAllByIswithdrawalIsFalseAndRegdateIsBetween(start, end));
-//            info.add(memberRepository.countAllByIswithdrawalIsTrueAndWthdrdateIsBetween(start, end));
-//        }
-//        return info;
-//    }
+    // 일주일 간 일일 가입 탈퇴 수
+    public List cntToday(){
+        List<Object> info = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+                LocalDate date = LocalDate.now().minusDays(i);
+                LocalDateTime start = LocalDateTime.of(date, LocalTime.of(0, 0, 0));
+                LocalDateTime end = LocalDateTime.of(date, LocalTime.of(23, 59, 59));
+                //idx 붙이면 날짜 순, 안붙이면 최신순
+                info.add(date);
+                info.add(memberRepository.countAllByIswithdrawalIsFalseAndRegdateIsBetween(start, end));
+                info.add(memberRepository.countAllByIswithdrawalIsTrueAndWthdrdateIsBetween(start, end));
+                System.out.println(info);
+        }
+        System.out.println(info);
+        return info;
+    }
 }

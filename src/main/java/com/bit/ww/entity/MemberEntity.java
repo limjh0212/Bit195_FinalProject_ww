@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member")
@@ -47,9 +48,11 @@ public class MemberEntity extends TimeEntity{
     @ApiModelProperty(hidden = true)
     @Column //탈퇴여부
     private boolean iswithdrawal;
-
+    @ApiModelProperty(hidden = true)
+    @Column //탈퇴일자
+    private LocalDateTime wthdrdate;
     @Builder
-    public MemberEntity(String id, String pw, String nickname, String email, String role, boolean gender, Integer age, String img, boolean iswithdrawal) {
+    public MemberEntity(String id, String pw, String nickname, String email, String role, boolean gender, Integer age, String img, boolean iswithdrawal, LocalDateTime wthdrdate) {
         this.id = id;
         this.pw = pw;
         this.nickname = nickname;
@@ -59,6 +62,7 @@ public class MemberEntity extends TimeEntity{
         this.age = age;
         this.img = img;
         this.iswithdrawal = iswithdrawal;
+        this.wthdrdate = wthdrdate;
     }
 
 }

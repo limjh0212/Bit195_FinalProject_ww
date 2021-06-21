@@ -85,8 +85,8 @@ public class BoardReadController {
         posts.put("pageList", boardService.pageListSearchTitleOrContent(search, boardname, pagenum));
         return posts;
     }
-    // 각 게시판별 내글보기
-    @ApiOperation(value = "내글보기", notes = "내글보기")
+    // 각 게시판별 내글보기 & qna 게시판 작성자 검색
+    @ApiOperation(value = "내글보기, qna 게시판 작성자 검색", notes = "내글보기, qna 게시판 작성자 검색")
     @GetMapping("/{boardname}/searchUid/{uid}")
     public HashMap searchUid(@PathVariable String boardname, @PathVariable String uid) {
         HashMap<String, Object> posts = new HashMap<>();

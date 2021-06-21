@@ -8,6 +8,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,15 @@ public class MemberController {
         member.setPw(passwordEncoder.encode((member.getPw()))); // PW 암호화
         memberService.save(member);
         return "update ok!";
+    }
+    //회원 탈퇴
+    @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
+    @PatchMapping("/wthdr")
+    public String wthdr(@RequestBody MemberEntity member) {
+        member.setIswithdrawal(true);
+        member.setWthdrdate(LocalDateTime.now());
+        memberService.save(member);
+        return "wthdr ok!";
     }
 }
 

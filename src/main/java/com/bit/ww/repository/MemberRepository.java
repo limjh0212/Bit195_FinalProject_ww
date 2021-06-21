@@ -3,6 +3,8 @@ package com.bit.ww.repository;
 import com.bit.ww.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
+
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     MemberEntity findOneById(String id);
     // 총 회원수
@@ -13,6 +15,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     int countAllByIswithdrawalIsFalse();
     int countAllByIswithdrawalIsTrue();
     // 일일 가입 탈퇴 수
-    //int countAllByIswithdrawalIsFalseAndRegdateIsBetween(LocalDateTime start,LocalDateTime end);
-    //int countAllByIswithdrawalIsTrueAndWthdrdateIsBetween(LocalDateTime start,LocalDateTime end);
+    int countAllByIswithdrawalIsFalseAndRegdateIsBetween(LocalDateTime start, LocalDateTime end);
+    int countAllByIswithdrawalIsTrueAndWthdrdateIsBetween(LocalDateTime start,LocalDateTime end);
 }

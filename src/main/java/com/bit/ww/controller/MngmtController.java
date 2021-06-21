@@ -40,7 +40,7 @@ public class MngmtController {
         infos.put("cntM40", memberService.cntGenderAndAge(true, 40, 49));
         infos.put("cntW40", memberService.cntGenderAndAge(false, 40, 49));
         infos.put("cntTotalPosts", boardService.cntTotalPosts(5));
-        // 코디 데이터 정보
+        // Todo: 코디 데이터 정보
         return infos;
     }
     @ApiOperation(value = "멤버관리 페이지", notes = "총 회원수, 가입회원 수, 탈퇴 회원수, 일주일간 각 날짜별 가입 및 탈퇴 회원수")
@@ -51,7 +51,7 @@ public class MngmtController {
         infos.put("cntMembers", memberService.cntMembers());
         infos.put("cntWthdrFalse", memberService.cntWthdrFalse());
         infos.put("cntWthdrTrue", memberService.cntWthdrTrue());
-        //infos.put("cnt7days", memberService.cntToday());
+        infos.put("cnt7days", memberService.cntToday());
         return infos;
     }
     // 회원 목록은 MemberController에 있음.
@@ -83,7 +83,7 @@ public class MngmtController {
         infos.put("cntRecentQuestion", boardService.cntRecentBoard(start, end,4));
         infos.put("cntNotAnswered",boardService.cntNotAnswered());
         infos.put("NotAnsweredQuestion", boardService.findNotAnswered());
-        // 작성자 검색
+        // Todo: 작성자 검색
         return infos;
     }
     // 마이 페이지

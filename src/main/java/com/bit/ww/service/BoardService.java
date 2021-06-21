@@ -210,7 +210,7 @@ public class BoardService {
         return postRepository.countAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardname(search, search, boardname);
     }
 
-    // 내글보기
+    // 내글보기 & QnA 작성자 검색
     @Transactional
     public List<PostDTO> searchUid(String boardname, String uid) {
         List<PostEntity> postEntities = postRepository.findByBoardnameAndUidOrderByNumDesc(boardname, uid);
