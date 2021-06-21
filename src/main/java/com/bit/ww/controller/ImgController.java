@@ -24,14 +24,13 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/cmnty")
 public class ImgController {
     private final BoardService boardService;
     private final ImgService imgService;
     // Todo: 이미지 + 포스트 수정 필요.
     @CrossOrigin(origins = {"http://localhost:8081"})
     @ApiOperation(value = "OOTD 이미지 저장", notes = "OOTD 이미지 저장")
-    @PostMapping("/ootdpost")
+    @PostMapping("/api/cmnty/ootdpost")
     @ResponseStatus(HttpStatus.CREATED)
     public PostEntity ootdpost(@Validated @RequestParam("boardname") String boardname,
                                @Validated @RequestParam("uid") String uid,
@@ -55,15 +54,15 @@ public class ImgController {
     // Todo: swagger에서 불가능
     @CrossOrigin(origins = {"http://localhost:8081"})
     @ApiOperation(value = "이미지 저장 테스트", notes = "이미지 저장 테스트")
-    @PostMapping("/postimg")
+    @PostMapping("/api/cmnty/postimg")
     @ResponseStatus(HttpStatus.CREATED)
     public String create(@RequestPart(value = "images", required = false)List<MultipartFile> files
     ) throws Exception {
         return imgService.addImg(files);
     }
-    @CrossOrigin(origins = {"http://localhost:8081/getimg"})
-    @ApiOperation(value = "이미지 출력 테스트", notes = "이미지 출력 테스트")
-    @GetMapping(value = "/getimg/{num}", produces = {MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE})
+    @CrossOrigin(origins = {"http://localhost:8081/"})
+    @ApiOperation(value = "이미지 출력", notes = "이미지 출력")
+    @GetMapping(value = "/api/member/getimg/{num}", produces = {MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE})
     public ResponseEntity<byte[]> getImage(@PathVariable int num) throws Exception{
         ImgDTO imgDTO = imgService.findImg(num);
         String absolutePath = new File("").getAbsolutePath()+File.separator+File.separator;
@@ -85,7 +84,7 @@ public class ImgController {
     // OOTD 상세보기 imgList test
     @CrossOrigin(origins = {"http://localhost:8081/getimg"})
     @ApiOperation(value = "OOTD 상세보기 이미지 출력 테스트", notes = "OOTD 상세보기 이미지 출력 테스트")
-    @GetMapping(value = "/getimglist/{num}")
+    @GetMapping(value = "/api/cmnty/getimglist/{num}")
     public ResponseEntity<List<byte[]>> getImageList(@PathVariable int num) throws Exception{
         List<byte[]> imgByteList = new ArrayList<>();
         List<ImgDTO> imgDTOList = imgService.findPostImgs(num);

@@ -35,6 +35,9 @@ public class MemberController {
         return memberService.findbyId(id);
     }
 
+    //회원 이미지 조회
+    //imgController에 존재
+
     //회원 삭제
     @ApiOperation(value = "회원 삭제", notes = "회원 삭제")
     @DeleteMapping("/delete/{id}")

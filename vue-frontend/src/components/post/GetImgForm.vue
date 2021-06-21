@@ -1,7 +1,7 @@
 <template>
   <div>
-  <div>
-    <img :src="src">
+  <div class="test">
+    <img class= "profile" :src="src">
   </div>
   <div>
     <table>
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-// import {getImg} from "@/api/img";
 import {getImg, getImgList} from "@/api/img";
 
 export default {
@@ -42,9 +41,10 @@ export default {
     }
   },
   methods : {
+    // Todo: 마이페이지 & 상단 바에 메소드 적용 필요.
     async getImg(){
       var base = this;
-      const num = 6;
+      const num = 1; //로그인한 회원 정보에서 img 값 가져오는 걸로 변경 $store.
       await getImg(num)
           .then(function (response) {
             let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(response.data)));
@@ -56,7 +56,6 @@ export default {
         let imgSrc = '';
         const num = 118; // postDB num
         const {data} = await getImgList(num);
-        console.log(data.length);
         for (var i = 0; i < data.length; i++) {
           imgSrc = "data:image/png;base64," + data[i];
           base.imgSrcList.push(imgSrc);
@@ -72,5 +71,19 @@ export default {
 </script>
 
 <style scoped>
-
+.test{
+  width: 150px;
+  height: 150px;
+  border-radius: 70%;
+  overflow: hidden;
+  margin-left: 20px;
+  margin-top : 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+.profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 </style>
