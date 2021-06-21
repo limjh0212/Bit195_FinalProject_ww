@@ -58,7 +58,7 @@ public class ImgController {
     @ResponseStatus(HttpStatus.CREATED)
     public String create(@RequestPart(value = "images", required = false)List<MultipartFile> files
     ) throws Exception {
-        return imgService.addImg(files);
+        return imgService.addImg(0,files);
     }
     @CrossOrigin(origins = {"http://localhost:8081/"})
     @ApiOperation(value = "이미지 출력", notes = "이미지 출력")

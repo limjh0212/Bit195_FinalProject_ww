@@ -4,6 +4,7 @@ import com.bit.ww.dto.ImgDTO;
 import com.bit.ww.dto.PostDTO;
 import com.bit.ww.entity.ImgEntity;
 import com.bit.ww.entity.PostEntity;
+import com.bit.ww.repository.BoardRepository;
 import com.bit.ww.repository.ImgRepository;
 import com.bit.ww.repository.MemberRepository;
 import com.bit.ww.repository.PostRepository;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ImgService {
     private final ImgRepository imgRepository;
+    private final BoardRepository boardRepository;
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
     private final FileHandler fileHandler;
@@ -27,6 +29,7 @@ public class ImgService {
     public ImgDTO convertEntityToDTO(ImgEntity imgEntity) {
     return ImgDTO.builder()
             .num(imgEntity.getNum())
+            .boardid(imgEntity.getBoardid())
             .postid(imgEntity.getPostid())
             .filename(imgEntity.getFilename())
             .originalname(imgEntity.getOriginalname())
@@ -54,10 +57,10 @@ public class ImgService {
         return convertEntityToDTO(imgEntity);
     }
     // 이미지 저장
-    public String addImg(List<MultipartFile> files) {
+    public String addImg(int boardnum, List<MultipartFile> files) {
         List<ImgDTO> imgList = null;
         try {
-            imgList = fileHandler.parseFilesInfo(files);
+            imgList = fileHandler.parseFilesInfo(0, files);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -88,21 +91,23 @@ public class ImgService {
     public PostEntity addPost(PostDTO postDTO, List<MultipartFile> files) throws Exception{
         // 파일을 저장하고 그 img에 대한 리스트를 저장
         List<ImgDTO> imgList = null;
+        int boardnum = boardRepository.findByBoardname(postDTO.getBoardname()).get().getBoardnum();
+
         try {
-            imgList = fileHandler.parseFilesInfo(files);
+            imgList = fileHandler.parseFilesInfo(boardnum,files);
         } catch (Exception e) {
             e.printStackTrace();
         }
         if(!imgList.isEmpty()){
             List<ImgDTO> beans = new ArrayList<>();
             for(ImgDTO imgDTO : imgList){
+                imgDTO.setBoardid(boardnum);
                 imgDTO.setPostid(postDTO.getPostnum());
                 ImgEntity temp = imgRepository.save(imgDTO.toEntity());
                 beans.add(convertEntityToDTO(temp));
             }
         }
-        //postDTO.setBoardnum(boardRepository.findByBoardname(postDTO.getBoardname()).get().getBoardnum());
-        postDTO.setBoardnum(2);
+        postDTO.setBoardnum(boardnum);
         postDTO.setWriter(memberRepository.findOneById(postDTO.getUid()).getNickname());
         return postRepository.save(postDTO.toEntity());
     }

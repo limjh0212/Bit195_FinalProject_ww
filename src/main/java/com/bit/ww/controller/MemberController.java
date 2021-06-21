@@ -47,6 +47,14 @@ public class MemberController {
         return "delete ok!";
     }
 
+//    //회원 수정
+//    @ApiOperation(value = "회원 수정", notes = "회원 수정")
+//    @PatchMapping("/update")
+//    public String update(@RequestBody MemberEntity member) {
+//        member.setPw(passwordEncoder.encode((member.getPw()))); // PW 암호화
+//        memberService.save(member);
+//        return "update ok!";
+//    }
     //회원 수정
     @ApiOperation(value = "회원 수정", notes = "회원 수정")
     @PatchMapping("/update")

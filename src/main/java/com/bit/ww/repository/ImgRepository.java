@@ -8,4 +8,5 @@ import java.util.List;
 public interface ImgRepository extends JpaRepository<ImgEntity, Integer> {
     ImgEntity save(ImgEntity imgEntity);
     List<ImgEntity> findAllByPostid(int postid);
+    List<ImgEntity> findAllByBoardid(int boardid);
 }

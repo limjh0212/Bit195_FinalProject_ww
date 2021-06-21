@@ -17,6 +17,9 @@ public class ImgEntity {
     private int num;
 
     @Column
+    private int boardid;
+
+    @Column
     private int postid;
 
     @Column
@@ -32,8 +35,9 @@ public class ImgEntity {
     private long filesize;
 
     @Builder
-    public ImgEntity (int num, int postid, String filename, String originalname, String storedpath, long filesize){
+    public ImgEntity (int num, int boardid, int postid, String filename, String originalname, String storedpath, long filesize){
         this.num = num;
+        this.boardid = boardid;
         this.postid = postid;
         this.filename = filename;
         this.originalname = originalname;

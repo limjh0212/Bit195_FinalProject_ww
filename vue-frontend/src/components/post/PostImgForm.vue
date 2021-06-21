@@ -11,6 +11,14 @@
         <!--      </div>-->
         <div>
             <form @submit.prevent="saveOotd" method="post" enctype="multipart/form-data">
+                <p>게시판</p>
+                <select id="Boardname" name="boardname">
+                  <option value="">게시판선택</option>
+                  <option value="freeBoard">자유게시판</option>
+                  <option value="OOTD">OOTD</option>
+                  <option value="hotDeal">핫딜</option>
+                  <option value="qna">문의사항</option>
+                </select>
                 <p>제목</p>
                 <input id="Title" name="title" type="text"></input>
                 <p>내용</p>
@@ -63,11 +71,11 @@ export default {
         //   }
         // },
         async saveOotd() {
+            const BoardEl = document.querySelector('#Boardname');
             const TitleEl = document.querySelector('#Title');
             const ContentEl = document.querySelector('#Content');
             const ootdData = new FormData();
-            // ootdData.append("boardname", this.$route.params.boardname);
-            ootdData.append("boardname", "OOTD");
+            ootdData.append("boardname", BoardEl.value);
             ootdData.append("title", TitleEl.value);
             ootdData.append("content", ContentEl.value);
             ootdData.append("uid", this.$store.state.id);

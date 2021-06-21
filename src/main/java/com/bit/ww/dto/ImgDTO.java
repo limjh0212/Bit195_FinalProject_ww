@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class ImgDTO {
     private int num;
+    private int boardid;
     private int postid;
     private String filename;
     private String originalname;
@@ -18,6 +19,7 @@ public class ImgDTO {
     public ImgEntity toEntity(){
         return ImgEntity.builder()
                 .num(this.num)
+                .boardid(this.boardid)
                 .postid(this.postid)
                 .filename(this.filename)
                 .originalname(this.originalname)
@@ -27,8 +29,9 @@ public class ImgDTO {
     }
 
     @Builder
-    public ImgDTO(int num, int postid, String filename, String originalname, String storedpath, long filesize){
+    public ImgDTO(int num, int boardid, int postid, String filename, String originalname, String storedpath, long filesize){
         this.num = num;
+        this.boardid = boardid;
         this.postid = postid;
         this.filename = filename;
         this.originalname = originalname;

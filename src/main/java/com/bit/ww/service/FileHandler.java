@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 public class FileHandler {
-    public List<ImgDTO> parseFilesInfo(List<MultipartFile> multipartFiles) throws Exception{
+    public List<ImgDTO> parseFilesInfo(int boardnum, List<MultipartFile> multipartFiles) throws Exception{
         // 반환할 파일 리스트
         List<ImgDTO> fileList = new ArrayList<>();
         // 파일이 빈 것이 들어오면 빈 객체 반환
@@ -56,6 +56,7 @@ public class FileHandler {
                     String newname = Long.toString(System.nanoTime()) + originalFileExtension;
                     // 생성 후 리스트에 추가
                     ImgDTO imgDTO = ImgDTO.builder()
+                            .boardid(boardnum) //Todo: 수정 필요.
                             .postid(1) //Todo: 수정 필요.
                             .filename(newname)
                             .originalname(multipartFile.getOriginalFilename())
@@ -113,6 +114,7 @@ public class FileHandler {
                 String newname = Long.toString(System.nanoTime()) + originalFileExtension;
                 // 생성 후 리스트에 추가
                 imgFile = ImgDTO.builder()
+                        .boardid(0)
                         .postid(0)
                         .filename(newname)
                         .originalname(multipartFile.getOriginalFilename())
