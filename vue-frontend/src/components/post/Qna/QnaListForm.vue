@@ -21,17 +21,20 @@
                 </tr>
             </tbody>
             <tfoot>
-                <button><router-link to="/post/freeboard">글 작성</router-link></button>
+                <button>
+                    <router-link to="/post/qna">글 작성</router-link>
+                </button>
                 |
-                <button><router-link to="#">내글 보기</router-link></button>
+                <button>
+                    <router-link to="#">내글 보기</router-link>
+                </button>
                 <div>
                     <ul>
                         <li v-for="page in items.pageList" @click="fetchData(page)">{{ page }}</li>
                     </ul>
                 </div>
                 <div>
-                    <select v-model="search" name="search">
-                        <option value="">Select</option>
+                    <select v-model="search" name="search" title="선택">
                         <option value="true">제목</option>
                         <option value="false">제목+내용</option>
                     </select>
