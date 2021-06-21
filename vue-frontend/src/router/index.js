@@ -55,33 +55,6 @@ export const router = new VueRouter({
                 meta     : {auth: true}
 
             },
-
-            {
-                //게시글 작성
-                path     : '/post/:boardname',
-                component: () => import('@/view/post/WritePage'),
-                meta     : {auth: true}
-
-            },
-            {
-                //게시글 목록조회
-                path     : '/list/:boardname',
-                component: () => import('@/view/post/ListPage'),
-                meta     : {auth: true}
-            },
-            {
-                //게시글 상세조회
-                path     : '/post/:boardname/:postnum',
-                component: () => import('@/view/post/PostPage'),
-                meta     : {auth: true}
-            },
-
-            {
-                //관리자 페이지
-                path    : '/admin',
-                redirect: '/admin/main',
-                meta    : {admin: true},
-            },
             {
                 //관리자 페이지
                 path     : '/admin/main',
@@ -108,6 +81,33 @@ export const router = new VueRouter({
                         path     : '/admin/memberlist',
                         component: () => import('@/view/admin/MemberList')
                     }
+                ]
+            },
+            {
+                //커뮤니티
+                path     : '/board',
+                component: () => import('@/view/post/BoardPage'),
+                meta     : {auth: true},
+                children : [
+                    {
+                        //게시글 작성
+                        path     : '/post/:boardname',
+                        component: () => import('@/view/post/WritePage'),
+                        meta     : {auth: true}
+
+                    },
+                    {
+                        //게시글 목록조회
+                        path     : '/list/:boardname',
+                        component: () => import('@/view/post/ListPage'),
+                        meta     : {auth: true}
+                    },
+                    {
+                        //게시글 상세조회
+                        path     : '/post/:boardname/:postnum',
+                        component: () => import('@/view/post/PostPage'),
+                        meta     : {auth: true}
+                    },
                 ]
             },
 

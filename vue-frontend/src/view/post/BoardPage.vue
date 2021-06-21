@@ -1,15 +1,16 @@
 <template>
     <div>
-        <AdminSideNav></AdminSideNav>
+        <BoardSubNav></BoardSubNav>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
-import AdminSideNav from "@/components/member/AdminSideNav";
+
+import BoardSubNav from "@/components/post/BoardSubNav";
 
 export default {
-    components: {AdminSideNav}
+    components: {BoardSubNav}
 }
 </script>
 
