@@ -129,6 +129,11 @@ export const router = new VueRouter({
                         path     : '/mypage/aboutme',
                         component: () => import('@/view/mypage/AboutMePage'),
                     },
+                    {
+                        //위치 등록
+                        path     : '/mypage/location',
+                        component: () => import('@/view/mypage/UserLocation'),
+                    },
 
                 ]
             },

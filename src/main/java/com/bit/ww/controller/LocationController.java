@@ -42,4 +42,10 @@ public class LocationController {
     public int countbyuserid(String userid) {
         return userLocationRepository.countByUserid(userid);
     }
+
+    @ApiOperation(value = "사용자 위치 삭제", notes = "사용자 위치 삭제")
+    @DeleteMapping("/deletelocation/{num}")
+    public void deleteAddress(@PathVariable int num) {
+        userLocationRepository.deleteById(num);
+    }
 }

@@ -41,18 +41,27 @@ export function loadCoords() {
     }
 }
 
+//행정구역 검색
 export function searchLo(keyword) {
     return instance.get(`/api/weather/location?keyword=${keyword}`);
 }
 
+//사용자 위치 저장
 export function saveLo(userData) {
-    return instance.post('/api/weather/savelocation',userData);
+    return instance.post('/api/weather/savelocation', userData);
 }
 
+//사용자 위치 삭제
+export function deleteLo(num) {
+    return instance.delete(`/api/weather/deletelocation/${num}`);
+}
+
+//사용자 저장 위치 조회
 export function userLo(userid) {
     return instance.get(`/api/weather/userlocation?userid=${userid}`);
 }
 
+//사용자 저장 위치 수 조회
 export function countLo(userid) {
     return instance.get(`/api/weather/countlocation?userid=${userid}`);
 }
