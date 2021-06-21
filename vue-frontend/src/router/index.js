@@ -86,27 +86,30 @@ export const router = new VueRouter({
             {
                 //커뮤니티
                 path     : '/board',
-                component: () => import('@/view/post/BoardPage'),
+                component: () => import('@/view/post/BoardMain'),
                 meta     : {auth: true},
                 children : [
+                    {
+                        //Main
+                        path     : '/board',
+                        component: () => import('@/view/post/PostMain'),
+
+                    },
                     {
                         //게시글 작성
                         path     : '/post/:boardname',
                         component: () => import('@/view/post/WritePage'),
-                        meta     : {auth: true}
 
                     },
                     {
                         //게시글 목록조회
                         path     : '/list/:boardname',
-                        component: () => import('@/view/post/ListPage'),
-                        meta     : {auth: true}
+                        component: () => import('@/view/post/Board/BoardView'),
                     },
                     {
                         //게시글 상세조회
                         path     : '/post/:boardname/:postnum',
-                        component: () => import('@/view/post/PostPage'),
-                        meta     : {auth: true}
+                        component: () => import('@/view/post/Board/PostPage'),
                     },
                 ]
             },

@@ -8,9 +8,7 @@
 import SignupForm from "@/components/member/SignupForm";
 
 export default {
-    components: {
-        SignupForm
-    }
+    components: {SignupForm}
 }
 </script>
 
