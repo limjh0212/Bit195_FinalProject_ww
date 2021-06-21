@@ -7,5 +7,5 @@ export function aboutme(id) {
 
 //회원 img 조회
 export function getimg(num) {
-    return api.get(`/api/member/getimg/${num}`);
+    return api.get(`/api/member/getimg/${num}`, {responseType : "arraybuffer"});
 }

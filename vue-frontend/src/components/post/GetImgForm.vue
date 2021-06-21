@@ -41,7 +41,7 @@ export default {
     }
   },
   methods : {
-    // Todo: 마이페이지 & 상단 바에 메소드 적용 필요.
+    // Todo: 상단 바에 메소드 적용 필요.
     async getImg(){
       var base = this;
       const num = 1; //로그인한 회원 정보에서 img 값 가져오는 걸로 변경 $store.
