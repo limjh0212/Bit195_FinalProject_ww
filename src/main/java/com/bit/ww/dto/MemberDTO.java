@@ -1,6 +1,5 @@
 package com.bit.ww.dto;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -13,7 +12,7 @@ public class MemberDTO {
     private String email;
     private boolean gender;
     private int age;
-    private String img;
+    private int img;
     private Timestamp regdate;
     private Timestamp editdate;
     private Timestamp wthdrdate;

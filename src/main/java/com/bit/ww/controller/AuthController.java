@@ -3,12 +3,14 @@ package com.bit.ww.controller;
 import com.bit.ww.dto.LoginDTO;
 import com.bit.ww.entity.MemberEntity;
 import com.bit.ww.security.JwtTokenProvider;
+import com.bit.ww.service.ImgService;
 import com.bit.ww.service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -21,14 +23,36 @@ public class AuthController {
     JwtTokenProvider jwtTokenProvider;
     PasswordEncoder passwordEncoder;
     MemberService memberService;
+    ImgService imgService;
 
-    //회원가입
+//    //회원가입
+//    @ApiOperation(value = "회원 등록", notes = "회원 등록")
+//    @PostMapping("/signup")
+//    public String signup(@RequestBody MemberEntity member) {
+//        // PW 암호화
+//        member.setPw(passwordEncoder.encode((member.getPw())));
+//        memberService.save(member);
+//        return "save ok";
+//    }
+    //회원가입 + 이미지
     @ApiOperation(value = "회원 등록", notes = "회원 등록")
     @PostMapping("/signup")
-    public String signup(@RequestBody MemberEntity member) {
-        // PW 암호화
-        member.setPw(passwordEncoder.encode((member.getPw())));
-        memberService.save(member);
+    public String signup(@Validated @RequestParam("id") String id,
+                         @Validated @RequestParam("pw") String pw,
+                         @Validated @RequestParam("nickname") String nickname,
+                         @Validated @RequestParam("email") String email,
+                         @Validated @RequestParam("age") int age,
+                         @Validated @RequestParam("img") MultipartFile file
+                         ) throws Exception{
+        MemberEntity memberEntity = MemberEntity.builder()
+                    .id(id)
+                    .pw(passwordEncoder.encode(pw))
+                    .nickname(nickname)
+                    .email(email)
+                    .age(age)
+                    .img(imgService.addMember(file))
+                    .build();
+        memberService.save(memberEntity);
         return "save ok";
     }
 

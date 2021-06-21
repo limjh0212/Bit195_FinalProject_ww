@@ -4,7 +4,6 @@ import com.bit.ww.dto.ImgDTO;
 import com.bit.ww.dto.PostDTO;
 import com.bit.ww.entity.ImgEntity;
 import com.bit.ww.entity.PostEntity;
-import com.bit.ww.repository.BoardRepository;
 import com.bit.ww.repository.ImgRepository;
 import com.bit.ww.repository.MemberRepository;
 import com.bit.ww.repository.PostRepository;
@@ -22,7 +21,6 @@ import java.util.Optional;
 public class ImgService {
     private final ImgRepository imgRepository;
     private final PostRepository postRepository;
-    private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final FileHandler fileHandler;
 
@@ -59,7 +57,7 @@ public class ImgService {
     public String addImg(List<MultipartFile> files) {
         List<ImgDTO> imgList = null;
         try {
-            imgList = fileHandler.parseFileInfo(files);
+            imgList = fileHandler.parseFilesInfo(files);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,13 +70,26 @@ public class ImgService {
         }
         return "img save ok!";
     }
+    // 이미지 저장
+    public int addMember(MultipartFile file) {
+        ImgDTO img = null;
+        try {
+            img = fileHandler.parseFileInfo(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        if(!img.equals(null)){
+//            imgRepository.save(img.toEntity());
+//        }
+        return imgRepository.save(img.toEntity()).getNum();
+    }
     // 이미지 + 게시물 함께 저장 Todo: 수정 필요.
     @Transactional
     public PostEntity addPost(PostDTO postDTO, List<MultipartFile> files) throws Exception{
         // 파일을 저장하고 그 img에 대한 리스트를 저장
         List<ImgDTO> imgList = null;
         try {
-            imgList = fileHandler.parseFileInfo(files);
+            imgList = fileHandler.parseFilesInfo(files);
         } catch (Exception e) {
             e.printStackTrace();
         }

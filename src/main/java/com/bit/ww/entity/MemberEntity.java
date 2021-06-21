@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +45,8 @@ public class MemberEntity extends TimeEntity{
     private Integer age;
     @ApiModelProperty(hidden = true)
     @Column
-    private String img;
+    @ColumnDefault("0")
+    private int img;
     @ApiModelProperty(hidden = true)
     @Column //탈퇴여부
     private boolean iswithdrawal;
@@ -52,7 +54,7 @@ public class MemberEntity extends TimeEntity{
     @Column //탈퇴일자
     private LocalDateTime wthdrdate;
     @Builder
-    public MemberEntity(String id, String pw, String nickname, String email, String role, boolean gender, Integer age, String img, boolean iswithdrawal, LocalDateTime wthdrdate) {
+    public MemberEntity(String id, String pw, String nickname, String email, String role, boolean gender, Integer age, int img, boolean iswithdrawal, LocalDateTime wthdrdate) {
         this.id = id;
         this.pw = pw;
         this.nickname = nickname;
