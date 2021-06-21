@@ -76,10 +76,7 @@ export default {
   height: 150px;
   border-radius: 70%;
   overflow: hidden;
-  margin-left: 20px;
-  margin-top : 20px;
-  margin-bottom: 20px;
-  margin-right: 20px;
+  margin: 20px;
 }
 .profile {
   width: 100%;

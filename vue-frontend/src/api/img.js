@@ -16,3 +16,7 @@ export function saveOotdPost(ootdData){
 export function getImgList(num){
     return api.get(`/api/cmnty/getimglist/${num}`);
 }
+// 이미지 카드 형식 리스트 출력
+export function getOotdList(){
+    return api.get('/api/cmnty/getootdlist');
+}

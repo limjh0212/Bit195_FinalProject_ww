@@ -8,7 +8,11 @@ import java.util.List;
 public interface ImgRepository extends JpaRepository<ImgEntity, Integer> {
     ImgEntity save(ImgEntity imgEntity);
     List<ImgEntity> findAllByPostid(int postid);
-    // Todo: 진행중 - column 추가 (img순서)
-    int countAllByPostid(int postid);
+    // Exist
+    Boolean existsAllByBoardidAndPostid(int boardid, int postid);
+    //Postid List 출력용
     List<ImgEntity> findAllByBoardidOrderByNumDesc(int boardid);
+    //Boardid & Postid로 List출력
+    List<ImgEntity> findAllByBoardidAndPostidOrderByNumDesc(int boardid, int postid);
+
 }

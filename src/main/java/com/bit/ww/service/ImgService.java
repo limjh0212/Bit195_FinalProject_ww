@@ -122,11 +122,30 @@ public class ImgService {
         return imgDTOList;
     }
     @Transactional
-    public List<ImgDTO> findOotdImgs() {
+    public List<ImgDTO> findOotdImgs() throws Exception{
         List<ImgEntity> imgEntities = imgRepository.findAllByBoardidOrderByNumDesc(2);
+//        System.out.println(imgEntities.size());
+        List<Integer> postidList = new ArrayList<>();
+        for (int i = 0; i < imgEntities.size(); i++){
+            if(!postidList.contains(imgEntities.get(i).getPostid())) {
+                System.out.println(imgEntities.get(i).getPostid());
+                postidList.add(0, imgEntities.get(i).getPostid());
+            }
+        }
+//        System.out.println("postidlist : "+postidList);
+        List<ImgEntity> imgEntityList = new ArrayList<>();
+        for (int k = 0; k < postidList.size(); k++) {
+            if (imgRepository.existsAllByBoardidAndPostid(2, postidList.get(k))) {
+                imgEntityList.add(0,(imgRepository.findAllByBoardidAndPostidOrderByNumDesc(2, postidList.get(k))).get(0));
+//                System.out.println("postid : " + postidList.get(k));
+            }else{
+                //todo: 기본 이미지 출력
+            }
+        }
+        System.out.println("imgEntityList : "+imgEntityList);
         List<ImgDTO> imgDTOList = new ArrayList<>();
 
-        for (ImgEntity imgEntity : imgEntities) {
+        for (ImgEntity imgEntity : imgEntityList) {
             imgDTOList.add(this.convertEntityToDTO(imgEntity));
         }
         return imgDTOList;

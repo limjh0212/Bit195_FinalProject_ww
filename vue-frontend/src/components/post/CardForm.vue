@@ -1,26 +1,31 @@
 <template>
     <div>
-        <table>
-            <thead>
-                <tr>
-                    <th class="text-left">No.</th>
-                    <th class="text-left">Title</th>
-                    <th class="text-left">작성자</th>
-                    <th class="text-left">작성일</th>
+<!--        <table>-->
+<!--            <thead>-->
+<!--                <tr>-->
+<!--                    <th class="text-left">No.</th>-->
+<!--                    <th class="text-left">Title</th>-->
+<!--                    <th class="text-left">작성자</th>-->
+<!--                    <th class="text-left">작성일</th>-->
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, idx) in items" :key="idx">
-                    <td>{{ item.postnum }}</td>
-                    <td><a :href="`/post/OOTD/${item.postnum}`">{{ item.title }}</a></td>
-                    <td>{{ item.writer }}</td>
-                    <td v-if="$moment(item.regdate).format('YYYY-MM-DD')===$moment().format('YYYY-MM-DD')">
-                        {{ $moment(item.regdate).format('HH:mm:ss') }}
-                    </td>
-                    <td v-else>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
-                </tr>
-            </tbody>
+<!--                </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--                <tr v-for="(item, idx) in items" :key="idx">-->
+<!--                    <td>{{ item.postnum }}</td>-->
+<!--                    <td><a :href="`/post/OOTD/${item.postnum}`">{{ item.title }}</a></td>-->
+<!--                    <td>{{ item.writer }}</td>-->
+<!--                    <td v-if="$moment(item.regdate).format('YYYY-MM-DD')===$moment().format('YYYY-MM-DD')">-->
+<!--                        {{ $moment(item.regdate).format('HH:mm:ss') }}-->
+<!--                    </td>-->
+<!--                    <td v-else>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>-->
+<!--                </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+        <table>
+          <tr class="row" v-for="(ootd, idx) in ootdList" :key="idx">
+            <td class="card"><img class="imgCard" :src="ootd"></td>
+          </tr>
         </table>
         <LoadingSpinner v-if="isLoading"></LoadingSpinner>
     </div>
@@ -29,7 +34,7 @@
 <script>
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {freeboardList, OOTDList} from "@/api/post";
-
+import {getOotdList} from "@/api/img";
 
 export default {
     components: {LoadingSpinner},
@@ -37,18 +42,31 @@ export default {
         return {
             items    : [],
             isLoading: false,
+            ootdList : [],
         }
     },
     methods: {
-        async fetchData() {
-            this.isLoading = true;
-            const {data} = await OOTDList();
-            this.isLoading = false;
-            this.items = data.posts;
-        },
+        // async fetchData() {
+        //     this.isLoading = true;
+        //     const {data} = await OOTDList();
+        //     this.isLoading = false;
+        //     this.items = data.posts;
+        // },
+          async fetchOotd(){
+              this.isLoading = true;
+              let imgSrc = '';
+              const {data} = await getOotdList();
+              this.isLoading = false;
+              for (var i = 0; i< data.length; i++){
+                imgSrc = "data:image/png;base64," + data[i];
+                this.ootdList.push(imgSrc);
+              }
+              console.log(this.ootdList);
+          },
     },
     created() {
-        this.fetchData();
+        //this.fetchData();
+      this.fetchOotd();
     }
 }
 </script>
@@ -56,7 +74,20 @@ export default {
 <style scoped>
 .text-left {
     width: 10rem;
-
 }
-
+.row{
+  margin: 30px;
+}
+.card{
+  width: 200px;
+  height: 300px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: auto;
+}
+.imgCard{
+  width: 100%;
+  height: 100%;
+  /*object-fit: contain;*/
+}
 </style>
