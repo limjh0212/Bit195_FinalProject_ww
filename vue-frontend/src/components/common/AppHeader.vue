@@ -11,9 +11,6 @@
                     <router-link class="toolbar" to="/board">커뮤니티</router-link>
                 </li>
                 <li>
-                    <router-link class="toolbar" to="/post/freeBoard">자유게시판 작성</router-link>
-                </li>
-                <li>
                     <router-link class="toolbar" to="/post/OOTD">OOTD 작성</router-link>
                 </li>
                 <li>
@@ -43,7 +40,6 @@ export default {
             this.$router.push('/login');
         },
     }
-
 }
 </script>
 

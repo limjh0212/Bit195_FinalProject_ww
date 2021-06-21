@@ -29,3 +29,13 @@ export function qnaList() {
 export function freeBoardView(postId, uid) {
     return api.get(`/api/cmnty/post/${postId}?uid=${uid}`);
 }
+
+//게시글 검색 조회(제목+내용)
+export function freeBoardTitle(keyword, page) {
+    return api.get(`/api/cmnty/freeBoard/searchTitle/${keyword}?page=${page}`);
+}
+
+//게시글 검색 조회(제목+내용)
+export function freeBoardAll(keyword, page) {
+    return api.get(`/api/cmnty/freeBoard/searchTitleOrContent/${keyword}?page=${page}`);
+}

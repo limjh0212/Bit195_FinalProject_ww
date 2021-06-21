@@ -1,6 +1,7 @@
 <template>
     <div>
         <form @submit.prevent="save">
+            <input v-model="title" placeholder='제목을 적어주세요' type="text"></input>
             <el-tiptap :extensions="extensions" class="editor__content" :content="content" v-model="content"
                        :width="700"
                        height="100%" placeholder="Write something ..."/>
@@ -51,21 +52,22 @@ export default {
             new History()
         ],
         content   : ``,
+        title     : ''
     }),
     methods: {
         async save() {
             const postData = {
                 boardname: this.$route.params.boardname,
                 content  : this.content,
-                title    : "test",
+                title    : this.title,
                 uid      : this.$store.state.id,
                 writer   : this.$store.state.nickname
             }
             const {data} = await savePost(postData);
             console.log(data);
-            await this.$router.push(`/list/${postData.boardname}`);
+            await this.$router.push(`/list/freeBoard`);
         }
     }
 };
 </script>
-<style ></style>
+<style></style>

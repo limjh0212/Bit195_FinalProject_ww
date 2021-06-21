@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import EditorForm from "@/components/post/WriteForm";
+import EditorForm from "@/components/post/Board/BoardWriteForm";
 
 
 export default {
