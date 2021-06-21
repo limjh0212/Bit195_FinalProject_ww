@@ -121,4 +121,14 @@ public class ImgService {
         }
         return imgDTOList;
     }
+    @Transactional
+    public List<ImgDTO> findOotdImgs() {
+        List<ImgEntity> imgEntities = imgRepository.findAllByBoardidOrderByNumDesc(2);
+        List<ImgDTO> imgDTOList = new ArrayList<>();
+
+        for (ImgEntity imgEntity : imgEntities) {
+            imgDTOList.add(this.convertEntityToDTO(imgEntity));
+        }
+        return imgDTOList;
+    }
 }
