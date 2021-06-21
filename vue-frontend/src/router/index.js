@@ -41,6 +41,20 @@ export const router = new VueRouter({
                 meta     : {auth: true}
             },
 
+            {
+                //이미지 게시글 작성
+                path     : '/postimg',
+                component: () => import('@/view/post/ImgPage'),
+                meta     : {auth: true}
+
+            },
+            {
+                //이미지 게시글 출력
+                path     : '/getimg',
+                component: () => import('@/view/post/GetImgPage'),
+                meta     : {auth: true}
+
+            },
 
             {
                 //게시글 작성

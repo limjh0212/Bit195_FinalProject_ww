@@ -18,7 +18,7 @@ public class PostDTO {
     private String writer;
     private String title;
     private String content;
-    private String img;
+    private int img;
     private int readcount;
     private int likecount;
     private boolean isanswered;
@@ -26,6 +26,14 @@ public class PostDTO {
     private int tempnum;
     private LocalDateTime regdate;
     private LocalDateTime editdate;
+
+    // Todo: 사용하지 않으면 삭제 예정.
+//    public PostDTO(String boardname, String uid, String title, String content) {
+//        this.boardname = boardname;
+//        this.uid = uid;
+//        this.title = title;
+//        this.content = content;
+//    }
 
     public PostEntity toEntity() {
         return PostEntity.builder()
@@ -48,7 +56,7 @@ public class PostDTO {
     }
 
     @Builder
-    public PostDTO(int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, String img, int readcount, int likecount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime regdate, LocalDateTime editdate){
+    public PostDTO(int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, int img, int readcount, int likecount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime regdate, LocalDateTime editdate){
         this.num = num;
         this.boardname = boardname;
         this.boardnum = boardnum;
