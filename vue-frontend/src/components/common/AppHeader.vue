@@ -14,7 +14,7 @@
                     <router-link class="toolbar" to="/post/OOTD">OOTD 작성</router-link>
                 </li>
                 <li>
-                    <router-link class="toolbar" to="/post/qna">Q&A 작성</router-link>
+                    <router-link class="toolbar" to="/mypage">My Page</router-link>
                 </li>
                 <li><a class="logout-button" href="javascript:;" @click="logoutUser">Logout</a></li>
             </ul>

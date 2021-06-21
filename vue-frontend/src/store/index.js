@@ -19,6 +19,7 @@ export const store = new Vuex.Store({
         token   : '',
         nickname: '',
         role    : '',
+        img : '',
     },
     getters  : {
         isLogin(state) {
@@ -34,12 +35,14 @@ export const store = new Vuex.Store({
             state.token = userData.token;
             state.nickname = userData.nickname;
             state.role = userData.role;
+            state.img = userData.img;
         },
         clearUserData(state) {
             state.id = '';
             state.token = '';
             state.nickname = '';
             state.role = '';
+            state.img = '';
         },
     },
     actions  : {

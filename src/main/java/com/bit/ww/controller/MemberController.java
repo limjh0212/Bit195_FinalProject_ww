@@ -30,6 +30,7 @@ public class MemberController {
 
     //회원 ID 조회
     @ApiOperation(value = "회원 ID조회", notes = "회원 ID조회")
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @GetMapping("/findbyid/{id}")
     public Optional<MemberEntity> findbyid(@PathVariable String id) {
         return memberService.findbyId(id);
@@ -72,6 +73,7 @@ public class MemberController {
         memberService.save(member);
         return "wthdr ok!";
     }
+
 }
 
 

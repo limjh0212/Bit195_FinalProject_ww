@@ -113,6 +113,25 @@ export const router = new VueRouter({
                     },
                 ]
             },
+            {
+                //My Page
+                path     : '/mypage',
+                component: () => import('@/view/mypage/MyPage'),
+                meta     : {auth: true},
+                children : [
+                    {
+                        //Main
+                        path     : '/mypage/main',
+                        component: () => import('@/view/mypage/MyPageMain')
+                    },
+                    {
+                        //내 정보 조회
+                        path     : '/mypage/aboutme',
+                        component: () => import('@/view/mypage/AboutMePage'),
+                    },
+
+                ]
+            },
 
         ]
     })
