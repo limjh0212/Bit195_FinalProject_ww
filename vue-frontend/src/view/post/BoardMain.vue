@@ -1,7 +1,11 @@
 <template>
     <div>
+      <div>
         <BoardSubNav></BoardSubNav>
-        <router-view></router-view>
+      </div>
+        <div class="router-view">
+          <router-view></router-view>
+        </div>
     </div>
 </template>
 

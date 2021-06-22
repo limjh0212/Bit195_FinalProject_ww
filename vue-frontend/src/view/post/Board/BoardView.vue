@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="board-router-view">
 <!--        <BoardListForm></BoardListForm>-->
         <div v-if="this.$route.params.boardname === 'freeBoard'">
             <BoardListForm></BoardListForm>

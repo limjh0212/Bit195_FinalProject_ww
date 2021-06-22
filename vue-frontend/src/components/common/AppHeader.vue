@@ -7,7 +7,7 @@
       <div class="nav-menu">
       <div class ="nav-box">
         <div class ="nav-box-default">
-          <a class="logout-button" href="javascript:;" @click="logoutUser">로그아웃</a>
+          <a href="javascript:;" @click="logoutUser">로그아웃</a>
         </div>
       </div>
       <div v-if="isUserLogin" class ="nav-box">
@@ -69,96 +69,5 @@ export default {
 </script>
 
 <style scoped>
-/*header {*/
-/*    width: 100%;*/
-/*    text-align: center;*/
-/*    position: relative;*/
-/*    height: 100px;*/
-/*    border-bottom: 1px solid #35495e*/
-/*}*/
-
-/*header h1 {*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 100px;*/
-/*}*/
-
-/*header ul.menu:after {*/
-/*    display: block;*/
-/*    clear: both;*/
-/*    content: '';*/
-/*}*/
-
-/*header ul.menu {*/
-/*    position: absolute;*/
-/*    top: 20px;*/
-/*    right: 50px;*/
-/*}*/
-
-/*header ul.menu li {*/
-/*    float: left;*/
-/*    padding: 10px 20px;*/
-/*    list-style: none;*/
-/*}*/
-
-a {
-    text-decoration: none;
-    color: #333;
-}
-#nav{
-  width: 100%;
-  text-align: center;
-  position: relative;
-  height: 100px;
-  border-bottom: 1px solid #35495e
-}
-.nav-logo{
-  position: absolute;
-  top: 0;
-  float:left;
-  width: 20%;
-}
-.nav-menu{
-  float:right;
-  width: 60%;
-  height: 60px;
-}
-.nav-box{
-  width:25%;
-  float:right;
-}
-.nav-box-default{
-  /*width: 100%;*/
-  /*height: 100%;*/
-  margin: 10px;
-}
-.nav-box div{
-  display: inline-block;
-}
-
-.headerProfile {
-  float:left;
-  width: 40px;
-  height: 40px;
-  border-radius: 70%;
-  overflow: hidden;
-}
-.profile {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.nickname{
-  float:right;
-  width: auto;
-  height: 40px;
-  margin: 5px;
-  color: #333;
-}
-@media(max-width: 1000px){
-  #nav{
-    width:100%;
-  }
-}
-
+@import '../../css/cmnty/main.css';
 </style>

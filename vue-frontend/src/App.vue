@@ -4,7 +4,9 @@
         <div v-if="isUrlCheck">
             <AppHeader></AppHeader>
         </div>
+        <div>
             <router-view></router-view>
+        </div>
         <div v-if="isUrlCheck">
             <AppFooter></AppFooter>
         </div>
