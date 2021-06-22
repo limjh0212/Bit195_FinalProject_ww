@@ -63,9 +63,9 @@ export default {
                 uid      : this.$store.state.id,
                 writer   : this.$store.state.nickname
             }
-            const {data} = await savePost(postData);
-            console.log(data);
-            await this.$router.push(`/list/freeBoard`);
+            await savePost(postData);
+            console.log(postData.boardname)
+            await this.$router.push(`/list/${postData.boardname}`);
         }
     }
 };

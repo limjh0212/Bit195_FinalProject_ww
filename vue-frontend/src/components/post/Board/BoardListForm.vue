@@ -21,13 +21,9 @@
                 </tr>
             </tbody>
             <tfoot>
-                <button>
-                    <router-link to="/post/freeboard">글 작성</router-link>
-                </button>
+                <button><router-link to="/post/freeBoard">글 작성</router-link></button>
                 |
-                <button>
-                    <router-link to="#">내글 보기</router-link>
-                </button>
+                <button><router-link to="#">내글 보기</router-link></button>
                 <div>
                     <ul>
                         <li v-for="page in items.pageList" @click="fetchData(page)">{{ page }}</li>

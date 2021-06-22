@@ -23,7 +23,6 @@
         </div>
 
 
-
         <!--저장/취소 Btn-->
         <div v-if="isEdit===true">
             <button v-if="post.uid===checkUid" @click="update">저장</button>
@@ -121,9 +120,9 @@ export default {
             console.log(data);
             this.isEdit = false;
         },
-        async doDelete(num){
+        async doDelete(num) {
             await deletePost(num);
-            await this.$router.push('/list/freeBoard')
+            await this.$router.push(`/list/${this.$route.params.boardname}`)
         }
     },
     computed: {

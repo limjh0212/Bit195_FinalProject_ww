@@ -4,9 +4,8 @@
         |
         <router-link to="/list/OOTD">OOTD</router-link>
         |
-        <router-link to="/post/qna">문의하기</router-link>
-        |
-        <router-link v-if="isAdmin" to="/list/qna">Q&A</router-link>
+        <router-link v-if="isAdmin" to="/list/qna">Q&A 답변하기</router-link>
+        <router-link v-else to="/list/qna">문의하기</router-link>
     </div>
 </template>
 

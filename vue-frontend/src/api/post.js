@@ -44,3 +44,13 @@ export function freeBoardTitle(keyword, page) {
 export function freeBoardAll(keyword, page) {
     return api.get(`/api/cmnty/freeBoard/searchTitleOrContent/${keyword}?page=${page}`);
 }
+
+//Qna 내글보기(사용자)
+export function qnaUserList(userid) {
+    return api.get(`/api/cmnty/qna/searchUid/${userid}`);
+}
+
+//Qna 내글보기(관리자)
+export function qnaAdminList(num) {
+    return api.get(`/api/cmnty/qna/posts?page=${num}`);
+}

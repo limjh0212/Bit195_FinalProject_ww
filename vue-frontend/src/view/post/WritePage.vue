@@ -1,7 +1,6 @@
 <template>
     <div>
         <EditorForm></EditorForm>
-
     </div>
 </template>
 
