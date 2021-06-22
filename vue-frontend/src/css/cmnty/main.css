@@ -6,6 +6,9 @@
     #sub-nav{
         width:100%;
     }
+    #board-list-form{
+        width:100%;
+    }
 }
 /*링크 : 밑줄 없음, 클릭해도 색상 변경 없음.*/
 a {

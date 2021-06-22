@@ -1,5 +1,6 @@
 <template>
     <v-container class="content-view">
+      <div id="board-list-form">
         <v-simple-table>
             <template v-slot:default>
                 <thead>
@@ -43,6 +44,7 @@
                 <span v-if="isLoading"><LoadingSpinner></LoadingSpinner></span>
             </template>
         </v-simple-table>
+      </div>
     </v-container>
 </template>
 
