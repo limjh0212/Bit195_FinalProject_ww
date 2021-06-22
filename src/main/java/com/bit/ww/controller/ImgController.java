@@ -60,7 +60,7 @@ public class ImgController {
     ) throws Exception {
         return imgService.addImg(0,files);
     }
-    @CrossOrigin(origins = {"http://localhost:8081/"})
+    @CrossOrigin(origins = {"http://localhost:8081"})
     @ApiOperation(value = "이미지 출력", notes = "이미지 출력")
     @GetMapping(value = "/api/member/getimg/{num}", produces = {MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE})
     public ResponseEntity<byte[]> getImage(@PathVariable int num) throws Exception{

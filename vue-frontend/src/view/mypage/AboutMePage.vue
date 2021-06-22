@@ -38,7 +38,7 @@ export default {
                 let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(response.data)));
                 base.src = "data:image/png;base64," + base64String;
             });
-        }
+        },
     },
     created() {
         this.fetchData();
@@ -49,15 +49,11 @@ export default {
 
 <style scoped>
 .mypageImg {
-
     width: 150px;
     height: 150px;
     border-radius: 70%;
     overflow: hidden;
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-right: 20px;
+    margin: 20px;
 }
 
 .profile {

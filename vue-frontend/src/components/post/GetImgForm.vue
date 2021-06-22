@@ -1,8 +1,8 @@
 <template>
   <div>
-  <div class="test">
-    <img class= "profile" :src="src">
-  </div>
+<!--  <div class="test">-->
+<!--    <img class= "profile" :src="src">-->
+<!--  </div>-->
   <div>
     <table>
       <thead>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import {getImg, getImgList} from "@/api/img";
+import {getImgList} from "@/api/img";
 
 export default {
   name: "GetImgForm",

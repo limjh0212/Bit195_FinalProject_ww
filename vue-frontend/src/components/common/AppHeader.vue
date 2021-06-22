@@ -13,8 +13,10 @@
                 <li>
                     <router-link class="toolbar" to="/post/OOTD">OOTD 작성</router-link>
                 </li>
-                <li>
-                    <router-link class="toolbar" to="/mypage">My Page</router-link>
+                <li v-if="isUserLogin">
+                  <div class="headerProfile">
+                    <router-link class="toolbar" to="/mypage"><img :src="src" class="profile"></router-link>
+                  </div>
                 </li>
                 <li><a class="logout-button" href="javascript:;" @click="logoutUser">Logout</a></li>
             </ul>
@@ -24,8 +26,14 @@
 </template>
 
 <script>
+import {getimg} from "@/api/member";
 
 export default {
+    data() {
+      return {
+        src : "",
+      };
+    },
     computed: {
         isUserLogin() {
             return this.$store.getters.isLogin;
@@ -39,6 +47,16 @@ export default {
             this.$store.commit('clearUserData');
             this.$router.push('/login');
         },
+        async fetchImg() {
+            var base = this;
+            await getimg(this.$store.state.img).then(function (response) {
+              let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(response.data)));
+              base.src = "data:image/png;base64," + base64String;
+            });
+        },
+    },
+    created() {
+          this.fetchImg();
     }
 }
 </script>
@@ -79,5 +97,17 @@ header ul.menu li {
 a {
     text-decoration: none;
     color: #333;
+}
+.headerProfile {
+  width: 40px;
+  height: 40px;
+  border-radius: 70%;
+  overflow: hidden;
+}
+
+.profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

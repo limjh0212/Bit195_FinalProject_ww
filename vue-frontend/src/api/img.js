@@ -5,9 +5,9 @@ export function saveImg(formData){
     return api.post('/api/cmnty/postimg', formData);
 }
 // 이미지 출력
-export function getImg(num){
-    return api.get(`/api/cmnty/getimg/${num}`, {responseType : "arraybuffer"});
-}
+// export function getImg(num){
+//     return api.get(`/api/cmnty/getimg/${num}`, {responseType : "arraybuffer"});
+// }
 // 이미지 + 포스트 : OOTD 저장
 export function saveOotdPost(ootdData){
     return api.post('/api/cmnty/ootdpost', ootdData);
