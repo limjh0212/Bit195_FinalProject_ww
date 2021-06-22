@@ -1,6 +1,7 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
 import {store} from '@/store';
+import WeatherPage from "@/view/weather/WeatherPage";
 
 Vue.use(VueRouter);
 
@@ -15,7 +16,7 @@ export const router = new VueRouter({
             {
                 //MainPage
                 path     : '/weather',
-                component: () => import('@/view/weather/WeatherPage'),
+                component: WeatherPage
             },
             {
                 //로그인
