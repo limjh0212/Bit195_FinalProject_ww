@@ -23,8 +23,14 @@
 <!--            </tbody>-->
 <!--        </table>-->
         <table>
-          <tr class="row" v-for="(ootd, idx) in ootdList" :key="idx">
-            <td class="card"><img class="imgCard" :src="ootd"></td>
+<!--          <tr class="row" v-for="(ootd, idx) in ootdList" :key="idx">-->
+<!--            <td class="card"><img class="imgCard" :src="ootd"></td>-->
+<!--          </tr>-->
+          <tr class="row" v-for="item in list()" >
+            <td class="card"><img class="imgCard" :src="item[0]"></td>
+            <td class="card"><img class="imgCard" :src="item[1]"></td>
+            <td class="card"><img class="imgCard" :src="item[2]"></td>
+            <td class="card"><img class="imgCard" :src="item[3]"></td>
           </tr>
         </table>
         <LoadingSpinner v-if="isLoading"></LoadingSpinner>
@@ -63,6 +69,19 @@ export default {
               }
               console.log(this.ootdList);
           },
+          list: function () {
+            var line = [];
+            var imgList = [];
+            for (var i = 0; i < this.ootdList.length; i+=4) {
+              imgList.push(this.ootdList[i]);
+              imgList.push(this.ootdList[i+1]);
+              imgList.push(this.ootdList[i+2]);
+              imgList.push(this.ootdList[i+3]);
+              line.push(imgList.slice(i,i+4));
+            }
+            console.log(line);
+            return line;
+          },
     },
     created() {
         //this.fetchData();
@@ -83,7 +102,7 @@ export default {
   height: 300px;
   border-radius: 20px;
   overflow: hidden;
-  margin: auto;
+  margin: 20px;
 }
 .imgCard{
   width: 100%;

@@ -77,10 +77,8 @@ export default {
             loadCoords();
             this.locationInfo = weatherData.timezone;
             this.currentWeather = weatherData.current;
-            console.log(this.currentWeather);
             this.iconSrc = `https://openweathermap.org/img/wn/${weatherData.current.weather[0].icon}@2x.png`;
             this.weeklyWeather = weatherData.daily;
-            console.log(this.weeklyWeather);
             },
     },
     created() {
