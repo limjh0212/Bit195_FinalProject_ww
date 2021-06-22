@@ -35,7 +35,11 @@ export const store = new Vuex.Store({
             state.token = userData.token;
             state.nickname = userData.nickname;
             state.role = userData.role;
-            state.img = userData.img;
+            if(userData.img === 0){
+                state.img = 1;
+            }else{
+                state.img = userData.img;
+            }
         },
         clearUserData(state) {
             state.id = '';
