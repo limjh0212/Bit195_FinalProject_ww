@@ -10,6 +10,11 @@ export function updatePost(postId, postData) {
     return api.patch(`/api/cmnty/post/${postId}`, postData)
 }
 
+//게시글 삭제
+export function deletePost(postId) {
+    return api.delete(`/api/cmnty/post/${postId}`)
+}
+
 //자유게시판 목록 조회
 export function freeboardList(page) {
     return api.get(`/api/cmnty/freeBoard/posts?page=${page}`)

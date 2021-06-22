@@ -43,7 +43,7 @@
                     <button @click.prevent="SearchData">검색</button>
                 </div>
             </tfoot>
-            <LoadingSpinner></LoadingSpinner>
+            <span v-if="isLoading"><LoadingSpinner></LoadingSpinner></span>
         </template>
     </v-simple-table>
 </template>

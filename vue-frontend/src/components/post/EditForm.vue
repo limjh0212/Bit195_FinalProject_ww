@@ -10,7 +10,7 @@
 
         <!--수정 Form-->
         <form v-else>
-            <h1 v-text="post.title"></h1>
+            <input v-model="title" type="text"></input>
             <el-tiptap :extensions="extensions" class="editor__content" :spellcheck="false" :content="content"
                        v-model="content" :width="700"
                        height="100%" placeholder="Write something ..."/>
@@ -19,7 +19,10 @@
         <!--수정 Btn-->
         <div v-if="isEdit===false">
             <button v-if="post.uid===checkUid" @click="doEdit">수정</button>
+            <button v-if="post.uid===checkUid" @click="doDelete(post.num)">삭제</button>
         </div>
+
+
 
         <!--저장/취소 Btn-->
         <div v-if="isEdit===true">
@@ -58,7 +61,7 @@ import "codemirror/lib/codemirror.css"; // import base style
 import "codemirror/mode/xml/xml.js"; // language
 import "codemirror/addon/selection/active-line.js"; // require active-line.js
 import "codemirror/addon/edit/closetag.js";
-import {freeBoardView, updatePost} from "@/api/post";
+import {deletePost, freeBoardView, updatePost} from "@/api/post";
 
 
 export default {
@@ -117,6 +120,10 @@ export default {
             const {data} = await updatePost(this.post.num, postData);
             console.log(data);
             this.isEdit = false;
+        },
+        async doDelete(num){
+            await deletePost(num);
+            await this.$router.push('/list/freeBoard')
         }
     },
     computed: {
