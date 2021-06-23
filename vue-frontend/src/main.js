@@ -5,6 +5,7 @@ import {store} from "@/store";
 import {Editor} from '@/utils/editor'
 import {moment} from "@/utils/moment";
 import vuetify from "@/utils/vuetify";
+import {apexchart} from "@/utils/charts";
 
 Vue.config.productionTip = false
 
@@ -15,5 +16,6 @@ new Vue({
     Editor,
     moment,
     vuetify,
+    apexchart
 
 }).$mount('#app')

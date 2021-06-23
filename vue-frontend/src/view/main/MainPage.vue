@@ -1,6 +1,6 @@
 <template>
     <div id="main-form" class="content-view">
-          <WeatherForm></WeatherForm>
+      <WeatherForm></WeatherForm>
     </div>
 </template>
 
