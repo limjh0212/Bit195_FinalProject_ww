@@ -1,19 +1,17 @@
 <template>
-  <div>
-  <div v-if="this.$store.state.role === 'ROLE_USER'">
-    <v-container>
-      <WeatherForm></WeatherForm>
-    </v-container>
-  </div>
-  <div v-if="isAdmin">
-    <div>
-    <AdminSideNav></AdminSideNav>
+    <div id="main-form">
+    <div v-if="this.$store.state.role === 'ROLE_USER'" class="content-view">
+          <WeatherForm></WeatherForm>
     </div>
-    <div>
-    <router-view></router-view>
+    <div v-if="isAdmin" class="content-view">
+      <div class="side-nav">
+          <AdminSideNav></AdminSideNav>
+      </div>
+      <div class="side-content-view">
+          <router-view></router-view>
+      </div>
     </div>
-  </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -30,5 +28,5 @@ export default {
 </script>
 
 <style scoped>
-
+@import '../../css/common/mainP.css';
 </style>

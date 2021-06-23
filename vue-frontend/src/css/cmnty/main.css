@@ -9,6 +9,12 @@
     #board-list-form{
         width:100%;
     }
+    #admin-side-nav{
+        width: 100%;
+    }
+    #footer{
+        width:100%;
+    }
 }
 /*링크 : 밑줄 없음, 클릭해도 색상 변경 없음.*/
 a {
@@ -87,18 +93,40 @@ a {
 .sub-nav-box div{
     display: inline-block;
 }
+/*사이드 네이게이션*/
+#side-nav{
+    width: 100%;
+    position: relative;
+    text-align: center;
+    margin: auto;
+}
+.side-nav-box{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+.side-nav-box-default{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.side-nav-box div{
+    display: inline-block;
+}
 /*main화면*/
 .router-view{
+    padding: 0;
+    margin: 0;
     display: inline-block;
     width: 100%;
-    height: auto;
 }
 .content-view{
     width: 100%;
-    margin:auto;
+    margin: auto;
+    height: auto;
 }
 /*footer*/
-footer {
+#footer {
     border-top: 1px solid #35495e;
     text-align: center;
     font-size: 15px;

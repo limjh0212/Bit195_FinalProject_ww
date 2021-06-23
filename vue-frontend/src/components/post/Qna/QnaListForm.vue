@@ -1,5 +1,7 @@
-<template xmlns="http://www.w3.org/1999/html">
-    <v-simple-table style="width: 70%">
+<template>
+  <v-container class="content-view">
+    <div id="board-list-form">
+      <v-simple-table>
         <template v-slot:default>
             <thead>
                 <tr>
@@ -42,7 +44,9 @@
             </tfoot>
             <span v-if="isLoading"><LoadingSpinner></LoadingSpinner></span>
         </template>
-    </v-simple-table>
+      </v-simple-table>
+    </div>
+  </v-container>
 </template>
 
 <script>
