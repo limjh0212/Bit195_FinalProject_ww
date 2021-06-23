@@ -86,30 +86,33 @@ public class BoardReadController {
         return posts;
     }
     // 각 게시판별 내글보기 & qna 게시판 작성자 검색
-    @ApiOperation(value = "내글보기, qna 게시판 작성자 검색", notes = "내글보기, qna 게시판 작성자 검색")
+    @ApiOperation(value = "내글보기, qna 게시판 작성자 검색 - 페이징", notes = "내글보기, qna 게시판 작성자 검색")
     @GetMapping("/{boardname}/searchUid/{uid}")
-    public HashMap searchUid(@PathVariable String boardname, @PathVariable String uid) {
+    public HashMap searchUid(@PathVariable String boardname, @PathVariable String uid, @RequestParam(value = "page", defaultValue = "1") int pagenum) {
         HashMap<String, Object> posts = new HashMap<>();
-        posts.put("posts", boardService.searchUid(boardname, uid));
+        posts.put("posts", boardService.searchUid(boardname, uid, pagenum));
         posts.put("cntPosts", boardService.cntSearchUid(boardname, uid));
+        posts.put("pageList", boardService.pageListSearchUid(boardname, uid, pagenum));
         return posts;
     }
 
-    @ApiOperation(value = "내글보기 - 검색 리스트 - 제목", notes = "내글보기 - 검색 리스트 - 제목")
+    @ApiOperation(value = "내글보기 - 검색 리스트 - 제목 - 페이징", notes = "내글보기 - 검색 리스트 - 제목")
     @GetMapping("/{boardname}/searchUidAndTitle/{uid}/{search}")
-    public HashMap searchUidAndTitle(@PathVariable String boardname, @PathVariable String uid, @PathVariable String search) {
+    public HashMap searchUidAndTitle(@PathVariable String boardname, @PathVariable String uid, @PathVariable String search, @RequestParam(value = "page", defaultValue = "1") int pagenum) {
         HashMap<String, Object> posts = new HashMap<>();
-        posts.put("posts", boardService.searchUidAndTitle(boardname, uid, search));
+        posts.put("posts", boardService.searchUidAndTitle(boardname, uid, search, pagenum));
         posts.put("cntPosts", boardService.cntSearchUidAndTitle(boardname, uid, search));
+        posts.put("pageList", boardService.pageListSearchUidAndTitle(boardname, uid, search, pagenum));
         return posts;
     }
 
-    @ApiOperation(value = "내글보기 - 검색 리스트 - 제목+내용", notes = "내글보기 - 검색 리스트 - 제목+내용")
+    @ApiOperation(value = "내글보기 - 검색 리스트 - 제목+내용 - 페이징", notes = "내글보기 - 검색 리스트 - 제목+내용")
     @GetMapping("/{boardname}/searchUidAndTitleOrContent/{uid}/{search}")
-    public HashMap searchUidAndTitleOrContent(@PathVariable String boardname, @PathVariable String uid, @PathVariable String search) {
+    public HashMap searchUidAndTitleOrContent(@PathVariable String boardname, @PathVariable String uid, @PathVariable String search, @RequestParam(value = "page", defaultValue = "1") int pagenum) {
         HashMap<String, Object> posts = new HashMap<>();
-        posts.put("posts", boardService.searchUidAndTitleOrContent(boardname, uid, search));
+        posts.put("posts", boardService.searchUidAndTitleOrContent(boardname, uid, search, pagenum));
         posts.put("cntPosts", boardService.cntSearchUidAndTitleOrContent(boardname, uid, search));
+        posts.put("pageList", boardService.pageListSearchUidAndTitleOrContent(boardname, uid, search, pagenum));
         return posts;
     }
 

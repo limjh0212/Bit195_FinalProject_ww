@@ -18,10 +18,10 @@ public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     // 각 게시판 별 제목+내용 검색
     Page<PostEntity> findByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(String title, String content, String boardname, Pageable pageable);
     int countAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardname(String title, String content, String boardname);
-    // 관리 - 작성자 검색 (Id, 닉네임)
-    List<PostEntity> findByUidOrderByNumDesc(String uid);
+    // 관리 - 작성자 검색 (Id, 닉네임) //Todo: 여기서부터 수정 진행중(0623 15:00)
+    Page<PostEntity> findByUidOrderByNumDesc(String uid, Pageable pageable);
     int countAllByUid(String uid);
-    List<PostEntity> findByWriterOrderByNumDesc(String writer);
+    Page<PostEntity> findByWriterOrderByNumDesc(String writer, Pageable pageable);
     int countAllByWriter(String writer);
     // 관리 - 총 게시물 수
     int countAllByBoardnumIsNot(int boardnum);
@@ -29,16 +29,16 @@ public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     int countAllByRegdateIsBetweenAndBoardnumIsNot(LocalDateTime start, LocalDateTime end, int boardnum);
     int countAllByRegdateIsBetweenAndBoardnum(LocalDateTime start, LocalDateTime end, int boardnum);
     // 관리 - 미해결 문의 수
-    List<PostEntity> findByBoardnumAndIsansweredIsFalseOrderByNumDesc(int boardnum);
+    Page<PostEntity> findByBoardnumAndIsansweredIsFalseOrderByNumDesc(int boardnum, Pageable pageable);
     int countAllByBoardnumAndIsansweredIsFalse(int boadrnum);
     // 마이페이지 - 각 게시판 별 내가 작성한 글
-    List<PostEntity> findByBoardnameAndUidOrderByNumDesc(String boardname, String uid);
+    Page<PostEntity> findByBoardnameAndUidOrderByNumDesc(String boardname, String uid, Pageable pageable);
     int countAllByBoardnameAndUid(String boardname, String uid);
     // 마이페이지 - 각 게시판 별 내가 작성한 글에서 제목 검색
-    List<PostEntity> findByBoardnameAndUidAndTitleIgnoreCaseOrderByNumDesc(String boardname, String uid, String title);
+    Page<PostEntity> findByBoardnameAndUidAndTitleIgnoreCaseOrderByNumDesc(String boardname, String uid, String title, Pageable pageable);
     int countAllByBoardnameAndUidAndTitleIgnoreCase(String boardname, String uid, String title);
     // 마이페이지 - 각 게시판 별 내가 작성한 글에서 제목 + 내용 검색
-    List<PostEntity> findByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingOrderByNumDesc(String boardname, String uid, String title, String content);
+    Page<PostEntity> findByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingOrderByNumDesc(String boardname, String uid, String title, String content, Pageable pageable);
     int countAllByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContaining(String boardname, String uid, String title, String content);
     // 인기글 찾기
     List<PostEntity> findByBoardnameOrderByReadcountDesc(String boardname);

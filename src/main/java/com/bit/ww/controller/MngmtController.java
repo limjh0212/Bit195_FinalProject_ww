@@ -6,9 +6,7 @@ import com.bit.ww.service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -76,13 +74,14 @@ public class MngmtController {
     @ApiOperation(value = "문의 관리 페이지", notes = "최근 문의 수, 미해결문의 수, 미해결문의리스트")
     @GetMapping("/qna")
     @Secured({"ROLE_ADMIN"})
-    public HashMap qnaInfos(){
+    public HashMap qnaInfos(@RequestParam(value = "page", defaultValue = "1") int pagenum){
         HashMap<String, Object> infos = new HashMap<>();
         LocalDateTime start = LocalDateTime.of(LocalDate.now().minusDays(7), LocalTime.of(0, 0, 0));
         LocalDateTime end = LocalDateTime.now();
         infos.put("cntRecentQuestion", boardService.cntRecentBoard(start, end,4));
         infos.put("cntNotAnswered",boardService.cntNotAnswered());
-        infos.put("NotAnsweredQuestion", boardService.findNotAnswered());
+        infos.put("NotAnsweredQuestion", boardService.findNotAnswered(pagenum)); //Todo:확인 필요
+        infos.put("pageList", boardService.pageListNotAnswered(pagenum));
         // Todo: 작성자 검색
         return infos;
     }

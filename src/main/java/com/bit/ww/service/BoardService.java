@@ -60,7 +60,7 @@ public class BoardService {
         // 총 게시글 수 기준 마지막 페이지 번호 계산 (올림)
         int lastPagenum = (int) (Math.ceil((cntPosts / CNTPAGEPOST)));
         // 현재 페이지 기준으로 화면에서 보이는 마지막 페이지 번호 계산
-        int lastViewPagenum = 0;
+        int lastViewPagenum ;
         if (lastPagenum <= 5){
             lastViewPagenum = lastPagenum;
             pagenum = 1;
@@ -212,8 +212,9 @@ public class BoardService {
 
     // 내글보기 & QnA 작성자 검색
     @Transactional
-    public List<PostDTO> searchUid(String boardname, String uid) {
-        List<PostEntity> postEntities = postRepository.findByBoardnameAndUidOrderByNumDesc(boardname, uid);
+    public List<PostDTO> searchUid(String boardname, String uid, int pagenum) {
+        Page<PostEntity> pagePosts = postRepository.findByBoardnameAndUidOrderByNumDesc(boardname, uid, PageRequest.of(pagenum - 1, CNTPAGEPOST, Sort.by(Sort.Direction.DESC, "num")));
+        List<PostEntity> postEntities = pagePosts.getContent();
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
@@ -221,7 +222,11 @@ public class BoardService {
         }
         return postDTOList;
     }
-
+    @Transactional
+    public Integer[] pageListSearchUid(String boardname, String uid, int pagenum) {
+        cntPosts = (double) cntSearchUid(boardname, uid);
+        return pageList(pagenum);
+    }
     @Transactional
     public int cntSearchUid(String boardname, String uid) {
         return postRepository.countAllByBoardnameAndUid(boardname, uid);
@@ -229,8 +234,9 @@ public class BoardService {
 
     // 내글보기 - 검색 - 제목
     @Transactional
-    public List<PostDTO> searchUidAndTitle(String boardname, String uid, String search) {
-        List<PostEntity> postEntities = postRepository.findByBoardnameAndUidAndTitleIgnoreCaseOrderByNumDesc(boardname, uid, search);
+    public List<PostDTO> searchUidAndTitle(String boardname, String uid, String search, int pagenum) {
+        Page<PostEntity> pagePosts = postRepository.findByBoardnameAndUidAndTitleIgnoreCaseOrderByNumDesc(boardname, uid, search, PageRequest.of(pagenum - 1, CNTPAGEPOST, Sort.by(Sort.Direction.DESC, "num")));
+        List<PostEntity> postEntities = pagePosts.getContent();
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
@@ -238,7 +244,11 @@ public class BoardService {
         }
         return postDTOList;
     }
-
+    @Transactional
+    public Integer[] pageListSearchUidAndTitle(String boardname, String uid, String search, int pagenum) {
+        cntPosts = (double) cntSearchUidAndTitle(boardname, uid, search);
+        return pageList(pagenum);
+    }
     @Transactional
     public int cntSearchUidAndTitle(String boardname, String uid, String search) {
         return postRepository.countAllByBoardnameAndUidAndTitleIgnoreCase(boardname, uid, search);
@@ -246,8 +256,9 @@ public class BoardService {
 
     // 내글보기 - 검색 - 제목
     @Transactional
-    public List<PostDTO> searchUidAndTitleOrContent(String boardname, String uid, String search) {
-        List<PostEntity> postEntities = postRepository.findByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingOrderByNumDesc(boardname, uid, search, search);
+    public List<PostDTO> searchUidAndTitleOrContent(String boardname, String uid, String search, int pagenum) {
+        Page<PostEntity> pagePosts = postRepository.findByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingOrderByNumDesc(boardname, uid, search, search, PageRequest.of(pagenum - 1, CNTPAGEPOST, Sort.by(Sort.Direction.DESC, "num")));
+        List<PostEntity> postEntities = pagePosts.getContent();
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
@@ -255,7 +266,11 @@ public class BoardService {
         }
         return postDTOList;
     }
-
+    @Transactional
+    public Integer[] pageListSearchUidAndTitleOrContent(String boardname, String uid, String search, int pagenum) {
+        cntPosts = (double) cntSearchUidAndTitleOrContent(boardname, uid, search);
+        return pageList(pagenum);
+    }
     @Transactional
     public int cntSearchUidAndTitleOrContent(String boardname, String uid, String search) {
         return postRepository.countAllByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContaining(boardname, uid, search, search);
@@ -283,12 +298,13 @@ public class BoardService {
         }
         return postDTOList;
     }
-
+    // Todo: 아직 안쓰이는 중(추가 필요)
     // 관리자 및 마이페이지
     // uid가 쓴 모든 글
     @Transactional
-    public List<PostDTO> findUidPosts(String uid) {
-        List<PostEntity> postEntities = postRepository.findByUidOrderByNumDesc(uid);
+    public List<PostDTO> findUidPosts(String uid, int pagenum) {
+        Page<PostEntity> pagePosts = postRepository.findByUidOrderByNumDesc(uid, PageRequest.of(pagenum - 1, CNTPAGEPOST, Sort.by(Sort.Direction.DESC, "num")));
+        List<PostEntity> postEntities = pagePosts.getContent();
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
@@ -296,7 +312,11 @@ public class BoardService {
         }
         return postDTOList;
     }
-
+    @Transactional
+    public Integer[] pageListUidPosts(String uid, int pagenum) {
+        cntPosts = (double) cntUidPosts(uid);
+        return pageList(pagenum);
+    }
     @Transactional
     public int cntUidPosts(String uid) {
         return postRepository.countAllByUid(uid);
@@ -304,8 +324,9 @@ public class BoardService {
 
     // writer가 쓴 모든 글
     @Transactional
-    public List<PostDTO> findWriterPosts(String writer) {
-        List<PostEntity> postEntities = postRepository.findByWriterOrderByNumDesc(writer);
+    public List<PostDTO> findWriterPosts(String writer, int pagenum) {
+        Page<PostEntity> pagePosts = postRepository.findByWriterOrderByNumDesc(writer, PageRequest.of(pagenum - 1, CNTPAGEPOST, Sort.by(Sort.Direction.DESC, "num")));
+        List<PostEntity> postEntities = pagePosts.getContent();
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
@@ -313,7 +334,11 @@ public class BoardService {
         }
         return postDTOList;
     }
-
+    @Transactional
+    public Integer[] pageListWriterPosts(String writer, int pagenum) {
+        cntPosts = (double) cntWriterPosts(writer);
+        return pageList(pagenum);
+    }
     @Transactional
     public int cntWriterPosts(String writer) {
         return postRepository.countAllByWriter(writer);
@@ -338,9 +363,10 @@ public class BoardService {
 
     // 미해결 문의
     @Transactional
-    public List<PostDTO> findNotAnswered() {
+    public List<PostDTO> findNotAnswered(int pagenum) {
         int boardnum = 4;
-        List<PostEntity> postEntities = postRepository.findByBoardnumAndIsansweredIsFalseOrderByNumDesc(boardnum);
+        Page<PostEntity> pagePosts = postRepository.findByBoardnumAndIsansweredIsFalseOrderByNumDesc(boardnum, PageRequest.of(pagenum - 1, CNTPAGEPOST, Sort.by(Sort.Direction.DESC, "num")));
+        List<PostEntity> postEntities = pagePosts.getContent();
         List<PostDTO> postDTOList = new ArrayList<>();
 
         for (PostEntity postEntity : postEntities) {
@@ -348,7 +374,11 @@ public class BoardService {
         }
         return postDTOList;
     }
-
+    @Transactional
+    public Integer[] pageListNotAnswered( int pagenum) {
+        cntPosts = (double) cntNotAnswered();
+        return pageList(pagenum);
+    }
     @Transactional
     public int cntNotAnswered() {
         int boardnum = 4;
