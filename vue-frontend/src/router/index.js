@@ -16,30 +16,36 @@ export const router = new VueRouter({
                 //MainPage
                 path     : '/main',
                 component: () => import('@/view/main/MainPage'),
+            },
+            {
+                //AdminPage
+                path     : '/admin',
+                meta     : {admin: true},
+                component: () => import('@/view/admin/AdminPage'),
                 children : [
                     {
                         meta     : {admin: true},
-                        path     : '/main/dashboard',
+                        path     : '/admin/main',
                         component: () => import('@/view/admin/AdminMain')
                     },
                     {
                         meta     : {admin: true},
-                        path     : '/main/cmnty',
+                        path     : '/admin/cmnty',
                         component: () => import('@/view/admin/CmntyPage')
                     },
                     {
                         meta     : {admin: true},
-                        path     : '/main/member',
+                        path     : '/admin/member',
                         component: () => import('@/view/admin/MemberPage')
                     },
                     {
                         meta     : {admin: true},
-                        path     : '/main/qna',
+                        path     : '/admin/qna',
                         component: () => import('@/view/admin/QnaPage')
                     },
                     {
                         meta     : {admin: true},
-                        path     : '/main/memberlist',
+                        path     : '/admin/memberlist',
                         component: () => import('@/view/admin/MemberList')
                     }
                 ]
