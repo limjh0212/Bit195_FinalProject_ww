@@ -1,0 +1,107 @@
+/*반응형*/
+@media(max-width: 1000px){
+    #nav{
+        width:100%;
+    }
+    #sub-nav{
+        width:100%;
+    }
+    #board-list-form{
+        width:100%;
+    }
+}
+/*링크 : 밑줄 없음, 클릭해도 색상 변경 없음.*/
+a {
+    text-decoration: none;
+    color: #333;
+}
+/*메인 네비게이션*/
+#nav{
+    width: 100%;
+    text-align: center;
+    position: relative;
+    height: 100px;
+    border-bottom: 1px solid #35495e;
+}
+.nav-logo{
+    position: absolute;
+    top: 0;
+    float:left;
+    width: 20%;
+}
+.nav-menu{
+    float:right;
+    width: 60%;
+    height: 60px;
+}
+.nav-box{
+    width:25%;
+    float:right;
+}
+.nav-box-default{
+    /*width: 100%;*/
+    /*height: 100%;*/
+    margin: 10px;
+}
+.nav-box div{
+    display: inline-block;
+}
+.headerProfile {
+    float:left;
+    width: 40px;
+    height: 40px;
+    border-radius: 70%;
+    overflow: hidden;
+}
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.nickname{
+    float:right;
+    width: auto;
+    height: 40px;
+    margin: 5px;
+    color: #333;
+}
+/*서브 네이게이션*/
+#sub-nav{
+    float: left;
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+.sub-nav-box{
+    float: left;
+    width: 15%;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+.sub-nav-box-default{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.sub-nav-box div{
+    display: inline-block;
+}
+/*main화면*/
+.router-view{
+    display: inline-block;
+    width: 100%;
+    height: auto;
+}
+.content-view{
+    width: 100%;
+    margin:auto;
+}
+/*footer*/
+footer {
+    border-top: 1px solid #35495e;
+    text-align: center;
+    font-size: 15px;
+    color: grey;
+    margin: 100px 0 0 0;
+}
