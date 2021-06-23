@@ -2,7 +2,7 @@
   <header>
     <div id="nav">
       <div class="nav-logo">
-        <h1><a href="/weather" class="logo">Weather</a></h1>
+        <h1><a href="/main" class="logo">Weather</a></h1>
       </div>
       <div class="nav-menu">
       <div class ="nav-box">
@@ -24,9 +24,6 @@
       <div class ="nav-box">
         <router-link class="toolbar" to="/board"><div class ="nav-box-default">커뮤니티</div></router-link>
       </div>
-      <div v-if="isAdmin" class ="nav-box">
-        <router-link class="toolbar" to="/admin/main"><div class ="nav-box-default">관리자 페이지</div></router-link>
-      </div>
       </div>
     </div>
   </header>
@@ -45,9 +42,6 @@ export default {
         isUserLogin() {
             return this.$store.getters.isLogin;
         },
-        isAdmin() {
-            return this.$store.getters.isAdmin;
-        }
     },
     methods : {
         logoutUser() {

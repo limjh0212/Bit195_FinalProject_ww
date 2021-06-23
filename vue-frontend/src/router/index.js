@@ -1,7 +1,6 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
 import {store} from '@/store';
-import WeatherPage from "@/view/weather/WeatherPage";
 
 Vue.use(VueRouter);
 
@@ -15,8 +14,35 @@ export const router = new VueRouter({
             },
             {
                 //MainPage
-                path     : '/weather',
-                component: WeatherPage
+                path     : '/main',
+                component: () => import('@/view/main/MainPage'),
+                children : [
+                    {
+                        meta     : {admin: true},
+                        path     : '/main/dashboard',
+                        component: () => import('@/view/admin/AdminMain')
+                    },
+                    {
+                        meta     : {admin: true},
+                        path     : '/main/cmnty',
+                        component: () => import('@/view/admin/CmntyPage')
+                    },
+                    {
+                        meta     : {admin: true},
+                        path     : '/main/member',
+                        component: () => import('@/view/admin/MemberPage')
+                    },
+                    {
+                        meta     : {admin: true},
+                        path     : '/main/qna',
+                        component: () => import('@/view/admin/QnaPage')
+                    },
+                    {
+                        meta     : {admin: true},
+                        path     : '/main/memberlist',
+                        component: () => import('@/view/admin/MemberList')
+                    }
+                ]
             },
             {
                 //로그인
@@ -55,34 +81,6 @@ export const router = new VueRouter({
                 component: () => import('@/view/post/GetImgPage'),
                 meta     : {auth: true}
 
-            },
-            {
-                //관리자 페이지
-                path     : '/admin/main',
-                component: () => import('@/view/admin/AdminPage'),
-                meta     : {admin: true},
-                children : [
-                    {
-                        path     : '/admin/main',
-                        component: () => import('@/view/admin/AdminMain')
-                    },
-                    {
-                        path     : '/admin/cmnty',
-                        component: () => import('@/view/admin/CmntyPage')
-                    },
-                    {
-                        path     : '/admin/member',
-                        component: () => import('@/view/admin/MemberPage')
-                    },
-                    {
-                        path     : '/admin/qna',
-                        component: () => import('@/view/admin/QnaPage')
-                    },
-                    {
-                        path     : '/admin/memberlist',
-                        component: () => import('@/view/admin/MemberList')
-                    }
-                ]
             },
             {
                 //커뮤니티
