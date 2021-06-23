@@ -1,11 +1,24 @@
 <template>
     <div>
-        <router-link to="/list/freeBoard">자유게시판</router-link>
-        |
-        <router-link to="/list/OOTD">OOTD</router-link>
-        |
-        <router-link v-if="isAdmin" to="/list/qna">Q&A 답변하기</router-link>
-        <router-link v-else to="/list/qna">문의하기</router-link>
+        <v-container>
+            <div id="sub-nav">
+                <div class="sub-nav-box">
+                    <router-link to="/list/freeBoard">
+                        <div class="sub-nav-box-default">자유게시판</div>
+                    </router-link>
+                </div>
+                <div class="sub-nav-box">
+                    <router-link to="/list/OOTD">
+                        <div class="sub-nav-box-default">OOTD</div>
+                    </router-link>
+                </div>
+                <div class="sub-nav-box">
+                    <router-link to="/list/qna">
+                        <div class="sub-nav-box-default">Q&A</div>
+                    </router-link>
+                </div>
+            </div>
+        </v-container>
     </div>
 </template>
 
