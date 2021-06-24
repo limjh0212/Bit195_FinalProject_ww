@@ -44,7 +44,7 @@
                 <div class="box">
                   <div id="bar">
                     <!--                    내가 추가한 것-->
-                    <BarChart></BarChart>
+                      <BarChart></BarChart>
                   </div>
                 </div>
               </div>
@@ -82,13 +82,11 @@
 
 <script>
 import BarChart from "@/components/chart/BarChart";
-import DonutChart from "@/components/chart/DonutChart";
 import LineChart from "@/components/chart/LineChart";
-
-
+import DonutChart from "@/components/chart/DonutChart";
 export default {
   name: "TestPage",
-  components: {LineChart, DonutChart, BarChart},
+  components: {DonutChart, LineChart, BarChart},
 }
 </script>
 

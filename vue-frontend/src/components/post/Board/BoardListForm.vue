@@ -5,10 +5,10 @@
         <template v-slot:default>
             <thead>
                 <tr>
-                    <th class="text-left">No.</th>
-                    <th class="text-left">Title</th>
-                    <th class="text-left">작성자</th>
-                    <th class="text-left">작성일</th>
+                    <th class="th">No.</th>
+                    <th class="th">Title</th>
+                    <th class="th">작성자</th>
+                    <th class="th">작성일</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,22 +23,32 @@
                 </tr>
             </tbody>
             <tfoot>
+                <div>
                 <button><router-link to="/post/freeBoard">글 작성</router-link></button>
                 |
                 <button><router-link to="#">내글 보기</router-link></button>
-                <div>
-                    <ul>
-                        <li v-for="page in items.pageList" @click="fetchData(page)">{{ page }}</li>
-                    </ul>
                 </div>
                 <div>
+                  <div class="page-list">
+                    <div class="page-box" v-for="page in items.pageList" @click="fetchData(page)">
+                      <div class="page-box-default">{{ page }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="foot-search">
+                  <div class="foot-search-box">
                     <select v-model="search" name="search">
                         <option value="">Select</option>
                         <option value="true">제목</option>
                         <option value="false">제목+내용</option>
                     </select>
+                  </div>
+                  <div class="foot-search-box">
                     <input v-model="keyword" placeholder="검색어를 입력하세요" type="text"></input>
+                  </div>
+                  <div class="foot-search-box">
                     <button @click.prevent="SearchData">검색</button>
+                  </div>
                 </div>
             </tfoot>
             <span v-if="isLoading"><LoadingSpinner></LoadingSpinner></span>
@@ -97,9 +107,5 @@ export default {
 </script>
 
 <style scoped>
-.text-left {
-    width: 10rem;
-}
-
-
+@import "../../../css/cmnty/boardList.css";
 </style>

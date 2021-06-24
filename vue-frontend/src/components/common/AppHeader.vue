@@ -6,9 +6,9 @@
       </div>
       <div class="nav-menu">
       <div class ="nav-box">
-        <div class ="nav-box-default">
-          <a href="javascript:;" @click="logoutUser">로그아웃</a>
-        </div>
+          <router-link class="toolbar" to="/login">
+            <div class ="nav-box-default" ref="javascript:;" @click="logoutUser">로그아웃</div>
+           </router-link>
       </div>
       <div v-if="isUserLogin" class ="nav-box">
         <router-link class="toolbar" to="/mypage">

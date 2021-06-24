@@ -1,0 +1,33 @@
+/*table 상단*/
+.th {
+    width: 10rem;
+    text-align: center;
+}
+/*table 하단*/
+.page-list{
+    width: 50%;
+    text-align: center;
+    position: relative;
+    height: auto;
+    font-size: 15px;
+    margin: auto;
+}
+.page-box{
+    width: 20%;
+    float:left;
+}
+.page-box-default{
+    margin: 3px;
+}
+.foot-search{
+    width: 100%;
+    text-align: center;
+    position: relative;
+    height: auto;
+    font-size: 10px;  /* Todo: tfoot의 문제 - 해결 필요 */
+}
+.foot-search-box{
+    width: 30%;
+    float:left;
+    margin: 3px;
+}
