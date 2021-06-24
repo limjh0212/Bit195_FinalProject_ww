@@ -36,7 +36,7 @@ export default {
 /* 반응형 최대크기 */
 #app {
   margin:0 auto;
-  width:1000px;
+  width:1200px;
   min-height:100%;
   padding-top:71px;
   border-left:1px #D8D8D8 solid;
@@ -55,7 +55,7 @@ body {
   user-select: none;
 }
 /* 반응형 시작 */
-@media(max-width:1000px){
+@media(max-width:1200px){
   #app{
     width:100%;
     border-left:0;

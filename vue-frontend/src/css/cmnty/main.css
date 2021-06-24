@@ -1,5 +1,5 @@
 /*반응형*/
-@media(max-width: 1000px){
+@media(max-width: 1200px){
     #nav{
         width:100%;
     }
@@ -75,7 +75,6 @@ a {
 }
 /*서브 네이게이션*/
 #sub-nav{
-    float: left;
     width: 100%;
     position: relative;
     text-align: center;
