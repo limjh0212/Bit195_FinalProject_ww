@@ -1,5 +1,9 @@
-import {apexchart} from "@/utils/charts";
-import apexchartCharts from "node-sass";
+import Vue from "vue";
+import VueApexCharts from 'vue-apexcharts'
+import apexchartCharts from "../../../vue-frontend/node_modules/node-sass";
+
+Vue.use(VueApexCharts)
+let apexchart = Vue.component('apexchart', VueApexCharts);
 
 apexchart.grid = {
     padding: {

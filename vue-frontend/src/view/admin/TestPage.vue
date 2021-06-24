@@ -1,9 +1,9 @@
 <template>
   <div>
-<!--    <div id="wrapper">-->
-<!--      <div class="content-area">-->
-<!--        <div class="container-fluid">-->
-<!--          <div class="text-right mt-3 mb-3 d-fixed">-->
+    <div id="wrapper">
+      <div class="content-area">
+        <div class="container-fluid">
+          <div class="text-right mt-3 mb-3 d-fixed">
 <!--            <a-->
 <!--                href="https://github.com/apexcharts/apexcharts.js/tree/master/samples/vanilla-js/dashboards/modern"-->
 <!--                target="_blank"-->
@@ -11,79 +11,87 @@
 <!--            >-->
 <!--              <span class="btn-text">View Code</span>-->
 <!--            </a>-->
-<!--            <button class="btn btn-success" id="fusionexport-btn">-->
-<!--              <span-->
-<!--                  class="spinner-border spinner-border-sm"-->
-<!--                  role="status"-->
-<!--                  aria-hidden="true"-->
-<!--              ></span>-->
-<!--              <span class="btn-text">Download as PDF</span>-->
-<!--            </button>-->
-<!--          </div>-->
-<!--          <div class="main">-->
-<!--            <div class="row sparkboxes mt-4 mb-4">-->
-<!--              <div class="col-md-4">-->
-<!--                <div class="box box1">-->
-<!--                  <div id="spark1"></div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-4">-->
-<!--                <div class="box box2">-->
-<!--                  <div id="spark2"></div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-4">-->
-<!--                <div class="box box3">-->
-<!--                  <div id="spark3"></div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+            <button class="btn btn-success" id="fusionexport-btn">
+              <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+              ></span>
+              <span class="btn-text">Download as PDF</span>
+            </button>
+          </div>
+          <div class="main">
+            <div class="row sparkboxes mt-4 mb-4">
+              <div class="col-md-4">
+                <div class="box box1">
+                  <div id="spark1"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="box box2">
+                  <div id="spark2"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="box box3">
+                  <div id="spark3"></div>
+                </div>
+              </div>
+            </div>
 
-<!--            <div class="row mt-5 mb-4">-->
-<!--              <div class="col-md-6">-->
-<!--                <div class="box">-->
-<!--                  <div id="bar"></div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-6">-->
-<!--                <div class="box">-->
-<!--                  <div id="donut"></div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+            <div class="row mt-5 mb-4">
+              <div class="col-md-6">
+                <div class="box">
+                  <div id="bar">
+                    <!--                    내가 추가한 것-->
+                    <BarChart></BarChart>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="box">
+                  <div id="donut">
+                    <!--                    내가 추가한 것-->
+                    <DonutChart></DonutChart>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-<!--            <div class="row mt-4 mb-4">-->
-<!--              <div class="col-md-6">-->
-<!--                <div class="box">-->
-<!--                  <div id="area"></div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="col-md-6">-->
-<!--                <div class="box">-->
-<!--                  <div id="line"></div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+            <div class="row mt-4 mb-4">
+              <div class="col-md-6">
+                <div class="box">
+                  <div id="area"></div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="box">
+                  <div id="line">
+                    <!--                    내가 추가한 것-->
+                    <LineChart></LineChart>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import '../../assets/data'
-import '../../assets/scripts'
-import '../../assets/img/logo.png'
-import '../../assets/img/banana.png'
-import '../../assets/img/map.png'
-import '../../assets/img/user.png'
-import '../../assets/img/tellius.png'
+import BarChart from "@/components/chart/BarChart";
+import DonutChart from "@/components/chart/DonutChart";
+import LineChart from "@/components/chart/LineChart";
+
+
 export default {
-  name: "TestPage"
+  name: "TestPage",
+  components: {LineChart, DonutChart, BarChart},
 }
 </script>
 
 <style scoped>
-@import '../../assets/styles.css';
+
 </style>
