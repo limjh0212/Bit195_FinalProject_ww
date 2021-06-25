@@ -6,12 +6,12 @@
       </div>
       <div class="nav-menu">
       <div class ="nav-box">
-          <router-link class="toolbar" to="/login">
+          <router-link to="/login">
             <div class ="nav-box-default" ref="javascript:;" @click="logoutUser">로그아웃</div>
            </router-link>
       </div>
       <div v-if="isUserLogin" class ="nav-box">
-        <router-link class="toolbar" to="/mypage">
+        <router-link to="/mypage">
           <div class ="nav-box-default">
             <div class="headerProfile"><img :src="src" class="profile"></div>
             <div><p class="nickname">{{ this.$store.state.id }}님</p></div>
@@ -19,10 +19,10 @@
         </router-link>
       </div>
       <div class ="nav-box">
-        <router-link class="toolbar" to="/post/OOTD"><div class ="nav-box-default">OOTD 작성</div></router-link>
+        <router-link to="/post/OOTD"><div class ="nav-box-default">OOTD 작성</div></router-link>
       </div>
       <div class ="nav-box">
-        <router-link class="toolbar" to="/board"><div class ="nav-box-default">커뮤니티</div></router-link>
+        <router-link to="/board"><div class ="nav-box-default">커뮤니티</div></router-link>
       </div>
       </div>
     </div>
@@ -46,7 +46,6 @@ export default {
     methods : {
         logoutUser() {
             this.$store.commit('clearUserData');
-            this.$router.push('/login');
         },
         async fetchImg() {
             var base = this;
