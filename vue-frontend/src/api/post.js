@@ -46,11 +46,16 @@ export function freeBoardAll(keyword, page) {
 }
 
 //Qna 내글보기(사용자)
-export function qnaUserList(userid) {
-    return api.get(`/api/cmnty/qna/searchUid/${userid}`);
+export function qnaUserList(userid,num) {
+    return api.get(`/api/cmnty/qna/searchUid/${userid}?page=${num}`);
 }
 
 //Qna 내글보기(관리자)
 export function qnaAdminList(num) {
     return api.get(`/api/cmnty/qna/posts?page=${num}`);
+}
+
+//좋아요 생성
+export function likePost(postNum, Data) {
+    return api.post(`/api/cmnty/like/${postNum}`, Data);
 }

@@ -35,27 +35,32 @@ import {savePost} from "@/api/post";
 export default {
     name: "Editor",
 
-    data   : () => ({
-        extensions: [
-            new Doc(),
-            new Text(),
-            new Paragraph(),
-            new Heading({level: 5}),
-            new Bold({bubble: true}),
-            new Underline({bubble: true}),
-            new Italic({bubble: true}),
-            new Strike({bubble: true}),
-            new Link({bubble: true}),
-            new Image(),
-            new Blockquote(),
-            new HorizontalRule({bubble: true}),
-            new History()
-        ],
-        content   : ``,
-        title     : ''
-    }),
+    data() {
+        return {
+            extensions: [
+                new Doc(),
+                new Text(),
+                new Paragraph(),
+                new Heading({level: 5}),
+                new Bold({bubble: true}),
+                new Underline({bubble: true}),
+                new Italic({bubble: true}),
+                new Strike({bubble: true}),
+                new Link({bubble: true}),
+                new Image(),
+                new Blockquote(),
+                new HorizontalRule({bubble: true}),
+                new History()
+            ],
+            content   : ``,
+            title     : ''
+        };
+    },
     methods: {
         async save() {
+            if (this.title === '') {
+                this.title = '제목 없음';
+            }
             const postData = {
                 boardname: this.$route.params.boardname,
                 content  : this.content,
@@ -64,7 +69,6 @@ export default {
                 writer   : this.$store.state.nickname
             }
             await savePost(postData);
-            console.log(postData.boardname)
             await this.$router.push(`/list/${postData.boardname}`);
         }
     }

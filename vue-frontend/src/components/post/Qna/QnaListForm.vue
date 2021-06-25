@@ -5,7 +5,7 @@
         <template v-slot:default>
             <thead>
                 <tr>
-                    <th class="text-left">No.</th>
+                    <th class="text-left">요청번호</th>
                     <th class="text-left">Title</th>
                     <th class="text-left">작성자</th>
                     <th class="text-left">작성일</th>
@@ -29,7 +29,7 @@
 
                 <div>
                     <ul>
-                        <li v-for="(page, i) in items.pageList" @click="fetchData(i+1)">{{ page }}</li>
+                        <li v-for="page in items.pageList" @click="fetchData(page)">{{ page }}</li>
                     </ul>
                 </div>
                 <div>
@@ -75,11 +75,14 @@ export default {
             if (this.isAdmin) {
                 this.isLoading = true;
                 const {data} = await qnaAdminList(num);
+                console.log(data);
                 this.isLoading = false;
                 this.items = data;
             } else {
                 this.isLoading = true;
-                const {data} = await qnaUserList(this.$store.state.id);
+                const {data} = await qnaUserList(this.$store.state.id,num);
+                console.log(data);
+                console.log(this.$store.state.id,num);
                 this.isLoading = false;
                 this.items = data;
             }

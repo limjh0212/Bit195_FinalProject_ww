@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ReadForm from "@/components/post/EditForm";
+import ReadForm from "@/components/post/Board/BoardEditForm";
 
 export default {
     components: {ReadForm}
