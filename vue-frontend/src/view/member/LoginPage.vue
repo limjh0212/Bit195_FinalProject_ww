@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>Log in Page!</h1>
         <LoginForm></LoginForm>
     </div>
 </template>
@@ -12,8 +11,3 @@ export default {
     components: {LoginForm},
 };
 </script>
-
-<style>
-
-
-</style>

@@ -61,12 +61,14 @@
                 </tbody>
             </table>
         </div>
-        <div v-if="isLoading"><LoadingSpinner></LoadingSpinner></div>
+        <div v-if="isLoading">
+            <LoadingSpinner></LoadingSpinner>
+        </div>
     </div>
 </template>
 
 <script>
-import {loadCoords, weatherData} from "@/api/weather";
+import {api_wwData, loadCoords, weatherData} from "@/api/weather";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default {
@@ -78,6 +80,7 @@ export default {
             weeklyWeather : [],
             iconSrc       : "",
             isLoading     : false,
+            result        : {}
         }
     },
     methods: {
@@ -88,16 +91,20 @@ export default {
             this.iconSrc = `https://openweathermap.org/img/wn/${weatherData.current.weather[0].icon}@2x.png`;
             this.weeklyWeather = weatherData.daily;
             console.log(weatherData)
+
+            const Data = {
+                id : this.id,
+                max: weatherData.daily[0].temp.max,
+                min: weatherData.daily[0].temp.min
+            }
+            //날씨-코디 img 예측값 가져오기
+            const {data} = await api_wwData(Data);
+            this.result = data;
         },
-    },
+    }
+    ,
     created() {
-        this.isLoading = true;
         this.fetchWeather();
-        this.isLoading = false;
     },
 };
 </script>
-
-<style scoped>
-
-</style>

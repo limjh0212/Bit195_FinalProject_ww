@@ -74,7 +74,7 @@ public class AuthController {
     //회원 ID 조회
     @ApiOperation(value = "ID 중복확인", notes = "ID 중복확인")
     @PostMapping("/checkId")
-    public boolean checkId(String id) {
+    public boolean checkId(@RequestBody String id) {
         return memberService.checkId(id);
     }
 }

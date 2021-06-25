@@ -59,3 +59,7 @@ export function countLo(userid) {
     return instance.get(`/api/weather/countlocation?userid=${userid}`);
 }
 
+//날씨-코디 예측 값 요청
+export function api_wwData(Data) {
+    return instance.post(``,Data);
+}

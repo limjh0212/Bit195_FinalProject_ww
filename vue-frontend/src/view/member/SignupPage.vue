@@ -11,7 +11,3 @@ export default {
     components: {SignupForm}
 }
 </script>
-
-<style scoped>
-
-</style>

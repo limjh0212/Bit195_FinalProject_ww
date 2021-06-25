@@ -1,25 +1,30 @@
 <template>
-    <div>
+    <div align="center"
+         justify="center">
         <!--읽기 Form-->
         <form v-if="isEdit===false">
             <h1>{{ this.title }}</h1>
             <el-tiptap :extensions="extensions" class="editor__content" :readonly="true" :charCounterCount="false"
                        v-model="content" :content="content" :showMenubar="false" :spellcheck="false" :tooltip="false"
-                       :width="700" height="100%" placeholder="Write something ..."/>
+                       :width="700" height="100%" style="border: 1px solid cadetblue" placeholder="Write something ..."/>
         </form>
 
         <!--수정 Form-->
         <form v-else>
             <input v-model="title" type="text"></input>
             <el-tiptap :extensions="extensions" class="editor__content" :spellcheck="false" :content="content"
-                       v-model="content" :width="700"
+                       v-model="content" :width="700" style="border: 1px solid cadetblue"
                        height="100%" placeholder="Write something ..."/>
         </form>
 
         <!--댓글 입력창-->
         <div>
-            <textarea v-model="writeCmnt" type="textarea"/>
-            <button @click="saveCmnt">저장</button>
+            <div>
+                <textarea style="width: 658px; border: solid 1px cadetblue; " v-model="writeCmnt" placeholder="댓글을 입력하세요." type="textarea"/>
+            </div>
+            <div>
+                <button @click="saveCmnt">저장</button>
+            </div>
         </div>
 
         <!--수정 Btn-->
@@ -39,15 +44,15 @@
 
         <!--좋아요-->
         <div>
-            <button v-if="data.existLike===true" @click="likePost">좋아요🐸</button>
-            <button v-else @click="likePost">좋아요</button>
+            <button v-if="data.existLike===true" @click="likePost">좋아요<i class="fas fa-thumbs-up"/></button>
+            <button v-else @click="likePost">좋아요<i class="far fa-thumbs-up"/></button>
         </div>
 
         <!--댓글-->
         <div>
             <!--댓글-->
             <div v-for="(item, i) in cmnt">{{ item.content }}
-                <span @click="pushCmnt2(i)">대댓작성</span> |
+                <span @click="pushCmnt2(i)">대댓작성<i class="far fa-caret-square-down"></i></span> |
                 <span @click="editCmntdo(i)">수정</span> |
                 <span @click="deleteCmnt1(i)">삭제</span> |
 

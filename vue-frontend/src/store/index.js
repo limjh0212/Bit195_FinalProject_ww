@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 import Vue from "vue";
 import createPersistedState from 'vuex-persistedstate';
 import Cookies from 'js-cookie';
-import {loginUser} from "@/api/auth";
+import {api_loginUser} from "@/api/auth";
 
 Vue.use(Vuex);
 
@@ -52,7 +52,7 @@ export const store = new Vuex.Store({
     actions  : {
         //로그인 정보 저장
         async LOGIN({commit}, userData) {
-            const {data} = await loginUser(userData);
+            const {data} = await api_loginUser(userData);
             commit('setUserData', data);
             return data;
 
