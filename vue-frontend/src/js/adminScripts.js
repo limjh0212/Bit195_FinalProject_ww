@@ -1,6 +1,5 @@
 import {apexchart} from "@/utils/charts";
-import apexchartCharts from "node-sass";
-const scripts = this.data;
+// import apexchartCharts from "node-sass";
 
 apexchart.grid = {
     padding: {
@@ -230,13 +229,21 @@ var monthlyEarningsOpt = {
         }
     }
 }
+//Todo: 수정중
+var elSpark1 = document.getElementById("spark1");
+var elSpark2 = document.getElementById("spark2");
+var elSpark3 = document.getElementById("spark3");
 
+var spark1Chart = new ApexCharts(elSpark1, spark1);
+spark1Chart.render();
+var spark2Chart =new ApexCharts(elSpark2, spark2);
+spark2Chart.render();
+var spark3Chart =new ApexCharts(elSpark3, spark3);
+spark3Chart.render();
 
-new apexchartCharts(document.querySelector("#spark1"), spark1).render();
-new apexchartCharts(document.querySelector("#spark2"), spark2).render();
-new apexchartCharts(document.querySelector("#spark3"), spark3).render();
-
-var monthlyEarningsChart = new apexchartCharts(document.querySelector("#monthly-earnings-chart"), monthlyEarningsOpt);
+var elMonthlyEarningsChart = document.getElementById("monthly-earnings-chart");
+var monthlyEarningsChart = new ApexCharts(elMonthlyEarningsChart, monthlyEarningsOpt);
+monthlyEarningsChart.render();
 
 
 var optionsArea = {
@@ -379,8 +386,8 @@ var optionsArea = {
         show: false
     }
 }
-
-var chartArea = new apexchartCharts(document.querySelector('#area'), optionsArea);
+var elArea = document.getElementById("area");
+var chartArea = new ApexCharts(elArea, optionsArea);
 chartArea.render();
 
 var optionsBar = {
@@ -437,8 +444,8 @@ var optionsBar = {
     }
 
 }
-
-var chartBar = new apexchartCharts(document.querySelector('#bar'), optionsBar);
+var elBar = document.getElementById("bar");
+var chartBar = new ApexCharts(elBar, optionsBar);
 chartBar.render();
 
 
@@ -477,9 +484,9 @@ var optionDonut = {
         offsetY: 80
     }
 }
-
-var donut = new apexchartCharts(
-    document.querySelector("#donut"),
+var elDonut = document.getElementById("donut");
+var donut = new ApexCharts(
+    elDonut,
     optionDonut
 )
 donut.render();
@@ -578,8 +585,8 @@ var optionsLine = {
     }
 
 }
-
-var chartLine = new apexchartCharts(document.querySelector('#line'), optionsLine);
+var elLine = document.getElementById("line");
+var chartLine = new ApexCharts(elLine, optionsLine);
 
 // a small hack to extend height in website sample dashboard
 chartLine.render().then(function () {
