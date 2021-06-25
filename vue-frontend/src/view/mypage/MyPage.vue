@@ -5,7 +5,7 @@
         <router-link to="#"><div class="sub-nav-box-default">코디 좋아요</div></router-link>
       </div>
       <div class="sub-nav-box">
-        <router-link to="#"><div class="sub-nav-box-default">내가 작성한 글</div></router-link>
+        <router-link to=" "><div class="sub-nav-box-default">내가 작성한 글</div></router-link>
       </div>
       <div class="sub-nav-box">
         <router-link to="#"><div class="sub-nav-box-default">내가 작성한 댓글</div></router-link>
