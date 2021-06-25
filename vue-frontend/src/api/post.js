@@ -46,8 +46,8 @@ export function freeBoardAll(keyword, page) {
 }
 
 //Qna 내글보기(사용자)
-export function qnaUserList(userid,num) {
-    return api.get(`/api/cmnty/qna/searchUid/${userid}?page=${num}`);
+export function boardUserList(userid,num,boardname) {
+    return api.get(`/api/cmnty/${boardname}/searchUid/${userid}?page=${num}`);
 }
 
 //Qna 내글보기(관리자)

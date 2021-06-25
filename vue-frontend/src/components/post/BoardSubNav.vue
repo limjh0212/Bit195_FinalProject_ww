@@ -24,6 +24,7 @@
 
 <script>
 export default {
+    methods : {},
     computed: {
         isAdmin() {
             return this.$store.getters.isAdmin;

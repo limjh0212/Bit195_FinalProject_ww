@@ -6,7 +6,7 @@
             <button @click="SearchKeyword">입력</button>
             <ul>
                 <li v-for="(item, i) in data"><span>{{ item.city }} {{ item.address1 }} {{ item.address2 }}</span>
-                    <button @click="save(i)">선택</button>
+                    <button @click="save(i)">저장</button>
                 </li>
             </ul>
         </div>

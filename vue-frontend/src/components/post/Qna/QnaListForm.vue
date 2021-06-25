@@ -51,7 +51,7 @@
 
 <script>
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {freeBoardAll, freeBoardTitle, qnaAdminList, qnaUserList} from "@/api/post";
+import {boardUserList, freeBoardAll, freeBoardTitle, qnaAdminList} from "@/api/post";
 
 export default {
     components: {LoadingSpinner},
@@ -80,7 +80,7 @@ export default {
                 this.items = data;
             } else {
                 this.isLoading = true;
-                const {data} = await qnaUserList(this.$store.state.id,num);
+                const {data} = await boardUserList(this.$store.state.id,num,this.$route.params.boardname);
                 console.log(data);
                 console.log(this.$store.state.id,num);
                 this.isLoading = false;
