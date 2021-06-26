@@ -1,16 +1,11 @@
 <template>
     <div class="content-view">
         <v-container>
-            <div id="side-nav mt-3 mb-3 d-fixed">
+            <div id="side-nav" class="mt-3 mb-3 d-fixed">
                 <div class="side-nav-box">
                     <router-link to="/admin/main" class="btn btn-light mr-2">
                       <div class="side-nav-box-default"><span class="btn-text">서비스 현황</span></div>
                     </router-link>
-                    <span
-                        class="spinner-border spinner-border-sm"
-                        role="status"
-                        aria-hidden="true"
-                    ></span>
                 </div>
                 <div class="side-nav-box">
                     <router-link to="/admin/cmnty" class="btn btn-light mr-2">

@@ -68,13 +68,13 @@ public class ImgController {
         String absolutePath = new File("").getAbsolutePath()+File.separator+File.separator;
         String path = imgDTO.getStoredpath();
         // 맥에서 출력되지 않는 문제 해결을 위해
-//        System.out.println(path);
-//        String[] paths = path.split("\\\\");
-//        String imagesFolder = paths[0];
-//        String dateFolder = paths[1];
-//        String filename = paths[2];
-//        path = imagesFolder+"/"+dateFolder+"/"+filename;
-//        System.out.println(path);
+        System.out.println(path);
+        String[] paths = path.split("\\\\");
+        String imagesFolder = paths[0];
+        String dateFolder = paths[1];
+        String filename = paths[2];
+        path = imagesFolder+"/"+dateFolder+"/"+filename;
+        System.out.println(path);
         // escape 문자라서 \\\\네개 사용함.
         InputStream imageStream = new FileInputStream(absolutePath+path);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -93,11 +93,11 @@ public class ImgController {
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
             String path = imgDTOList.get(i).getStoredpath();
             // 맥에서 출력되지 않는 문제 해결을 위해
-//            String[] paths = path.split("\\\\");
-//            String imagesFolder = paths[0];
-//            String dateFolder = paths[1];
-//            String filename = paths[2];
-//            path = imagesFolder + "/" + dateFolder + "/" + filename;
+            String[] paths = path.split("\\\\");
+            String imagesFolder = paths[0];
+            String dateFolder = paths[1];
+            String filename = paths[2];
+            path = imagesFolder + "/" + dateFolder + "/" + filename;
             // escape 문자라서 \\\\네개 사용함.
             InputStream imageStream = new FileInputStream(absolutePath + path);
             byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -117,11 +117,11 @@ public class ImgController {
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
             String path = imgDTOList.get(i).getStoredpath();
             // 맥에서 출력되지 않는 문제 해결을 위해
-//            String[] paths = path.split("\\\\");
-//            String imagesFolder = paths[0];
-//            String dateFolder = paths[1];
-//            String filename = paths[2];
-//            path = imagesFolder + "/" + dateFolder + "/" + filename;
+            String[] paths = path.split("\\\\");
+            String imagesFolder = paths[0];
+            String dateFolder = paths[1];
+            String filename = paths[2];
+            path = imagesFolder + "/" + dateFolder + "/" + filename;
             // escape 문자라서 \\\\네개 사용함.
             InputStream imageStream = new FileInputStream(absolutePath + path);
             byte[] imageByteArray = IOUtils.toByteArray(imageStream);

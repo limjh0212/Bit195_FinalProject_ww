@@ -21,6 +21,50 @@ a {
     text-decoration: none;
     color: #333;
 }
+.board-btn{
+    display: inline-block;
+    font-weight: 400;
+    color: dimgrey;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0 0.05rem lightgrey;
+    float: left;
+    margin: 10px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+@media screen and (prefers-reduced-motion: reduce) {
+    .board-btn {
+        transition: none;
+    }
+}
+
+.board-btn:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.board-btn:focus, .ww-btn.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.board-btn.disabled, .ww-btn:disabled {
+    opacity: 0.65;
+}
+
+.board-btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
 /*메인 네비게이션*/
 #nav{
     width: 100%;
@@ -102,16 +146,15 @@ a {
     margin: auto;
 }
 .side-nav-box{
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     /*border: 1px solid grey;*/
     /*border-radius: 5px;*/
 }
 .side-nav-box-default{
     width: 100px;
     height: 100px;
-    /*margin-top: 5px;*/
-    /*margin-bottom: 5px;*/
+    font-size: 14px;
 }
 .side-nav-box div{
     display: inline-block;

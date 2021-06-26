@@ -17,7 +17,7 @@
 
     <div class="row mt-4 mb-4">
       <div class="col-md-12">
-        <div class="box">
+        <div class="table-box">
           <div>
             <v-simple-table>
               <template v-slot:default>
