@@ -3,6 +3,8 @@
         <div>
             <h1>오늘의 날씨</h1>
             <h3>{{ this.locationInfo }}</h3>
+            <li v-for="item in wwResult"><img :src="item" alt="이미지" /></li>
+
             <table>
                 <thead>
                     <tr>
@@ -80,7 +82,7 @@ export default {
             weeklyWeather : [],
             iconSrc       : "",
             isLoading     : false,
-            result        : {}
+            wwResult      : {}
         }
     },
     methods: {
@@ -93,13 +95,15 @@ export default {
             console.log(weatherData)
 
             const Data = {
-                id : this.id,
-                max: weatherData.daily[0].temp.max,
-                min: weatherData.daily[0].temp.min
+                user_id: this.$store.state.id,
+                temp   : weatherData.daily[0].temp.day
             }
+            console.log(Data)
             //날씨-코디 img 예측값 가져오기
             const {data} = await api_wwData(Data);
-            this.result = data;
+            this.wwResult = data;
+            console.log(this.wwResult)
+
         },
     }
     ,
