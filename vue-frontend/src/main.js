@@ -16,6 +16,6 @@ new Vue({
     Editor,
     moment,
     vuetify,
-    apexchart
+    apexchart,
 
 }).$mount('#app')

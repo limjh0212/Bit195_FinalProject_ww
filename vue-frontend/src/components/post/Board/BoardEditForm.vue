@@ -6,7 +6,8 @@
             <h1>{{ this.title }}</h1>
             <el-tiptap :extensions="extensions" class="editor__content" :readonly="true" :charCounterCount="false"
                        v-model="content" :content="content" :showMenubar="false" :spellcheck="false" :tooltip="false"
-                       :width="700" height="100%" style="border: 1px solid cadetblue" placeholder="Write something ..."/>
+                       :width="700" height="100%" style="border: 1px solid cadetblue"
+                       placeholder="Write something ..."/>
         </form>
 
         <!--수정 Form-->
@@ -16,64 +17,83 @@
                        v-model="content" :width="700" style="border: 1px solid cadetblue"
                        height="100%" placeholder="Write something ..."/>
         </form>
-
-        <!--댓글 입력창-->
-        <div>
+        <div style="width: 55%; display: flex; justify-content: space-between">
+            <!--좋아요-->
             <div>
-                <textarea style="width: 658px; border: solid 1px cadetblue; " v-model="writeCmnt" placeholder="댓글을 입력하세요." type="textarea"/>
+                <button v-if="data.existLike===true" @click="likePost">좋아요<i class="material-icons"
+                                                                             style="font-size: 18px; color:crimson">favorite</i>
+                </button>
+                <button v-else @click="likePost">좋아요<i class="material-icons" style="font-size: 18px ; color: crimson">favorite_border</i>
+                </button>
             </div>
-            <div>
-                <button @click="saveCmnt">저장</button>
+            <!--수정 Btn-->
+            <div v-if="isEdit===false">
+                <button v-if="post.uid===checkUid" @click="doEdit">수정<i class="material-icons"
+                                                                        style="font-size: 18px;">edit</i></button>&nbsp;&nbsp;&nbsp;
+                <button v-if="post.uid===checkUid" @click="doDelete(post.num)">삭제<i class="material-icons"
+                                                                                    style="font-size: 18px;">clear</i>
+                </button>
             </div>
         </div>
 
-        <!--수정 Btn-->
-        <div v-if="isEdit===false">
-            <button v-if="post.uid===checkUid" @click="doEdit">수정</button>
-            |
-            <button v-if="post.uid===checkUid" @click="doDelete(post.num)">삭제</button>
+        <!--댓글 입력창-->
+        <br>
+        <div s>
+            <div>
+                <textarea style="width: 700px; border: solid 1px cadetblue; resize: none " v-model="writeCmnt"
+                          placeholder="댓글을 입력하세요." type="textarea"/>
+            </div>
+            <div style="display: flex; justify-content: space-between">
+                <div>
+                </div>
+                <div style="width: 50%;">
+                    <button @click="saveCmnt">저장<i class="material-icons"
+                                                   style="font-size: 18px;">save</i></button>
+                </div>
+            </div>
         </div>
 
 
         <!--저장/취소 Btn-->
         <div v-if="isEdit===true">
-            <button v-if="post.uid===checkUid" @click="update">저장</button>
+            <button v-if="post.uid===checkUid" @click="update">저장<i class="material-icons"
+                                                                    style="font-size: 18px;">save</i></button>
             |
-            <button v-if="post.uid===checkUid" @click="goBack">취소</button>
+            <button v-if="post.uid===checkUid" @click="goBack">취소<i class="material-icons"
+                                                                    style="font-size: 18px;">arrow_back</i></button>
         </div>
 
-        <!--좋아요-->
-        <div>
-            <button v-if="data.existLike===true" @click="likePost">좋아요<i class="fas fa-thumbs-up"/></button>
-            <button v-else @click="likePost">좋아요<i class="far fa-thumbs-up"/></button>
-        </div>
 
         <!--댓글-->
-        <div>
+        <div style="width: 60%; border: #607D8B 1px solid">
             <!--댓글-->
-            <div v-for="(item, i) in cmnt">{{ item.content }}
-                <span @click="pushCmnt2(i)">대댓작성<i class="far fa-caret-square-down"></i></span> |
-                <span @click="editCmntdo(i)">수정</span> |
-                <span @click="deleteCmnt1(i)">삭제</span> |
-
-                <!--댓글 수정-->
-                <div v-if="showCmnt1(i)">
-                    <textarea v-model="editCmnt" placeholder="수정 내용을 입력하세요." type="textarea"/>
-                    <button @click="editCmnt1">저장</button>
+            <div style="display: flex; justify-content: space-between" v-for="(item, i) in cmnt">
+                <div>
+                    {{ item.content }}
                 </div>
-
-                <!--대댓글 작성-->
-                <div v-if="showCmnt2(i)">
-                    <div>
-                        <textarea v-model="writeCmnt2" placeholder="대댓글 내용을 입력하세요." type="textarea"/>
-                        <button @click="saveCmnt2">저장</button>
-                    </div>
+                <div>
+                    <span @click="pushCmnt2(i)"><i class="material-icons" style="font-size: 18px;">reply</i></span>&nbsp;&nbsp;&nbsp;
+                    <span @click="editCmntdo(i)"><i class="material-icons" style="font-size: 18px;">edit</i></span>&nbsp;&nbsp;&nbsp;
+                    <span @click="deleteCmnt1(i)"><i class="material-icons" style="font-size: 18px;">clear</i></span>&nbsp;&nbsp;&nbsp;
                 </div>
-                <!--대댓글-->
-                <ul>
-                    <li v-for="(item, i) in cmnt2[i]">{{ item.content }}</li>
-                </ul>
             </div>
+            <!--댓글 수정-->
+            <div v-if="showCmnt1(i)">
+                <textarea v-model="editCmnt" placeholder="수정 내용을 입력하세요." type="textarea"/>
+                <button @click="editCmnt1">저장</button>
+            </div>
+
+            <!--대댓글 작성-->
+            <div v-if="showCmnt2(i)">
+                <div>
+                    <textarea v-model="writeCmnt2" placeholder="대댓글 내용을 입력하세요." type="textarea"/>
+                    <button @click="saveCmnt2">저장</button>
+                </div>
+            </div>
+            <!--대댓글-->
+            <ul>
+                <li v-for="(item, i) in cmnt2[i]">{{ item.content }}</li>
+            </ul>
         </div>
     </div>
 </template>

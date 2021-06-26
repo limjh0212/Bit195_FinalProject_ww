@@ -1,52 +1,72 @@
 <template>
-  <v-container class="content-view">
-    <div id="board-list-form">
-      <v-simple-table>
-        <template v-slot:default>
-            <thead>
-                <tr>
-                    <th class="text-left">요청번호</th>
-                    <th class="text-left">Title</th>
-                    <th class="text-left">작성자</th>
-                    <th class="text-left">작성일</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, idx) in items.posts" :key="idx">
-                    <td>{{ item.postnum }}</td>
-                    <td><a :href="`/post/qna/${item.num}`">{{ item.title }}</a></td>
-                    <td>{{ item.writer }}</td>
-                    <td v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')">
-                        {{ $moment(item.regdate).format('HH:mm:ss') }}
-                    </td>
-                    <td v-else>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <button v-if="isAdmin===false">
-                    <router-link to="/post/qna">글 작성</router-link>
-                </button>
-
-                <div>
-                    <ul>
-                        <li v-for="page in items.pageList" @click="fetchData(page)">{{ page }}</li>
-                    </ul>
-                </div>
-                <div>
-                    <select v-model="search" name="search">
-                        <option value="">Select</option>
-                        <option value="true">제목</option>
-                        <option value="false">제목+내용</option>
-                    </select>
-                    <input v-model="keyword" placeholder="검색어를 입력하세요" type="text"></input>
-                    <button @click.prevent="SearchData">검색</button>
-                </div>
-            </tfoot>
-            <span v-if="isLoading"><LoadingSpinner></LoadingSpinner></span>
-        </template>
-      </v-simple-table>
-    </div>
-  </v-container>
+    <v-container class="content-view">
+        <div id="board-list-form">
+            <v-simple-table>
+                <template v-slot:default>
+                    <thead>
+                        <tr>
+                            <th class="th" style="width: 50px;">No.</th>
+                            <th class="th" style="width: 90px;">작성자</th>
+                            <th class="th" style="width: 300px;">Title</th>
+                            <th class="th" style="width: 120px;">작성일</th>
+                            <th class="th" style="width: 50px;">좋아요</th>
+                            <th class="th" style="width: 50px;">조회</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, idx) in items.posts" :key="idx">
+                            <td class="text_center">{{ item.postnum }}</td>
+                            <td class="text_center">{{ item.writer }}</td>
+                            <td><a :href="`/post/freeBoard/${item.num}`">{{ item.title }}</a></td>
+                            <td class="text_center"
+                                v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')">
+                                {{ $moment(item.regdate).format('HH:mm:ss') }}
+                            </td>
+                            <td class="text_center" v-else>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
+                            <td class="text_center">{{ item.likecount }}</td>
+                            <td class="text_center">{{ item.readcount }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <th colspan="6">
+                            <div style="justify-content: space-between; display: flex">
+                                <div>
+                                    <v-btn elevation="1" rounded small>
+                                        <router-link to="/post/freeBoard">글 작성<i class="material-icons"
+                                                                                 style="font-size: 15px">create</i>
+                                        </router-link>
+                                    </v-btn>
+                                </div>
+                                <div>
+                                    <div style="display: flex" class="page-list">
+                                        <div v-for="page in items.pageList" @click="fetchData(page)">{{ page }}</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="foot-search" >
+                                        <div class="foot-search-box">
+                                            <select v-model="search" name="search">
+                                                <option value="">Select</option>
+                                                <option value="true">제목</option>
+                                                <option value="false">제목+내용</option>
+                                            </select>
+                                        </div>
+                                        <div class="foot-search-box">
+                                            <input v-model="keyword" placeholder="검색어를 입력하세요" type="text"></input>
+                                        </div>
+                                        <div class="foot-search-box">
+                                            <button @click.prevent="SearchData"><i class="material-icons"
+                                                                                   style="font-size: 25px">search</i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                    </tfoot>
+                </template>
+            </v-simple-table>
+        </div>
+    </v-container>
 </template>
 
 <script>
@@ -80,9 +100,9 @@ export default {
                 this.items = data;
             } else {
                 this.isLoading = true;
-                const {data} = await boardUserList(this.$store.state.id,num,this.$route.params.boardname);
+                const {data} = await boardUserList(this.$store.state.id, num, this.$route.params.boardname);
                 console.log(data);
-                console.log(this.$store.state.id,num);
+                console.log(this.$store.state.id, num);
                 this.isLoading = false;
                 this.items = data;
             }
@@ -114,9 +134,7 @@ export default {
 </script>
 
 <style scoped>
-.text-left {
-    width: 10rem;
+.text_center {
+    text-align: center;
 }
-
-
 </style>
