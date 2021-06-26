@@ -114,16 +114,6 @@ h1, h2, h3, h4, h5, h6, strong {
     max-height: 444px;
 }
 
-.box .banana {
-    min-height: 404px;
-    background-image: url('public/assets/img/banana.png');
-    background-size: cover;
-}
-.box .map {
-    min-height: 404px;
-    background-image: url('public/assets/img/map.png');
-    background-size: cover;
-}
 .box .cog-icon {
     cursor: pointer;
     position: absolute;
@@ -197,19 +187,19 @@ h1, h2, h3, h4, h5, h6, strong {
     position: relative;
 }
 
-#spark1, #spark2, #spark3, #spark4 {
+.spark {
     position: relative;
     padding-top: 15px;
 }
-
-
 /* overrides */
 .sparkboxes #apexcharts-subtitle-text { fill: #8799a2 !important; }
 
 /* fusionexport btn CSS START */
 #fusionexport-btn {
-    min-width: 169px;
-    min-height: 38px;
+    /*min-width: 169px;*/
+    /*min-height: 38px;*/
+    min-width: 60px;
+    min-height: 30px;
     text-align: center;
 }
 

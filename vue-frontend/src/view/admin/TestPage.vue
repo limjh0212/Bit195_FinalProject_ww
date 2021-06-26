@@ -4,22 +4,22 @@
       <div class="content-area">
         <div class="container-fluid">
           <div class="text-right mt-3 mb-3 d-fixed">
-            <a
-                href="https://github.com/apexcharts/apexcharts.js/tree/master/samples/vanilla-js/dashboards/modern"
-                target="_blank"
-                class="btn btn-outline-primary mr-2"
-            >
-              <span class="btn-text">View Code</span>
-            </a>
-            <button class="btn btn-success" id="fusionexport-btn">
-              <span
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-              ></span>
-              <span class="btn-text">Download as PDF</span>
-            </button>
-          </div>
+<!--            <a-->
+<!--                href="https://github.com/apexcharts/apexcharts.js/tree/master/samples/vanilla-js/dashboards/modern"-->
+<!--                target="_blank"-->
+<!--                class="btn btn-outline-primary mr-2"-->
+<!--            >-->
+<!--              <span class="btn-text">View Code</span>-->
+<!--            </a>-->
+<!--            <button class="btn btn-success" id="fusionexport-btn">-->
+<!--              <span-->
+<!--                  class="spinner-border spinner-border-sm"-->
+<!--                  role="status"-->
+<!--                  aria-hidden="true"-->
+<!--              ></span>-->
+<!--              <span class="btn-text">Download as PDF</span>-->
+<!--            </button>-->
+<!--          </div>-->
           <div class="main">
             <div class="row sparkboxes mt-4 mb-4">
               <div class="col-md-4">
@@ -44,7 +44,6 @@
                 <div class="box">
                   <div id="bar">
                     <!--                    내가 추가한 것-->
-                      <BarChart></BarChart>
                   </div>
                 </div>
               </div>
@@ -52,7 +51,6 @@
                 <div class="box">
                   <div id="donut">
                     <!--                    내가 추가한 것-->
-                    <DonutChart></DonutChart>
                   </div>
                 </div>
               </div>
@@ -68,7 +66,6 @@
                 <div class="box">
                   <div id="line">
                     <!--                    내가 추가한 것-->
-                    <LineChart></LineChart>
                   </div>
                 </div>
               </div>
@@ -78,12 +75,10 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
-import BarChart from "@/components/chart/BarChart";
-import LineChart from "@/components/chart/LineChart";
-import DonutChart from "@/components/chart/DonutChart";
 export default {
   name: "TestPage",
   components: {DonutChart, LineChart, BarChart},

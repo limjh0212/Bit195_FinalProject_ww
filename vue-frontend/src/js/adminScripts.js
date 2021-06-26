@@ -485,10 +485,7 @@ var optionDonut = {
     }
 }
 var elDonut = document.getElementById("donut");
-var donut = new ApexCharts(
-    elDonut,
-    optionDonut
-)
+var donut = new ApexCharts(elDonut, optionDonut);
 donut.render();
 
 
@@ -628,6 +625,7 @@ var mobileDonut = function() {
 $(window).resize(function() {
     mobileDonut()
 });
+
 
 /* fusionexport integrations START */
 (() => {

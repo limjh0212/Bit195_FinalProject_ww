@@ -104,12 +104,14 @@ a {
 .side-nav-box{
     margin-top: 20px;
     margin-bottom: 20px;
-    border: 1px solid grey;
-    border-radius: 5px;
+    /*border: 1px solid grey;*/
+    /*border-radius: 5px;*/
 }
 .side-nav-box-default{
-    margin-top: 5px;
-    margin-bottom: 5px;
+    width: 100px;
+    height: 100px;
+    /*margin-top: 5px;*/
+    /*margin-bottom: 5px;*/
 }
 .side-nav-box div{
     display: inline-block;
