@@ -21,6 +21,14 @@ a {
     text-decoration: none;
     color: #333;
 }
+th {
+    font-family: 'Titillium Web', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+td{
+    font-family: 'Titillium Web', Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
+}
 .board-btn{
     display: inline-block;
     font-weight: 400;

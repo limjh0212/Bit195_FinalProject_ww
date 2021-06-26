@@ -1,68 +1,111 @@
 <template>
-  <v-container>
-    <div>
-        <table>
-            <tr class="row">
-                <td class="card-box card" v-for="item in ootdList">
-                  <img :src="item" class="imgCard">
-                </td>
-                <td class="card-box" v-for="(item, idx) in postList" :key="idx">
-                  <div class="card-info">
-                    <div class="card-box-default"><a :href="`/post/OOTD/${item.postnum}`">{{ item.title }}</a></div>
-                    <div class="card-box-default">{{ item.postnum }}</div>
-                  </div>
-                  <div class="card-info">
-                    <div class="card-box-default">{{ item.writer }}</div>
-                    <div class="card-box-default" v-if="$moment(item.regdate).format('YYYY-MM-DD')===$moment().format('YYYY-MM-DD')">{{ $moment(item.regdate).format('HH:mm:ss') }}</div>
-                    <div class="card-box-default" v-else>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</div>
-                  </div>
-                  <div class="card-info">
-                    <!--                      <div class="card-box-default">{{ item.existLike }}</div>-->
-                    <div class="card-box-default">{{ item.likecount }}</div>
-                  </div>
-                </td>
-            </tr>
-        </table>
-        <LoadingSpinner v-if="isLoading"></LoadingSpinner>
-    </div>
+  <v-container id="board-list-form">
+      <div class="content-view">
+        <div class="mt-3 mb-3 d-fixed">
+            <router-link to="/post/OOTD" class="board-btn btn-outline-primary mr-2">
+              <span class="btn-text">글 작성</span>
+            </router-link>
+            <button class="board-btn btn-success" id="fusionexport-btn" @click="fetchMyList(1)">
+<!--              @click="fetchMyList(1)"-->
+              <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+              ></span>
+              <span class="btn-text">내 글 보기</span>
+            </button>
+        </div>
+        <div>
+          <div class="main">
+            <table>
+                <tr class="row">
+                    <td id="card-form" class="card" v-for="item in list()">
+                      <div class="card-content">
+                          <div id="card-img" class="card-box">
+                            <img :src="item[0]" class="imgCard">
+                          </div>
+                          <div class="card-box">
+                            <div class="card-info">
+                              <div class="card-box-default"><a :href="`/post/OOTD/${item[1].postnum}`"><div>{{ item[1].title }}</div></a></div>
+                              <div class="card-box-default">{{ item[1].postnum }}</div>
+                            </div>
+                            <div id="card-post" class="card-info">
+                              <div class="card-box-default">{{ item[1].writer }}</div>
+                              <div class="card-box-default" v-if="$moment(item[1].regdate).format('YYYY-MM-DD')===$moment().format('YYYY-MM-DD')">{{ $moment(item[1].regdate).format('HH:mm:ss') }}</div>
+                              <div class="card-box-default" v-else>{{ $moment(item[1].regdate).format('YYYY-MM-DD') }}</div>
+                            </div>
+                            <div class="card-info">
+                              <!--                      <div class="card-box-default">{{ item.existLike }}</div>-->
+                              <div class="card-box-default">{{ item[1].likecount }}</div>
+                            </div>
+                          </div>
+                      </div>
+                    </td>
+                </tr>
+            </table>
+          </div>
+        </div>
+            <LoadingSpinner v-if="isLoading"></LoadingSpinner>
+      </div>
   </v-container>
 </template>
 
 <script>
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {getOotdList} from "@/api/img";
-import {OOTDList} from "@/api/post";
+import {boardUserList, OOTDList} from "@/api/post";
 
 export default {
     components: {LoadingSpinner},
     data() {
         return {
             isLoading: false,
-            ootdList : [],
             postList:[],
             pageList : [],
+            cardList: [],
+            myList   : false,
         }
     },
     methods: {
         async fetchData() {
             this.isLoading = true;
             const {data} = await OOTDList();
-            console.log(data);
             this.isLoading = false;
             this.postList = data.posts; // 포스트 정보 리스트
             this.pageList = data.pageList;
-
         },
         async fetchOotd(){
-              this.isLoading = true;
-              let imgSrc = '';
-              const {data} = await getOotdList();
-              this.isLoading = false;
-              for (var i = 0; i< data.length; i++){
-                imgSrc = "data:image/png;base64," + data[i];
-                this.ootdList.push(imgSrc);
-              } // 이미지 정보 리스트
+            this.isLoading = true;
+            const {data} = await getOotdList();
+            this.isLoading = false;
+            let img='';
+            let post=[];
+            let temp = [];
+            for (var i=0;i<data.length;i++){
+              img = "data:image/png;base64," + data[i];
+              temp.push(img);
+              post = this.postList[i];
+              temp.push(post);
+            }
+            this.cardList=temp;
         },
+        list : function (){
+          var card = [];
+          var cards =[];
+          for (var i=0;i<this.cardList.length;i+=2){
+            card.push(this.cardList[i]);
+            card.push(this.cardList[i+1]);
+            cards.push(card.slice(i,i+2));
+          }
+          return cards;
+        },
+        // async fetchMyList(num) {
+        //   const {data} = await boardUserList(this.$store.state.id, num, this.$route.params.boardname);
+        //   this.postList = data;
+        //   this.pageList = data.pageList;
+        //   this.myList = true;
+        //   console.log(this.postList)
+        // },
     },
     created() {
       this.fetchOotd();
@@ -72,23 +115,38 @@ export default {
 </script>
 
 <style scoped>
-.text-left {
-    width: 10rem;
+@media(max-width: 1200px){
+  #card-form{
+    width:23%;
+    height: 20%;
+  }
+}
+.right-btn-box{
+
 }
 .row{
-  margin: 30px;
+  margin: 0px;
+}
+.card-content{
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.2rem;
 }
 .card{
-  width: 20%;
-  height: 300px;
+  width: 23%;
+  height: 350px;
   border-radius: 5px;
   overflow: hidden;
-  margin-left: 15px;
-  margin-right: 15px;
+  padding: 5px 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .imgCard{
   width: 100%;
   height: 100%;
   object-fit: revert;
+}
+.card-box {
+  width: 100%;
 }
 </style>
