@@ -5,7 +5,7 @@
             <router-link to="/post/OOTD" class="board-btn btn-outline-primary mr-2">
               <span class="btn-text">글 작성</span>
             </router-link>
-            <button class="board-btn btn-success" id="fusionexport-btn" @click="fetchMyList(1)">
+            <button class="board-btn btn-success" id="fusionexport-btn">
 <!--              @click="fetchMyList(1)"-->
               <span
                   class="spinner-border spinner-border-sm"
@@ -26,7 +26,7 @@
                           </div>
                           <div class="card-box">
                             <div class="card-info">
-                              <div class="card-box-default"><a :href="`/post/OOTD/${item[1].postnum}`"><div>{{ item[1].title }}</div></a></div>
+                              <div class="card-box-default"><router-link :to="`/post/OOTD/${item[1].num}`"><div>{{ item[1].title }}</div></router-link></div>
                               <div class="card-box-default">{{ item[1].postnum }}</div>
                             </div>
                             <div id="card-post" class="card-info">
@@ -120,9 +120,6 @@ export default {
     width:23%;
     height: 20%;
   }
-}
-.right-btn-box{
-
 }
 .row{
   margin: 0px;
