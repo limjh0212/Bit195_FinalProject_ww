@@ -6,7 +6,7 @@
             <h1>{{ this.title }}</h1>
             <el-tiptap :extensions="extensions" class="editor__content" :readonly="true" :charCounterCount="false"
                        v-model="content" :content="content" :showMenubar="false" :spellcheck="false" :tooltip="false"
-                       :width="700" height="100%" style="border: 1px solid cadetblue"
+                       :width="700" height="100%" style="border: 1px solid lightgray"
                        placeholder="Write something ..."/>
         </form>
 
@@ -14,7 +14,7 @@
         <form v-else>
             <input v-model="title" type="text"></input>
             <el-tiptap :extensions="extensions" class="editor__content" :spellcheck="false" :content="content"
-                       v-model="content" :width="700" style="border: 1px solid cadetblue"
+                       v-model="content" :width="700" style="border: 1px solid lightgray"
                        height="100%" placeholder="Write something ..."/>
         </form>
         <div style="width: 55%; display: flex; justify-content: space-between">
@@ -26,6 +26,16 @@
                 <button v-else @click="likePost">좋아요<i class="material-icons" style="font-size: 18px ; color: crimson">favorite_border</i>
                 </button>
             </div>
+
+            <!--저장/취소 Btn-->
+            <div v-if="isEdit===true">
+                <button v-if="post.uid===checkUid" @click="update">저장<i class="material-icons"
+                                                                        style="font-size: 18px;">save</i></button>
+                |
+                <button v-if="post.uid===checkUid" @click="goBack">취소<i class="material-icons"
+                                                                        style="font-size: 18px;">arrow_back</i></button>
+            </div>
+
             <!--수정 Btn-->
             <div v-if="isEdit===false">
                 <button v-if="post.uid===checkUid" @click="doEdit">수정<i class="material-icons"
@@ -38,45 +48,46 @@
 
         <!--댓글 입력창-->
         <br>
-        <div s>
+        <div>
             <div>
-                <textarea style="width: 700px; border: solid 1px cadetblue; resize: none " v-model="writeCmnt"
-                          placeholder="댓글을 입력하세요." type="textarea"/>
-            </div>
-            <div style="display: flex; justify-content: space-between">
-                <div>
-                </div>
-                <div style="width: 50%;">
-                    <button @click="saveCmnt">저장<i class="material-icons"
-                                                   style="font-size: 18px;">save</i></button>
+                <v-textarea
+                    solo
+                    name="input-7-4"
+                    style="width: 700px;"
+                    v-model="writeCmnt"
+                    placeholder="댓글을 입력하세요."
+                ></v-textarea>
+                <div style="display: flex; justify-content: space-between">
+                    <div>
+                    </div>
+                    <div style="width: 50%;">
+                        <button @click="saveCmnt">저장<i class="material-icons"
+                                                       style="font-size: 18px;">save</i></button>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-        <!--저장/취소 Btn-->
-        <div v-if="isEdit===true">
-            <button v-if="post.uid===checkUid" @click="update">저장<i class="material-icons"
-                                                                    style="font-size: 18px;">save</i></button>
-            |
-            <button v-if="post.uid===checkUid" @click="goBack">취소<i class="material-icons"
-                                                                    style="font-size: 18px;">arrow_back</i></button>
-        </div>
-
-
-
+<br><br>
         <!--댓글-->
-        <div style="width: 60%; border: #607D8B 1px solid">
+        <div style="width: 60%;">
             <!--댓글-->
-            <div style="display: flex; justify-content: space-between" v-for="(item, i) in cmnt">
+            <div style="justify-content: space-between" v-for="(item, i) in cmnt">
+                <v-textarea  v-for="(item, i) in cmnt"
+                    solo
+                    name="input-7-4"
+                    style="width: 700px;"
+                    readonly
+                >
+                </v-textarea>
                 <div>
-                    {{ item.content }}
+                    <div>
+                        <span @click="pushCmnt2(i)"><i class="material-icons" style="font-size: 18px;">reply</i></span>&nbsp;&nbsp;&nbsp;
+                        <span @click="editCmntdo(i)"><i class="material-icons" style="font-size: 18px;">edit</i></span>&nbsp;&nbsp;&nbsp;
+                        <span @click="deleteCmnt1(i)"><i class="material-icons"
+                                                         style="font-size: 18px;">clear</i></span>&nbsp;&nbsp;&nbsp;
+                    </div>
                 </div>
-                <div>
-                    <span @click="pushCmnt2(i)"><i class="material-icons" style="font-size: 18px;">reply</i></span>&nbsp;&nbsp;&nbsp;
-                    <span @click="editCmntdo(i)"><i class="material-icons" style="font-size: 18px;">edit</i></span>&nbsp;&nbsp;&nbsp;
-                    <span @click="deleteCmnt1(i)"><i class="material-icons" style="font-size: 18px;">clear</i></span>&nbsp;&nbsp;&nbsp;
-                </div>
+
             </div>
             <!--댓글 수정-->
             <div v-if="showCmnt1(i)">
