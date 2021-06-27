@@ -22,12 +22,12 @@ export function freeboardList(page) {
 
 //OOTD 목록 조회
 export function OOTDList() {
-    return api.get('/api/cmnty/OOTD/posts')
+    return api.get('/api/cmnty/OOTD/postList')
 }
 
 //Q&A 목록 조회
-export function qnaList() {
-    return api.get('/api/cmnty/qna/posts')
+export function qnaList(page) {
+    return api.get(`/api/cmnty/qna/posts?page=${page}`)
 }
 
 //게시글 상세 조회
@@ -49,7 +49,10 @@ export function freeBoardAll(keyword, page) {
 export function boardUserList(userid,num,boardname) {
     return api.get(`/api/cmnty/${boardname}/searchUid/${userid}?page=${num}`);
 }
-
+//Qna 내글보기(사용자) - 페이징 없음
+export function boardUserListNoPage(userid,boardname) {
+    return api.get(`/api/cmnty/${boardname}/myList/${userid}`);
+}
 //Qna 내글보기(관리자)
 export function qnaAdminList(num) {
     return api.get(`/api/cmnty/qna/posts?page=${num}`);

@@ -104,10 +104,21 @@ public class BoardService {
                 .lastnum(boardEntity.getLastnum())
                 .build();
     }
+    // 게시판 이름으로 게시물 리스트 조회 + 페이징없음
+    @Transactional
+    public List<PostDTO> findPostsNoPage(String boardname) {
+        List<PostEntity> postEntities = postRepository.findByBoardnameOrderByNumDesc(boardname);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            postDTOList.add(this.convertEntityToDTO(postEntity));
+        }
+        return postDTOList;
+    }
     // 게시판 이름으로 게시물 리스트 조회 + 페이징
     @Transactional
     public List<PostDTO> findPosts(String boardname, int pagenum) {
-        Page<PostEntity> pagePosts = postRepository.findAllByBoardname(boardname, PageRequest.of(pagenum - 1, CNTPAGEPOST, Sort.by(Sort.Direction.DESC, "num")));
+        Page<PostEntity> pagePosts = postRepository.findAllByBoardnameOrderByNumDesc(boardname, PageRequest.of(pagenum - 1, CNTPAGEPOST, Sort.by(Sort.Direction.DESC, "num")));
         List<PostEntity> postEntities = pagePosts.getContent();
         List<PostDTO> postDTOList = new ArrayList<>();
 
@@ -210,6 +221,17 @@ public class BoardService {
         return postRepository.countAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardname(search, search, boardname);
     }
 
+    // 내글보기 페이징 없음.
+    @Transactional
+    public List<PostDTO> searchUidNoPage(String boardname, String uid) {
+        List<PostEntity> postEntities = postRepository.findAllByBoardnameAndUidOrderByNumDesc(boardname, uid);
+        List<PostDTO> postDTOList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntities) {
+            postDTOList.add(this.convertEntityToDTO(postEntity));
+        }
+        return postDTOList;
+    }
     // 내글보기 & QnA 작성자 검색
     @Transactional
     public List<PostDTO> searchUid(String boardname, String uid, int pagenum) {

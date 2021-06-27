@@ -130,4 +130,28 @@ public class ImgController {
         }
         return new ResponseEntity<>(imgByteList, HttpStatus.OK);
     }
+    // 내글 보기
+    @CrossOrigin(origins = {"http://localhost:8081/"})
+    @ApiOperation(value = "OOTD 내글보기", notes = "OOTD 내글보기")
+    @GetMapping(value = "/api/cmnty/getootdlist/{uid}")
+    public ResponseEntity<List<byte[]>> getOotdList(@PathVariable String uid) throws Exception{
+        List<byte[]> imgByteList = new ArrayList<>();
+        List<ImgDTO> imgDTOList = imgService.findMyOotdImgs(uid);
+        for( int i =0; i<imgDTOList.size(); i++) {
+            String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
+            String path = imgDTOList.get(i).getStoredpath();
+            // 맥에서 출력되지 않는 문제 해결을 위해
+//            String[] paths = path.split("\\\\");
+//            String imagesFolder = paths[0];
+//            String dateFolder = paths[1];
+//            String filename = paths[2];
+//            path = imagesFolder + "/" + dateFolder + "/" + filename;
+            // escape 문자라서 \\\\네개 사용함.
+            InputStream imageStream = new FileInputStream(absolutePath + path);
+            byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+            imageStream.close();
+            imgByteList.add(imageByteArray);
+        }
+        return new ResponseEntity<>(imgByteList, HttpStatus.OK);
+    }
 }

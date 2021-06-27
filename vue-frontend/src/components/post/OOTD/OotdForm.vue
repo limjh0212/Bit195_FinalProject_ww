@@ -1,42 +1,54 @@
 <template>
   <v-container id="board-list-form">
       <div class="content-view">
-        <div class="mt-3 mb-3 d-fixed">
+        <div v-if="myList" class="mt-3 mb-3 d-fixed">
+          <router-link to="/post/OOTD" class="board-btn btn-outline-primary mr-2">
+            <span class="btn-text">글 작성</span>
+          </router-link>
+          <button class="board-btn btn-success" id="ootd-btn" @click="fetchOotd">
+                <span
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                ></span>
+            <span class="btn-text" @click="fetchData">전체 보기</span>
+          </button>
+        </div>
+        <div v-else class="mt-3 mb-3 d-fixed">
             <router-link to="/post/OOTD" class="board-btn btn-outline-primary mr-2">
               <span class="btn-text">글 작성</span>
             </router-link>
-            <button class="board-btn btn-success" id="fusionexport-btn">
-<!--              @click="fetchMyList(1)"-->
+            <button class="board-btn btn-success" id="fusionexport-btn" @click="fetchMyImgList()">
               <span
                   class="spinner-border spinner-border-sm"
                   role="status"
                   aria-hidden="true"
               ></span>
-              <span class="btn-text">내 글 보기</span>
+              <span class="btn-text" @click="fetchMyPostList()">내 글 보기</span>
             </button>
         </div>
         <div>
           <div class="main">
             <table>
-                <tr class="row">
+                <tr class="ootd-line">
                     <td id="card-form" class="card" v-for="item in list()">
-                      <div class="card-content">
-                          <div id="card-img" class="card-box">
+                      <div class="card-size">
+                          <div class="card-img card-box">
                             <img :src="item[0]" class="imgCard">
                           </div>
-                          <div class="card-box">
-                            <div class="card-info">
-                              <div class="card-box-default"><router-link :to="`/post/OOTD/${item[1].num}`"><div>{{ item[1].title }}</div></router-link></div>
-                              <div class="card-box-default">{{ item[1].postnum }}</div>
+                          <div class="card-info card-box">
+                            <div class="card-box-default card-info1">
+                              <div class="card-info1-left">{{ item[1].postnum }}</div>
+                              <div class="card-info1-right"><router-link :to="`/post/OOTD/${item[1].num}`"><div>{{ item[1].title }}</div></router-link></div>
                             </div>
-                            <div id="card-post" class="card-info">
-                              <div class="card-box-default">{{ item[1].writer }}</div>
-                              <div class="card-box-default" v-if="$moment(item[1].regdate).format('YYYY-MM-DD')===$moment().format('YYYY-MM-DD')">{{ $moment(item[1].regdate).format('HH:mm:ss') }}</div>
-                              <div class="card-box-default" v-else>{{ $moment(item[1].regdate).format('YYYY-MM-DD') }}</div>
+                            <div id="card-post" class="card-box-default card-info2">
+                              <div class="card-info2-left">작성자 {{ item[1].writer }}</div>
+                              <div class="card-info2-right" v-if="$moment(item[1].regdate).format('YYYY-MM-DD')===$moment().format('YYYY-MM-DD')">{{ $moment(item[1].regdate).format('HH:mm:ss') }}</div>
+                              <div class="card-info2-right" v-else>{{ $moment(item[1].regdate).format('YYYY-MM-DD') }}</div>
                             </div>
-                            <div class="card-info">
-                              <!--                      <div class="card-box-default">{{ item.existLike }}</div>-->
-                              <div class="card-box-default">{{ item[1].likecount }}</div>
+                            <div class="card-box-default card-info3">
+                              <!--                      <div class="card-info3-default">{{ item.existLike }}</div>-->
+                              <div class="card-info3-default">좋아요 {{ item[1].likecount }}</div>
                             </div>
                           </div>
                       </div>
@@ -52,8 +64,8 @@
 
 <script>
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {getOotdList} from "@/api/img";
-import {boardUserList, OOTDList} from "@/api/post";
+import {getMyOotdList, getOotdList} from "@/api/img";
+import {boardUserListNoPage, OOTDList} from "@/api/post";
 
 export default {
     components: {LoadingSpinner},
@@ -61,23 +73,44 @@ export default {
         return {
             isLoading: false,
             postList:[],
-            pageList : [],
             cardList: [],
             myList   : false,
         }
     },
     methods: {
+        async fetchMyPostList() {
+          const {data} = await boardUserListNoPage(this.$store.state.id, this.$route.params.boardname);
+          this.postList = data.posts;
+          this.myList = true;
+        },
+        async fetchMyImgList() {
+          this.isLoading = true;
+          const {data} = await getMyOotdList(this.$store.state.id);
+          this.isLoading = false;
+          this.myList = true;
+          let img='';
+          let post=[];
+          let temp = [];
+          for (var i=0;i<data.length;i++){
+            img = "data:image/png;base64," + data[i];
+            temp.push(img);
+            post = this.postList[i];
+            temp.push(post);
+          }
+          this.cardList=temp;
+        },
         async fetchData() {
             this.isLoading = true;
             const {data} = await OOTDList();
             this.isLoading = false;
+            this.myList = false;
             this.postList = data.posts; // 포스트 정보 리스트
-            this.pageList = data.pageList;
         },
         async fetchOotd(){
             this.isLoading = true;
             const {data} = await getOotdList();
             this.isLoading = false;
+            this.myList = false;
             let img='';
             let post=[];
             let temp = [];
@@ -99,13 +132,7 @@ export default {
           }
           return cards;
         },
-        // async fetchMyList(num) {
-        //   const {data} = await boardUserList(this.$store.state.id, num, this.$route.params.boardname);
-        //   this.postList = data;
-        //   this.pageList = data.pageList;
-        //   this.myList = true;
-        //   console.log(this.postList)
-        // },
+
     },
     created() {
       this.fetchOotd();
@@ -115,35 +142,5 @@ export default {
 </script>
 
 <style scoped>
-@media(max-width: 1200px){
-  #card-form{
-    width:23%;
-    height: 20%;
-  }
-}
-.row{
-  margin: 0px;
-}
-.card-content{
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-  padding: 0.2rem;
-}
-.card{
-  width: 23%;
-  height: 350px;
-  border-radius: 5px;
-  overflow: hidden;
-  padding: 5px 5px;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-.imgCard{
-  width: 100%;
-  height: 100%;
-  object-fit: revert;
-}
-.card-box {
-  width: 100%;
-}
+@import '../../../css/cmnty/ootdList.css';
 </style>
