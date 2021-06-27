@@ -5,6 +5,32 @@
     }
 }
 /*layout*/
+.todayWeather {
+    float: left;
+    color: #333333;
+    width: 30%;
+    height: 360px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+.card-img{
+    width: 150px;
+    height: 150px;
+    margin: auto;
+}
+.weatherIcon{
+    width: 180px;
+    height: 180px;
+    display: inline-block;
+}
+.card-weather{
+    text-align: center;
+    font-size: 14px;
+}
 /*admin - mainPage*/
 .side-nav{
     float: left;
@@ -16,4 +42,7 @@
     float: right;
     width: 80%;
     height: 100%;
+}
+tr{
+    border-bottom: none;
 }

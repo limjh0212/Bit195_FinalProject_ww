@@ -8,6 +8,7 @@ import com.bit.ww.entity.CmntEntity;
 import com.bit.ww.entity.PostEntity;
 import com.bit.ww.service.BoardService;
 import com.bit.ww.service.CmntService;
+import com.bit.ww.service.ImgService;
 import com.bit.ww.service.LikeService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class BoardController {
     private final BoardService boardService;
     private final CmntService cmntService;
     private final LikeService likeService;
+    private final ImgService imgService;
 
     @ApiOperation(value = "게시판 글 작성", notes = "게시판 글 작성")
     @PostMapping("/post")
@@ -74,6 +76,11 @@ public class BoardController {
     @ApiOperation(value = "게시판 글 삭제", notes = "게시판 글 삭제")
     @DeleteMapping("/post/{postId}")
     public String deletePost(@PathVariable("postId") int num) {
+        PostDTO postDTO = boardService.getPost(num);
+        int ootdnum = postDTO.getPostnum();
+        if(imgService.existImg(ootdnum)){
+            imgService.deleteImgs(ootdnum);
+        }
         boardService.deletePost(num);
         return "delete ok!";
     }

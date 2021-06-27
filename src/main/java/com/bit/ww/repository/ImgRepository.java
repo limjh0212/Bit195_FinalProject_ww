@@ -14,5 +14,5 @@ public interface ImgRepository extends JpaRepository<ImgEntity, Integer> {
     List<ImgEntity> findAllByBoardidOrderByNumDesc(int boardid);
     //Boardid & Postid로 List출력
     List<ImgEntity> findAllByBoardidAndPostidOrderByNumDesc(int boardid, int postid);
-    // 내글보기
+
 }

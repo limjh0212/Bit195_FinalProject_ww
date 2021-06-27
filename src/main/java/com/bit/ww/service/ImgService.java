@@ -3,6 +3,7 @@ package com.bit.ww.service;
 import com.bit.ww.dto.ImgDTO;
 import com.bit.ww.dto.PostDTO;
 import com.bit.ww.entity.ImgEntity;
+import com.bit.ww.entity.MemberEntity;
 import com.bit.ww.entity.PostEntity;
 import com.bit.ww.repository.BoardRepository;
 import com.bit.ww.repository.ImgRepository;
@@ -177,5 +178,27 @@ public class ImgService {
             imgDTOList.add(this.convertEntityToDTO(imgEntity));
         }
         return imgDTOList;
+    }
+    @Transactional
+    public String deleteImg(String uid){
+        MemberEntity memberEntity = memberRepository.findOneById(uid);
+        imgRepository.deleteById(memberEntity.getImg());
+        return "delete ok!";
+    }
+    @Transactional
+    public String deleteImgs(int postid){
+        List<Integer> numList = new ArrayList<>();
+        List<ImgEntity> imgEntityList = imgRepository.findAllByBoardidAndPostidOrderByNumDesc(2,postid);
+        for (int i = 0; i< imgEntityList.size(); i++){
+            numList.add(0,imgEntityList.get(i).getNum());
+        }
+        for (int j = 0; j < numList.size();j++){
+            imgRepository.deleteById(numList.get(j));
+        }
+        return "delete ok!";
+    }
+    @Transactional
+    public boolean existImg(int postid){
+        return imgRepository.existsAllByBoardidAndPostid(2,postid);
     }
 }

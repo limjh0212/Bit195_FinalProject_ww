@@ -18,9 +18,6 @@
     padding: 5px 10px;
     margin-right: 20px;
 }
-/*.card-box div {*/
-/*    display: inline-block;*/
-/*}*/
 /*카드 내부 정렬*/
 .card div{
     display: inline-block;

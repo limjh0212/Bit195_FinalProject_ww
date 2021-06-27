@@ -112,3 +112,6 @@ export default {
     },
 };
 </script>
+<style scoped>
+@import '../../css/common/mainP.css';
+</style>

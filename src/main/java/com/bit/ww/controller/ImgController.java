@@ -3,9 +3,11 @@ package com.bit.ww.controller;
 import com.bit.ww.dto.BoardDTO;
 import com.bit.ww.dto.ImgDTO;
 import com.bit.ww.dto.PostDTO;
+import com.bit.ww.entity.MemberEntity;
 import com.bit.ww.entity.PostEntity;
 import com.bit.ww.service.BoardService;
 import com.bit.ww.service.ImgService;
+import com.bit.ww.service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
@@ -21,12 +23,14 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
 public class ImgController {
     private final BoardService boardService;
     private final ImgService imgService;
+    private final MemberService memberService;
     // Todo: 이미지 + 포스트 수정 필요.
     @CrossOrigin(origins = {"http://localhost:8081"})
     @ApiOperation(value = "OOTD 이미지 저장", notes = "OOTD 이미지 저장")
@@ -68,13 +72,13 @@ public class ImgController {
         String absolutePath = new File("").getAbsolutePath()+File.separator+File.separator;
         String path = imgDTO.getStoredpath();
         // 맥에서 출력되지 않는 문제 해결을 위해
-//        System.out.println(path);
-//        String[] paths = path.split("\\\\");
-//        String imagesFolder = paths[0];
-//        String dateFolder = paths[1];
-//        String filename = paths[2];
-//        path = imagesFolder+"/"+dateFolder+"/"+filename;
-//        System.out.println(path);
+        System.out.println(path);
+        String[] paths = path.split("\\\\");
+        String imagesFolder = paths[0];
+        String dateFolder = paths[1];
+        String filename = paths[2];
+        path = imagesFolder+"/"+dateFolder+"/"+filename;
+        System.out.println(path);
         // escape 문자라서 \\\\네개 사용함.
         InputStream imageStream = new FileInputStream(absolutePath+path);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -93,11 +97,11 @@ public class ImgController {
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
             String path = imgDTOList.get(i).getStoredpath();
             // 맥에서 출력되지 않는 문제 해결을 위해
-//            String[] paths = path.split("\\\\");
-//            String imagesFolder = paths[0];
-//            String dateFolder = paths[1];
-//            String filename = paths[2];
-//            path = imagesFolder + "/" + dateFolder + "/" + filename;
+            String[] paths = path.split("\\\\");
+            String imagesFolder = paths[0];
+            String dateFolder = paths[1];
+            String filename = paths[2];
+            path = imagesFolder + "/" + dateFolder + "/" + filename;
             // escape 문자라서 \\\\네개 사용함.
             InputStream imageStream = new FileInputStream(absolutePath + path);
             byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -117,11 +121,11 @@ public class ImgController {
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
             String path = imgDTOList.get(i).getStoredpath();
             // 맥에서 출력되지 않는 문제 해결을 위해
-//            String[] paths = path.split("\\\\");
-//            String imagesFolder = paths[0];
-//            String dateFolder = paths[1];
-//            String filename = paths[2];
-//            path = imagesFolder + "/" + dateFolder + "/" + filename;
+            String[] paths = path.split("\\\\");
+            String imagesFolder = paths[0];
+            String dateFolder = paths[1];
+            String filename = paths[2];
+            path = imagesFolder + "/" + dateFolder + "/" + filename;
             // escape 문자라서 \\\\네개 사용함.
             InputStream imageStream = new FileInputStream(absolutePath + path);
             byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -141,11 +145,11 @@ public class ImgController {
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
             String path = imgDTOList.get(i).getStoredpath();
             // 맥에서 출력되지 않는 문제 해결을 위해
-//            String[] paths = path.split("\\\\");
-//            String imagesFolder = paths[0];
-//            String dateFolder = paths[1];
-//            String filename = paths[2];
-//            path = imagesFolder + "/" + dateFolder + "/" + filename;
+            String[] paths = path.split("\\\\");
+            String imagesFolder = paths[0];
+            String dateFolder = paths[1];
+            String filename = paths[2];
+            path = imagesFolder + "/" + dateFolder + "/" + filename;
             // escape 문자라서 \\\\네개 사용함.
             InputStream imageStream = new FileInputStream(absolutePath + path);
             byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -154,4 +158,40 @@ public class ImgController {
         }
         return new ResponseEntity<>(imgByteList, HttpStatus.OK);
     }
+    @CrossOrigin(origins = {"http://localhost:8081"})
+    @ApiOperation(value = "OOTD 수정", notes = "OOTD 수정")
+    @PatchMapping("/api/cmnty/ootdpost/{postId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PostEntity ootdUpdate(@PathVariable("postId") int num,
+                               @Validated @RequestParam("title") String title,
+                               @Validated @RequestParam("content") String content,
+                               @Validated @RequestPart("images") List<MultipartFile> files
+    ) throws Exception {
+        PostDTO updatePost = boardService.getPost(num);
+        imgService.deleteImgs(updatePost.getPostnum());
+        return imgService.addPost(PostDTO.builder()
+                .boardname(updatePost.getBoardname())
+                .postnum(num)
+                .uid(updatePost.getUid())
+                .title(title)
+                .content(content)
+                .img(files.size())
+                .build(),files);
+    }
+    // Todo: swagger에서 불가능
+//    @CrossOrigin(origins = {"http://localhost:8081"})
+//    @ApiOperation(value = "이미지 수정", notes = "이미지 저장 수정")
+//    @PatchMapping("/api/cmnty/postimg/{uid}")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public String update(@PathVariable("uid") String uid, @RequestPart(value = "images", required = false)List<MultipartFile> files
+//    ) throws Exception {
+//        Optional<MemberEntity> memberWrapper = memberService.findbyId(uid);
+//        MemberEntity memberEntity = memberWrapper.get();
+//        imgService.deleteImg(uid);
+//        imgService.addImg(0,files);
+//        memberService.save(MemberEntity.builder()
+//                .img(imgService.)
+//                .build());
+//        return ;
+//    }
 }
