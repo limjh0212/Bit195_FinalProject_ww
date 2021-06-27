@@ -57,8 +57,5 @@ export const store = new Vuex.Store({
             return data;
 
         },
-
-
     },
-
 });

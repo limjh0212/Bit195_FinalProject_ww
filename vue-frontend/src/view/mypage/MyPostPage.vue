@@ -36,11 +36,6 @@
                                                                                  style="font-size: 15px">create</i>
                                         </router-link>
                                     </v-btn>&nbsp;&nbsp;&nbsp;
-                                    <v-btn elevation="1" rounded small v-if="myList"><span
-                                        @click="fetchData(1)">전체 보기</span>
-                                    </v-btn>
-                                    <v-btn elevation="1" rounded small v-else><span @click="fetchMyList(1)">내글 보기</span>
-                                    </v-btn>
                                 </div>
                                 <div>
                                     <div style="display: flex" class="page-list">
@@ -53,22 +48,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div>
-                                        <div>
-                                            <select v-model="search" name="search">
-                                                <option value="">Select</option>
-                                                <option value="true">제목</option>
-                                                <option value="false">제목+내용</option>
-                                            </select>
-                                        </div>
-                                        <div style="height: auto">
-                                            <input v-model="keyword" placeholder="검색어" type="text"></input>
-                                        </div>
-                                        <div>
-                                            <button @click.prevent="SearchData">
-                                                <i class="material-icons" style="font-size: 25px">search</i></button>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         </th>
@@ -81,60 +61,28 @@
 
 <script>
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {boardUserList, freeBoardAll, freeboardList, freeBoardTitle} from "@/api/post";
+import {boardUserList} from "@/api/post";
 
 export default {
     components: {LoadingSpinner},
     data() {
         return {
-            items    : [],
-            pageList : [],
-            options  : ['제목', '제목+내용'],
-            isLoading: false,
-            keyword  : '',
-            search   : true,
-            myList   : false,
+            items   : [],
+            pageList: [],
         }
     },
     methods: {
         //내글 목록
         async fetchMyList(num) {
-            const {data} = await boardUserList(this.$store.state.id, num, this.$route.params.boardname);
+            const {data} = await boardUserList(this.$store.state.id, num, 'freeBoard');
             this.items = data;
             this.pageList = data.pageList;
             this.myList = true;
             console.log(this.items)
         },
-
-        async fetchData(num) {
-            this.isLoading = true;
-            const {data} = await freeboardList(num);
-            this.isLoading = false;
-            this.items = data;
-            this.pageList = data.pageList;
-            this.myList = false;
-            console.log(this.items)
-        },
-
-        //기본 게시글 조회
-        async SearchData() {
-            if (this.search === true) {
-                // Title 검색
-                this.isLoading = true;
-                const {data} = await freeBoardTitle(this.keyword, 1);
-                this.isLoading = false;
-                this.items = data;
-            } else {
-                // Title+Content 검색
-                this.isLoading = true;
-                const {data} = await freeBoardAll(this.keyword, 1);
-                this.isLoading = false;
-                this.items = data;
-            }
-        },
     },
     created() {
-        this.fetchData(1);
+        this.fetchMyList(1);
     }
 }
 </script>
@@ -156,26 +104,7 @@ export default {
     margin: auto;
 }
 
-.page-box {
-    width: 20%;
-    float: left;
-}
-
 .page-box-default {
-    margin: 3px;
-}
-
-.foot-search {
-    width: 100%;
-    text-align: center;
-    position: relative;
-    height: auto;
-    font-size: 10px; /* Todo: tfoot의 문제 - 해결 필요 */
-}
-
-.foot-search-box {
-    width: 30%;
-    float: left;
     margin: 3px;
 }
 

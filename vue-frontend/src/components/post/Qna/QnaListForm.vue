@@ -17,7 +17,7 @@
                         <tr v-for="(item, idx) in items.posts" :key="idx">
                             <td class="text_center">{{ item.postnum }}</td>
                             <td class="text_center">{{ item.writer }}</td>
-                            <td><a :href="`/post/freeBoard/${item.num}`">{{ item.title }}</a></td>
+                            <td><a :href="`/post/qna/${item.num}`">{{ item.title }}</a></td>
                             <td class="text_center"
                                 v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')">
                                 {{ $moment(item.regdate).format('HH:mm:ss') }}
@@ -39,7 +39,7 @@
                                 </div>
                                 <div>
                                     <div style="display: flex" class="page-list">
-                                        <div v-for="page in items.pageList" @click="fetchData(page)">{{ page }}</div>
+                                        <div v-for="page in items.pageList" @click="fetchData(page)">&nbsp;&nbsp;&nbsp;{{ page }}&nbsp;&nbsp;&nbsp;</div>
                                     </div>
                                 </div>
                                 <div>

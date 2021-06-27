@@ -61,5 +61,5 @@ export function countLo(userid) {
 
 //날씨-코디 예측 값 요청
 export function api_wwData(Data) {
-    return instance.post(`http://54.180.140.72:5000/recommend`,Data);
+    return instance.post(`http://54.180.151.43:5000/recommend`,Data);
 }

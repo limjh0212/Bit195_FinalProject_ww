@@ -4,8 +4,10 @@
             <input v-model="title" placeholder='제목을 적어주세요' type="text"></input>
             <el-tiptap :extensions="extensions" class="editor__content" :content="content" v-model="content"
                        :width="700"
-                       height="100%" placeholder="Write something ..."/>
-            <button type="submit">저장</button>
+                       height="600px" placeholder="Write something ..."/>
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <v-btn elevation="1" rounded small type="submit">저장<i class="material-icons"
+                                                                  style="font-size: 20px">save</i></v-btn>
         </form>
     </div>
 </template>

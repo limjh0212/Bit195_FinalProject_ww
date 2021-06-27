@@ -1,22 +1,22 @@
 <template>
-    <div>
+    <div style="justify-content: center">
         <!--검색-->
         <div style="margin: 20px">
-            <input v-model="keyword" placeholder="검색어" type="text"></input>
-            <button @click="SearchKeyword">입력</button>
+            <input v-model="keyword" placeholder="검색어" type="text" style="width: 500px"></input>
+            <button @click="SearchKeyword"><i class="material-icons" style="font-size: 25px">search</i></button>
             <ul>
                 <li v-for="(item, i) in data"><span>{{ item.city }} {{ item.address1 }} {{ item.address2 }}</span>
-                    <button @click="save(i)">저장</button>
+                    <button @click="save(i)"><i class="material-icons" style="font-size: 20px">add</i></button>
                 </li>
             </ul>
         </div>
 
         <!--조회-->
-        <div style="margin: 20px">
-            <table>
+        <div style="margin: auto; ">
+            <table style="width: 200px;">
                 <tr v-for="(item, i) in locations">
                     <td>{{ item.address2 }}</td>
-                    <td @click.prevent="deleteLocation(item.num)">🐸</td>
+                    <td @click.prevent="deleteLocation(item.num)"><i class="material-icons" style="font-size: 20px">clear</i></td>
                 </tr>
             </table>
         </div>

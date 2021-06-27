@@ -130,6 +130,11 @@ export const router = new VueRouter({
                         component: () => import('@/view/mypage/MyPageMain')
                     },
                     {
+                        //내가 작성한 글
+                        path     : '/mypage/mypost',
+                        component: () => import('@/view/mypage/MyPostPage'),
+                    },
+                    {
                         //내 정보 조회
                         path     : '/mypage/aboutme',
                         component: () => import('@/view/mypage/AboutMePage'),
