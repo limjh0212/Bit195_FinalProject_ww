@@ -6,13 +6,15 @@ import com.bit.ww.service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -89,7 +91,10 @@ public class MngmtController {
     // 나머지는 내글보기와 동일
     @ApiOperation(value = "마이 페이지 - 내가 남긴 댓글", notes = "내가 남긴 댓글")
     @GetMapping("/mypage/mycmnts")
-    public List mycmnts(String writer){
-        return cmntService.getMyCmntList(writer);
+    public HashMap mycmnts(String writer, @RequestParam(value = "page", defaultValue = "1") int pagenum){
+        HashMap<String, Object> infos = new HashMap<>();
+        infos.put("myCmntList", cmntService.getMyCmntList(writer, pagenum));
+        infos.put("pageList", cmntService.pageListMyCmntList(writer, pagenum));
+        return infos;
     }
 }

@@ -50,13 +50,15 @@ export default {
     data() {
         return {
             items: [],
+            pageList:[],
         }
     },
     methods: {
         //내글 목록
         async fetchMyList() {
-            const {data} = await myCmnt(this.$store.state.id);
-            this.items = data;
+            const {data} = await myCmnt(this.$store.state.id,1);
+            this.items = data.myCmntList;
+            this.pageList = data.pageList;
             console.log(this.items)
         },
     },
