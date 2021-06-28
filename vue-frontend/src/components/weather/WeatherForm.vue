@@ -53,36 +53,6 @@
           </div>
         </div>
         </div>
-<!--        <div>-->
-<!--            <h1>일주일 날씨</h1>-->
-<!--            <table>-->
-<!--                <thead>-->
-<!--                    <tr>-->
-<!--                        <th>날짜</th>-->
-<!--                        <th>아이콘</th>-->
-<!--                        <th>날씨</th>-->
-<!--                        <th>설명</th>-->
-<!--                        <th>최고기온</th>-->
-<!--                        <th>최저기온</th>-->
-<!--                    </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                    <tr v-for="(item,i) in weeklyWeather" :key="i">-->
-<!--                        <td>{{ $moment().add(i, 'days').format('YYYY-MM-DD') }}</td>-->
-<!--                        <td>-->
-<!--                            <v-img @click="" :src="`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`"></v-img>-->
-<!--                        </td>-->
-<!--      method(){-->
-<!--      this.dd = item[i].temp.day-->
-<!--      }-->
-<!--                        <td>{{ item.weather[0].main }}</td>-->
-<!--                        <td>{{ item.weather[0].description }}</td>-->
-<!--                        <td>{{ item.temp.max }}℃</td>-->
-<!--                        <td>{{ item.temp.min }}℃</td>-->
-<!--                    </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
         <div v-if="isLoading">
             <LoadingSpinner></LoadingSpinner>
         </div>
