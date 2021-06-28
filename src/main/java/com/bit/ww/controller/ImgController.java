@@ -177,19 +177,28 @@ public class ImgController {
                 .build(),files);
     }
     // Todo: swagger에서 불가능
-//    @CrossOrigin(origins = {"http://localhost:8081"})
-//    @ApiOperation(value = "이미지 수정", notes = "이미지 저장 수정")
-//    @PatchMapping("/api/cmnty/postimg/{uid}")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public String update(@PathVariable("uid") String uid, @RequestPart(value = "images", required = false)List<MultipartFile> files
-//    ) throws Exception {
-//        Optional<MemberEntity> memberWrapper = memberService.findbyId(uid);
-//        MemberEntity memberEntity = memberWrapper.get();
-//        imgService.deleteImg(uid);
-//        imgService.addImg(0,files);
-//        memberService.save(MemberEntity.builder()
-//                .img(imgService.)
-//                .build());
-//        return ;
-//    }
+    // OOTD 카드 imgList test
+    @CrossOrigin(origins = {"http://localhost:8081/"})
+    @ApiOperation(value = "추천 사진 출력", notes = "추천 사진 출력")
+    @GetMapping(value = "/api/reco/imgList")
+    public ResponseEntity<List<byte[]>> imgList() throws Exception{
+        List<byte[]> imgByteList = new ArrayList<>();
+        List<ImgDTO> imgDTOList = imgService.findRecoImgList();
+        for( int i =0; i<imgDTOList.size(); i++) {
+            String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
+            String path = imgDTOList.get(i).getStoredpath();
+            // 맥에서 출력되지 않는 문제 해결을 위해
+//            String[] paths = path.split("\\\\");
+//            String imagesFolder = paths[0];
+//            String dateFolder = paths[1];
+//            String filename = paths[2];
+//            path = imagesFolder + "/" + dateFolder + "/" + filename;
+            // escape 문자라서 \\\\네개 사용함.
+            InputStream imageStream = new FileInputStream(absolutePath + path);
+            byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+            imageStream.close();
+            imgByteList.add(imageByteArray);
+        }
+        return new ResponseEntity<>(imgByteList, HttpStatus.OK);
+    }
 }
