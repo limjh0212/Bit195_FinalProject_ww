@@ -41,11 +41,15 @@
                 </tr>
                 </tbody>
                 <tfoot>
-                <div>
-<!--                  <ul>-->
-<!--                    <li v-for="page in items.pageList" @click="fetchData(page)">{{ page }}</li>-->
-<!--                  </ul>-->
-                </div>
+                <th colspan="6">
+                    <div class="board-page">
+                      <div class="page-list">
+                        <div v-for="page in pageList">
+                            <div class="page-box-default" @click="fetchData(page)">{{ page }}</div>
+                        </div>
+                      </div>
+                    </div>
+                </th>
                 </tfoot>
               </template>
             </v-simple-table>
@@ -66,15 +70,16 @@ export default {
             cntNotAnswered     : '',
             cntRecentQuestion  : '',
             NotAnsweredQuestion: [],
-
+            pageList : [],
         }
     },
     methods: {
-        async fetchData() {
-            const {data} = await fetchQna();
+        async fetchData(num) {
+            const {data} = await fetchQna(num);
             this.cntNotAnswered = data.cntNotAnswered;
             this.cntRecentQuestion = data.cntRecentQuestion;
             this.NotAnsweredQuestion = data.NotAnsweredQuestion;
+            this.pageList = data.pageList;
           var spark1 = {
             chart: {
               id: 'sparkline1',
@@ -182,7 +187,7 @@ export default {
         },
     },
     created() {
-        this.fetchData()
+        this.fetchData(1);
     }
 }
 </script>

@@ -39,7 +39,15 @@ public class BoardReadController {
         posts.put("pageList", boardService.pageListFindPosts(boardname, pagenum));
         return posts;
     }
-
+    // 페이징 없음
+    @ApiOperation(value = "게시판 글 리스트 - 페이징없음", notes = "게시판 글 리스트 - 페이징없음")
+    @GetMapping("/{boardname}/postList")
+    public HashMap noPagePosts(@PathVariable String boardname) {
+        HashMap<String, Object> posts = new HashMap<>();
+        posts.put("posts", boardService.findPostsNoPage(boardname));
+        posts.put("cntPosts", boardService.cntPosts(boardname));
+        return posts;
+    }
     // 게시물 상세보기
     @ApiOperation(value = "게시물 상세보기", notes = "게시물 상세보기")
     @GetMapping("/post/{postId}")
@@ -95,7 +103,14 @@ public class BoardReadController {
         posts.put("pageList", boardService.pageListSearchUid(boardname, uid, pagenum));
         return posts;
     }
-
+    @ApiOperation(value = "내글보기- 페이징없음", notes = "내글보기")
+    @GetMapping("/{boardname}/myList/{uid}")
+    public HashMap searchUidNoPage(@PathVariable String boardname, @PathVariable String uid) {
+        HashMap<String, Object> posts = new HashMap<>();
+        posts.put("posts", boardService.searchUidNoPage(boardname, uid));
+        posts.put("cntPosts", boardService.cntSearchUid(boardname, uid));
+        return posts;
+    }
     @ApiOperation(value = "내글보기 - 검색 리스트 - 제목 - 페이징", notes = "내글보기 - 검색 리스트 - 제목")
     @GetMapping("/{boardname}/searchUidAndTitle/{uid}/{search}")
     public HashMap searchUidAndTitle(@PathVariable String boardname, @PathVariable String uid, @PathVariable String search, @RequestParam(value = "page", defaultValue = "1") int pagenum) {

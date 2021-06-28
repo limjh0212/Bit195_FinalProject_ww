@@ -21,8 +21,8 @@ export function fetchMember() {
 }
 
 //Q&A 관리 페이지
-export function fetchQna() {
-    return api.get('/api/mngmt/qna')
+export function fetchQna(page) {
+    return api.get(`/api/mngmt/qna?page=${page}`)
 }
 
 //회우너 삭제

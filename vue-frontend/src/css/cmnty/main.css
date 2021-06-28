@@ -47,7 +47,10 @@ td{
     border-radius: 0.25rem;
     box-shadow: 0 0 0 0.05rem lightgrey;
     float: left;
-    margin: 10px;
+    /*margin: 10px;*/
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 @media screen and (prefers-reduced-motion: reduce) {

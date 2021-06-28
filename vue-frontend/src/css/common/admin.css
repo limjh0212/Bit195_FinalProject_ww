@@ -1,0 +1,21 @@
+.board-btn{
+    margin-left:10px;
+}
+.page-list{
+    width: 50%;
+    text-align: center;
+    position: relative;
+    height: auto;
+    font-size: 15px;
+    font-weight: lighter;
+    margin: 0px;
+    display: flex;
+}
+.page-box{
+    width: 20%;
+    float:left;
+}
+.page-box-default{
+    margin: 3px;
+    text-align: right;
+}

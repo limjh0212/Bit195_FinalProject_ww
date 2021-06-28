@@ -10,8 +10,10 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     // 게시판 이름으로 게시물 목록 찾기
-    Page<PostEntity> findAllByBoardname(String boardname, Pageable pageable);
+    Page<PostEntity> findAllByBoardnameOrderByNumDesc(String boardname, Pageable pageable);
     int countAllByBoardname(String boardname);
+    // 게시판 이름으로 게시물 목록 찾기 - 페이징 없음.
+    List<PostEntity> findByBoardnameOrderByNumDesc(String boardname);
     // 각 게시판 별 제목 검색
     Page<PostEntity> findByTitleIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(String title, String boardname, Pageable pageable);
     int countAllByTitleIgnoreCaseIsContainingAndBoardname(String title, String boardname);
@@ -32,6 +34,7 @@ public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     Page<PostEntity> findByBoardnumAndIsansweredIsFalseOrderByNumDesc(int boardnum, Pageable pageable);
     int countAllByBoardnumAndIsansweredIsFalse(int boadrnum);
     // 마이페이지 - 각 게시판 별 내가 작성한 글
+    List<PostEntity> findAllByBoardnameAndUidOrderByNumDesc(String boardname, String uid);
     Page<PostEntity> findByBoardnameAndUidOrderByNumDesc(String boardname, String uid, Pageable pageable);
     int countAllByBoardnameAndUid(String boardname, String uid);
     // 마이페이지 - 각 게시판 별 내가 작성한 글에서 제목 검색

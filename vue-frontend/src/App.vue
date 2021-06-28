@@ -33,6 +33,7 @@ export default {
 </script>
 
 <style>
+@import '../src/css/common/common.css';
 /* 반응형 최대크기 */
 #app {
   margin:0 auto;

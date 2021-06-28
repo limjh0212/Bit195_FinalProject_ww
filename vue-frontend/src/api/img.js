@@ -20,3 +20,7 @@ export function getImgList(num){
 export function getOotdList(){
     return api.get('/api/cmnty/getootdlist');
 }
+// 내글보기
+export function getMyOotdList(uid){
+    return api.get(`/api/cmnty/getootdlist/${uid}`);
+}

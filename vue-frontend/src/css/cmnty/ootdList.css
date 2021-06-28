@@ -1,1 +1,117 @@
+/*라인*/
+.ootd-line {
+    margin:0px;
+    border-bottom: none;
+}
+/*카드 외부 정렬*/
+#card-list{
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+.card {
+    float: left;
+    width: 22%;
+    height: 360px;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 5px 10px;
+    margin-right: 20px;
+}
+/*카드 내부 정렬*/
+.card div{
+    display: inline-block;
+}
+.card-size{
+    width: 100%;
+    position: relative;
+    text-align: center;
+    margin: 0;
+    padding: 0px;
+    display: inline-block;
+}
+.card-box{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.card-img{
+    display: inline-block;
+    width: 100%;
+    height: 65%;
 
+}
+.imgCard{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    object-fit: initial;
+}
+.card-info{
+    width: 100%;
+    height: 45%;
+}
+.card-content{
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 0.2rem;
+}
+/*카드 정보 정렬*/
+.card-info{
+    position: relative;
+    text-align: center;
+    margin: auto;
+}
+.card-info1{
+    width: 100%;
+    position: relative;
+    text-align: center;
+    margin: auto;
+}
+.card-info1-left {
+    float: left;
+    width: 20%;
+    text-align: left;
+}
+.card-info1-right {
+    float: right;
+    width: 80%;
+    text-align: right;
+    font-weight: bolder;
+}
+.card-info1 div{
+    display: inline-block;
+}
+.card-info2{
+    width: 100%;
+    position: relative;
+    text-align: center;
+    margin: auto;
+}
+.card-info2-left {
+    float: left;
+    width: 50%;
+    text-align: left;
+}
+.card-info2-right {
+    float: right;
+    width: 50%;
+    text-align: right;
+}
+.card-info2 div{
+    display: inline-block;
+}
+.card-info3{
+    width: 100%;
+    position: relative;
+    text-align: center;
+    margin: auto;
+}
+.card-info3-default{
+    float: right;
+    width: 50%;
+    text-align: right;
+}
+.card-info3 div{
+    display: inline-block;
+}

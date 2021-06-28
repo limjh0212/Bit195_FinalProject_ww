@@ -74,4 +74,5 @@ export default {
 </script>
 
 <style scoped>
+@import '../../css/common/admin.css';
 </style>

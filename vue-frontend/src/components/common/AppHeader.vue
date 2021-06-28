@@ -19,9 +19,6 @@
         </router-link>
       </div>
       <div class ="nav-box">
-        <router-link to="/post/OOTD"><div class ="nav-box-default">OOTD 작성</div></router-link>
-      </div>
-      <div class ="nav-box">
         <router-link to="/board"><div class ="nav-box-default">커뮤니티</div></router-link>
       </div>
       </div>
