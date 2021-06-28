@@ -43,9 +43,9 @@
                 <tfoot>
                 <th colspan="6">
                     <div class="board-page">
-                      <div class="page-list">
+                      <div class="page-list" style="display: flex; justify-content: center" >
                         <div v-for="page in pageList">
-                            <div class="page-box-default" @click="fetchData(page)">{{ page }}</div>
+                            <div class="page-box-default" @click="fetchData(page)">&nbsp;&nbsp;{{ page }}&nbsp;&nbsp;&nbsp;</div>
                         </div>
                       </div>
                     </div>

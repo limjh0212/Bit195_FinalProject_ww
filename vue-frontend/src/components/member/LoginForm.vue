@@ -1,5 +1,5 @@
 <template>
-    <div class="content-view" id="login-page" style="width: 400px">
+    <div id="login-page" class="content-view" style="width: 400px; height: 700px;">
         <div class="col s12 z-depth-4 card-panel">
             <!--Form-->
             <form class="login-form">

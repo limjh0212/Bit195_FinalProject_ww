@@ -6,8 +6,8 @@
                 <v-card
                     elevation="2"
                     outlined
-                    style="width: 800px">
-                    <v-simple-table dense >
+                    style="width: 800px; margin: 0 auto;">
+                    <v-simple-table dense>
                         <template v-slot:default>
                             <thead>
                                 <td style="text-align: center; width: 130px">제목</td>
@@ -42,7 +42,7 @@
                 <v-card
                     elevation="2"
                     outlined
-                    style="width: 800px">
+                    style="width: 800px; margin: 0 auto;">
                     <v-simple-table dense>
                         <template v-slot:default>
                             <thead>

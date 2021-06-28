@@ -9,7 +9,7 @@
                             <th class="th" style="width: 90px;">작성자</th>
                             <th class="th" style="width: 300px;">Title</th>
                             <th class="th" style="width: 120px;">작성일</th>
-                            <th class="th" style="width: 50px;">좋아요</th>
+                            <th class="th" style="width: 60px;">좋아요</th>
                             <th class="th" style="width: 50px;">조회</th>
                         </tr>
                     </thead>
@@ -156,26 +156,7 @@ export default {
     margin: auto;
 }
 
-.page-box {
-    width: 20%;
-    float: left;
-}
-
 .page-box-default {
-    margin: 3px;
-}
-
-.foot-search {
-    width: 100%;
-    text-align: center;
-    position: relative;
-    height: auto;
-    font-size: 10px; /* Todo: tfoot의 문제 - 해결 필요 */
-}
-
-.foot-search-box {
-    width: 30%;
-    float: left;
     margin: 3px;
 }
 

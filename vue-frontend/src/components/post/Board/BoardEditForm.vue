@@ -12,7 +12,8 @@
 
         <!--수정 Form-->
         <form v-else>
-            <input v-model="title" type="text"></input>
+            <input v-model="title" style="width: 600px" type="text"></input>
+
             <el-tiptap :extensions="extensions" class="editor__content" :spellcheck="false" :content="content"
                        v-model="content" :width="700" style="border: 1px solid lightgray"
                        height="100%" placeholder="Write something ..."/>
@@ -33,7 +34,7 @@
                                                                         style="font-size: 18px;">save</i></button>
                 |
                 <button v-if="post.uid===checkUid" @click="goBack">취소<i class="material-icons"
-                                                                        style="font-size: 18px;">arrow_back</i></button>
+                                                                        style="font-size: 18px;">clear</i></button>
             </div>
 
             <!--수정 Btn-->
@@ -48,15 +49,10 @@
 
         <!--댓글 입력창-->
         <br>
-        <div>
+        <div v-if="showCmnt===true">
             <div>
-                <v-textarea
-                    solo
-                    name="input-7-4"
-                    style="width: 700px;"
-                    v-model="writeCmnt"
-                    placeholder="댓글을 입력하세요."
-                ></v-textarea>
+                <v-textarea v-model="writeCmnt" name="input-7-4" placeholder="댓글을 입력하세요." solo
+                            style="width: 700px;"></v-textarea>
                 <div style="display: flex; justify-content: space-between">
                     <div>
                     </div>
@@ -67,45 +63,76 @@
                 </div>
             </div>
         </div>
-<br><br>
-        <!--댓글-->
-        <div style="width: 60%;">
-            <!--댓글-->
-            <div style="justify-content: space-between" v-for="(item, i) in cmnt">
-                <v-textarea  v-for="(item, i) in cmnt"
-                    solo
-                    name="input-7-4"
-                    style="width: 700px;"
-                    readonly
-                >
-                </v-textarea>
-                <div>
-                    <div>
-                        <span @click="pushCmnt2(i)"><i class="material-icons" style="font-size: 18px;">reply</i></span>&nbsp;&nbsp;&nbsp;
-                        <span @click="editCmntdo(i)"><i class="material-icons" style="font-size: 18px;">edit</i></span>&nbsp;&nbsp;&nbsp;
-                        <span @click="deleteCmnt1(i)"><i class="material-icons"
-                                                         style="font-size: 18px;">clear</i></span>&nbsp;&nbsp;&nbsp;
-                    </div>
-                </div>
 
+        <!--댓글 수정-->
+        <div v-if="showCmnt===false">
+            <v-textarea v-model="editCmnt" name="input-7-4" solo style="width: 700px;"></v-textarea>
+            <div style="display: flex; justify-content: space-between">
+                <div>
+                </div>
+                <div style="width: 50%;">
+                    <button @click="editCmnt1">저장<i class="material-icons"
+                                                    style="font-size: 18px;">save</i></button>
+                </div>
             </div>
-            <!--댓글 수정-->
-            <div v-if="showCmnt1(i)">
-                <textarea v-model="editCmnt" placeholder="수정 내용을 입력하세요." type="textarea"/>
-                <button @click="editCmnt1">저장</button>
-            </div>
+        </div>
+        <br><br>
+        <!--댓글-->
+        <div style="width: 80%;">
+            <table v-for="(item, idx) in cmnt" style="width: 750px">
+                <tr>
+                    <td style="width: 80px; text-align: left">{{ item.writer }}</td>
+                    <td style="width: 300px; ">{{ item.content }}</td>
+                    <td v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')"
+                        style="width: 150px; text-align: center">
+                        {{ $moment(item.regdate).format('HH:mm:ss') }}
+                    </td>
+                    <td v-else style="width: 150px; text-align: center">{{
+                            $moment(item.regdate).format('YYYY-MM-DD')
+                        }}
+                    </td>
+                    <td style="width: 100px; text-align: center">
+                        <span @click="pushCmnt2(idx)"><i class="material-icons"
+                                                         style="font-size: 18px;">reply</i></span>&nbsp;&nbsp;&nbsp;
+                        <span v-if="isWriter(item.writer)" @click="editCmntdo(idx)"><i class="material-icons"
+                                                                                       style="font-size: 18px;">edit</i></span>&nbsp;&nbsp;&nbsp;
+                        <span v-if="isWriter(item.writer)" @click="deleteCmnt1(idx)"><i class="material-icons"
+                                                                                        style="font-size: 18px;">clear</i></span>&nbsp;&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr v-for="(item, i) in cmnt2[idx]">
+                    <td style="width: 80px; text-align: center"><i class="material-icons"
+                                                                   style="font-size: 18px;">subdirectory_arrow_right</i>&nbsp;&nbsp;{{
+                            item.writer
+                        }}
+                    </td>
+                    <td style="width: 300px; ">{{ item.content }}</td>
+                    <td v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')"
+                        style="width: 150px; text-align: center">
+                        {{ $moment(item.regdate).format('HH:mm:ss') }}
+                    </td>
+                    <td v-else style="width: 150px; text-align: center">{{ $moment(item.regdate).format('YYYY-MM-DD') }}
+                    </td>
+                    <td style="width: 100px; text-align: center">
+                        <span v-if="isWriter(item.writer)" @click=""><i class="material-icons"
+                                                                                     style="font-size: 18px;">edit</i></span>&nbsp;&nbsp;&nbsp;
+                        <span v-if="isWriter(item.writer)" @click=""><i class="material-icons"
+                                                                                      style="font-size: 18px;">clear</i></span>&nbsp;&nbsp;&nbsp;
+                    </td>
+                    <!--댓글 수정-->
+                </tr>
+
+            </table>
+
 
             <!--대댓글 작성-->
-            <div v-if="showCmnt2(i)">
+            <div>
                 <div>
                     <textarea v-model="writeCmnt2" placeholder="대댓글 내용을 입력하세요." type="textarea"/>
                     <button @click="saveCmnt2">저장</button>
                 </div>
             </div>
-            <!--대댓글-->
-            <ul>
-                <li v-for="(item, i) in cmnt2[i]">{{ item.content }}</li>
-            </ul>
+
         </div>
     </div>
 </template>
@@ -173,9 +200,13 @@ export default {
             writeCmnt2: '',
             editCmnt  : '',
             cmntnum   : '',
+            showCmnt  : false,
         }
     },
-    methods : {
+    methods: {
+        isWriter(id) {
+            return this.$store.state.id === id;
+        },
 
         //댓글 삭제
         async deleteCmnt1(i) {
@@ -205,22 +236,14 @@ export default {
             }
             await api_editCmnt1(this.cmntnum, Data)
             await this.createContent()
+            this.showCmnt = true;
         },
 
         //댓글 수정 버튼 작동 (Text area 보여주기)
-        editCmntdo(i) {
-            if (this.cmnt1Array.includes(i)) {
-                this.cmnt1Array.pop(i);
-            } else {
-                this.cmnt2Array = [];
-                this.cmnt1Array = [];
-                this.cmnt1Array.push(i);
-                this.cmntnum = this.cmnt[i].num;
-            }
-        },
-        //댓글 수정 Textarea 표시 조건문
-        showCmnt1(i) {
-            return this.cmnt1Array.includes(i);
+        editCmntdo(idx) {
+            this.showCmnt = false;
+            this.cmntnum = this.cmnt[idx].num;
+            this.editCmnt = this.cmnt[idx].content
         },
 
         //대댓글 저장
@@ -238,14 +261,15 @@ export default {
         },
 
         //대댓글 작성폼 선택
-        pushCmnt2(i) {
-            if (this.cmnt2Array.includes(i)) {
-                this.cmnt2Array.pop(i);
+        pushCmnt2(idx) {
+            if (this.cmnt2Array.includes(idx)) {
+                console.log(idx)
+                this.cmnt2Array.pop(idx);
             } else {
                 this.cmnt1Array = [];
                 this.cmnt2Array = [];
-                this.cmnt2Array.push(i);
-                this.cmntnum = this.cmnt[i].num;
+                this.cmnt2Array.push(idx);
+                this.cmntnum = this.cmnt[idx].num;
             }
         },
 
@@ -318,12 +342,14 @@ export default {
             this.title = data.post.title;
             this.content = this.post.content;
         },
-    },
+    }
+    ,
     computed: {
         checkUid() {
             return this.$store.state.id;
         }
-    },
+    }
+    ,
     created() {
         this.createContent()
     }

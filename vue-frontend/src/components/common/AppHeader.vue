@@ -2,7 +2,7 @@
   <header>
     <div id="nav">
       <div class="nav-logo">
-        <h1><a href="/main" class="logo">Weather</a></h1>
+        <h1 style="text-decoration: none;"><a class="logo" href="/main">Weather</a></h1>
       </div>
       <div class="nav-menu">
       <div class ="nav-box">
@@ -11,7 +11,7 @@
            </router-link>
       </div>
       <div v-if="isUserLogin" class ="nav-box">
-        <router-link to="/mypage">
+        <router-link to="/mypage/aboutme">
           <div class ="nav-box-default">
             <div class="headerProfile"><img :src="src" class="profile"></div>
             <div><p class="nickname">{{ this.$store.state.id }}님</p></div>
