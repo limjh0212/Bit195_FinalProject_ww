@@ -25,7 +25,7 @@
                     </router-link>
                 </v-btn>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <v-btn elevation="2">
-                    <router-link to="#">
+                    <router-link to="/mypage/mycmnt">
                         <div class="sub-nav-box-default">내가 작성한 댓글</div>
                     </router-link>
                 </v-btn>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
