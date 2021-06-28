@@ -21,29 +21,37 @@
         <div style="width: 55%; display: flex; justify-content: space-between">
             <!--좋아요-->
             <div>
-                <button v-if="data.existLike===true" @click="likePost">좋아요<i class="material-icons"
-                                                                             style="font-size: 18px; color:crimson">favorite</i>
-                </button>
-                <button v-else @click="likePost">좋아요<i class="material-icons" style="font-size: 18px ; color: crimson">favorite_border</i>
-                </button>
+                <v-btn v-if="data.existLike===true" elevation="1" rounded small @click="likePost">좋아요<i
+                    class="material-icons"
+                    style="font-size: 18px; color:crimson">favorite</i>
+                </v-btn>
+                <v-btn v-else elevation="1" rounded small @click="likePost">좋아요<i class="material-icons"
+                                                                                  style="font-size: 18px ; color: crimson">favorite_border</i>
+                </v-btn>&nbsp;
+                <v-btn elevation="1" rounded small type="submit" @click="goback">뒤로
+                </v-btn>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
 
             <!--저장/취소 Btn-->
             <div v-if="isEdit===true">
-                <button v-if="post.uid===checkUid" @click="update">저장<i class="material-icons"
-                                                                        style="font-size: 18px;">save</i></button>
+                <v-btn v-if="post.uid===checkUid" elevation="1" rounded small @click="update">저장<i
+                    class="material-icons"
+                    style="font-size: 18px;">save</i></v-btn>
                 |
-                <button v-if="post.uid===checkUid" @click="goBack">취소<i class="material-icons"
-                                                                        style="font-size: 18px;">clear</i></button>
+                <v-btn v-if="post.uid===checkUid" elevation="1" rounded small @click="goBack">취소<i
+                    class="material-icons"
+                    style="font-size: 18px;">clear</i></v-btn>
             </div>
 
             <!--수정 Btn-->
             <div v-if="isEdit===false">
-                <button v-if="post.uid===checkUid" @click="doEdit">수정<i class="material-icons"
-                                                                        style="font-size: 18px;">edit</i></button>&nbsp;&nbsp;&nbsp;
-                <button v-if="post.uid===checkUid" @click="doDelete(post.num)">삭제<i class="material-icons"
-                                                                                    style="font-size: 18px;">clear</i>
-                </button>
+                <v-btn v-if="post.uid===checkUid" elevation="1" rounded small @click="doEdit">수정<i
+                    class="material-icons"
+                    style="font-size: 18px;">edit</i></v-btn>&nbsp;
+                <v-btn v-if="post.uid===checkUid" elevation="1" rounded small @click="doDelete(post.num)">삭제<i
+                    class="material-icons"
+                    style="font-size: 18px;">clear</i>
+                </v-btn>
             </div>
         </div>
 
@@ -57,8 +65,9 @@
                     <div>
                     </div>
                     <div style="width: 50%;">
-                        <button @click="saveCmnt">저장<i class="material-icons"
-                                                       style="font-size: 18px;">save</i></button>
+                        <v-btn elevation="1" rounded small @click="saveCmnt">저장<i class="material-icons"
+                                                                                  style="font-size: 18px;">save</i>
+                        </v-btn>
                     </div>
                 </div>
             </div>
@@ -71,8 +80,8 @@
                 <div>
                 </div>
                 <div style="width: 50%;">
-                    <button @click="editCmnt1">저장<i class="material-icons"
-                                                    style="font-size: 18px;">save</i></button>
+                    <v-btn elevation="1" rounded small @click="editCmnt1">저장<i class="material-icons"
+                                                                               style="font-size: 18px;">save</i></v-btn>
                 </div>
             </div>
         </div>
@@ -85,8 +94,8 @@
                 <div>
                 </div>
                 <div style="width: 50%;">
-                    <button @click="saveCmnt2">저장<i class="material-icons"
-                                                    style="font-size: 18px;">save</i></button>
+                    <v-btn elevation="1" rounded small @click="saveCmnt2">저장<i class="material-icons"
+                                                                               style="font-size: 18px;">save</i></v-btn>
                 </div>
             </div>
         </div>
@@ -98,8 +107,9 @@
                 <div>
                 </div>
                 <div style="width: 50%;">
-                    <button @click="editSaveCmnt2">저장<i class="material-icons"
-                                                        style="font-size: 18px;">save</i></button>
+                    <v-btn elevation="1" rounded small @click="editSaveCmnt2">저장<i class="material-icons"
+                                                                                   style="font-size: 18px;">save</i>
+                    </v-btn>
                 </div>
             </div>
         </div>
@@ -224,6 +234,9 @@ export default {
         }
     },
     methods: {
+        goback() {
+            this.$router.go(-1);
+        },
         isWriter(id) {
             return this.$store.state.id === id;
         },

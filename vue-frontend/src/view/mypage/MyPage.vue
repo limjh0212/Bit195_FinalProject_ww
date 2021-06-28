@@ -15,11 +15,6 @@
             </div>
             <div v-else>
                 <v-btn elevation="2">
-                    <router-link to="#">
-                        <div class="sub-nav-box-default">코디 좋아요</div>
-                    </router-link>
-                </v-btn>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <v-btn elevation="2">
                     <router-link to="/mypage/mypost">
                         <div class="sub-nav-box-default">내가 작성한 글</div>
                     </router-link>

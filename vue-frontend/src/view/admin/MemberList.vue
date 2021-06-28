@@ -1,43 +1,43 @@
 <template>
-  <div class="row mt-4 mb-4">
-      <div class="col-md-12">
-        <div class="table-box" >
-          <div>
-            <v-simple-table>
-                <template v-slot:default >
-                    <thead>
-                        <tr>
-                            <th class="text-left">선택</th>
-                            <th class="text-left">아이디</th>
-                            <th class="text-left">닉네임</th>
-                            <th class="text-left">가입일</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, idx) in members" :key="idx">
-                            <td><div><input type="checkbox" v-model="deleteSelect" v-bind:value="item.id"></div></td>
-                            <td>{{ item.id }}</td>
-                            <td>{{ item.nickname }}</td>
-                            <td>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
-                        </tr>
-                    </tbody>
-                                <div class="mt-3 mb-3">
-                                  <button class="board-btn btn-outline-danger" id="fusionexport-btn" @click="deleteId">
-                                <span
-                                    class="spinner-border spinner-border-sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                ></span>
-                                    <span class="btn-text">삭제</span>
-                                  </button>
-                                </div>
-    <!--                <button @click="deleteId">삭제</button>-->
-                </template>
-            </v-simple-table>
-          </div>
+    <div class="row mt-4 mb-4">
+        <div class="col-md-12">
+            <div class="table-box">
+                <div>
+                    <v-simple-table>
+                        <template>
+                            <thead>
+                                <tr>
+
+                                    <th style="text-align: center">아이디</th>
+                                    <th style="text-align: center">닉네임</th>
+                                    <th style="text-align: center">가입일</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, idx) in members" :key="idx">
+                                    <!--<td style="width: 50px; text-align: center"><input type="checkbox" v-model="deleteSelect"-->
+                                    <!--                               v-bind:value="item.id" /></td>-->
+                                    <td style="width: 100px; text-align: center">{{ item.id }}</td>
+                                    <td style="width: 100px; text-align: center">{{ item.nickname }}</td>
+                                    <td style="width: 120px; text-align: center">
+                                        {{ $moment(item.regdate).format('YYYY-MM-DD') }}
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <!--<tfoot>-->
+                            <!--    <td colspan="4">-->
+                            <!--        <v-btn elevation="1" rounded small @click="deleteId">삭제-->
+                            <!--            <i class="material-icons" style="font-size: 20px">clear</i>-->
+                            <!--        </v-btn>-->
+                            <!--    </td>-->
+                            <!--</tfoot>-->
+                        </template>
+                    </v-simple-table>
+                </div>
+            </div>
         </div>
-      </div>
-  </div>
+    </div>
 </template>
 <script>
 import {deleteId, fetchMemberList} from "@/api/admin";
@@ -47,9 +47,9 @@ export default {
     components: {LoadingSpinner},
     data() {
         return {
-            members  : [],
+            members     : [],
             deleteSelect: [],
-            isLoading: false,
+            isLoading   : false,
         }
     },
     methods: {
@@ -75,4 +75,9 @@ export default {
 
 <style scoped>
 @import '../../css/common/admin.css';
+
+
+input {
+
+}
 </style>

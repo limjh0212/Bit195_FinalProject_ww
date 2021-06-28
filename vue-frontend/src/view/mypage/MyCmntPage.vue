@@ -29,6 +29,11 @@
                                 <div>
                                 </div>
                                 <div>
+                                    <div class="page-list" style="display: flex">
+                                        <div v-for="page in pageList" @click="fetchMyList(page)">
+                                            &nbsp;&nbsp;&nbsp;{{ page }}&nbsp;&nbsp;&nbsp;
+                                        </div>
+                                    </div>
                                 </div>
                                 <div>
                                 </div>
@@ -49,21 +54,20 @@ export default {
     components: {LoadingSpinner},
     data() {
         return {
-            items: [],
-            pageList:[],
+            items   : [],
+            pageList: [],
         }
     },
     methods: {
         //내글 목록
-        async fetchMyList() {
-            const {data} = await myCmnt(this.$store.state.id,1);
+        async fetchMyList(page) {
+            const {data} = await myCmnt(this.$store.state.id, page);
             this.items = data.myCmntList;
             this.pageList = data.pageList;
-            console.log(this.items)
         },
     },
     created() {
-        this.fetchMyList();
+        this.fetchMyList(1);
     }
 }
 </script>
