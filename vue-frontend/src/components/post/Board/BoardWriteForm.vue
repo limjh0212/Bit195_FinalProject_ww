@@ -1,46 +1,74 @@
 <template>
-    <div class="board-router-view">
-        <div v-if="this.$route.params.boardname === 'freeBoard'">
-            <div>
-                <form @submit.prevent="save">
-                    <input v-model="title" placeholder='제목을 적어주세요' type="text"></input>
-                    <el-tiptap v-model="content" :content="content" :extensions="extensions" :width="700"
-                               class="editor__content"
-                               height="100%" placeholder="Write something ..."/>
-                    <button type="submit">저장</button>
-                </form>
-            </div>
-        </div>
-        <div v-if="this.$route.params.boardname === 'OOTD'">
-            <div>
+    <v-container>
+        <div class="board-router-view">
+            <div v-if="this.$route.params.boardname === 'freeBoard'">
                 <div>
-                    <form enctype="multipart/form-data" method="post" @submit.prevent="saveOotd">
+                    <form @submit.prevent="save">
+                        <input v-model="title" placeholder='제목' type="text"></input>
+                        <el-tiptap v-model="content" :content="content" :extensions="extensions" :width="700"
+                                   class="editor__content"
+                                   height="400px" placeholder="내용을 입력하세요."/>
+                        <br>
+                        <div style="width:700px; display: flex; justify-content: space-between">
+                            <div></div>
+                            <div>
+                                <v-btn elevation="1" rounded small type="submit">저장<i class="material-icons"
+                                                                                      style="font-size: 20px">save</i>
+                                </v-btn>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div v-if="this.$route.params.boardname === 'OOTD'">
+                <div>
+                    <div>
+                        <form enctype="multipart/form-data" method="post" @submit.prevent="saveOotd">
+                            <input v-model="title" placeholder='제목' type="text"></input>
+                            <el-tiptap v-model="content" :content="content" :extensions="extensions" :width="700"
+                                       class="editor__content"
+                                       height="100%" placeholder="내용을 입력하세요."/>
+                            <p>대표 이미지</p>
+                            <input id="File" multiple="multiple" name="files" type="file"
+                                   @change="onFileSelected"></input>
+                            <br>
+                            <div style="width:700px; display: flex; justify-content: space-between">
+                                <div></div>
+                                <div>
+                                    <v-btn elevation="1" rounded small type="submit">저장<i class="material-icons"
+                                                                                          style="font-size: 20px">save</i>
+                                    </v-btn>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <img ref="uploadImg" :src="this.imgsrc">
+                    </div>
+                </div>
+            </div>
+            <div v-if="this.$route.params.boardname === 'qna'">
+                <div>
+                    <form @submit.prevent="save">
                         <input v-model="title" placeholder='제목' type="text"></input>
                         <el-tiptap v-model="content" :content="content" :extensions="extensions" :width="700"
                                    class="editor__content"
                                    height="100%" placeholder="내용을 입력하세요."/>
-                        <p>대표 이미지</p>
-                        <input id="File" multiple="multiple" name="files" type="file" @change="onFileSelected"></input>
-                        <button id="Button" type="submit">저장</button>
+                        <br>
+                        <div style="width:700px; display: flex; justify-content: space-between">
+                            <div></div>
+                            <div>
+                                <v-btn elevation="1" rounded small type="submit">저장<i class="material-icons"
+                                                                                      style="font-size: 20px">save</i>
+                                </v-btn>
+                            </div>
+                        </div>
                     </form>
                 </div>
-                <div>
-                    <img ref="uploadImg" :src="this.imgsrc">
-                </div>
             </div>
         </div>
-        <div v-if="this.$route.params.boardname === 'qna'">
-            <div>
-                <form @submit.prevent="save">
-                    <input v-model="title" placeholder='제목을 적어주세요' type="text"></input>
-                    <el-tiptap v-model="content" :content="content" :extensions="extensions" :width="700"
-                               class="editor__content"
-                               height="100%" placeholder="Write something ..."/>
-                    <button type="submit">저장</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    </v-container>
 </template>
 
 <script>

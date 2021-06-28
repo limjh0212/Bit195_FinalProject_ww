@@ -135,6 +135,11 @@ export const router = new VueRouter({
                         component: () => import('@/view/mypage/MyPostPage'),
                     },
                     {
+                        //내가 작성한 댓글
+                        path     : '/mypage/mycmnt',
+                        component: () => import('@/view/mypage/MyCmntPage'),
+                    },
+                    {
                         //내 정보 조회
                         path     : '/mypage/aboutme',
                         component: () => import('@/view/mypage/AboutMePage'),

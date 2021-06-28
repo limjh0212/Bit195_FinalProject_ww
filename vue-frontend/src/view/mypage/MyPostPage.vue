@@ -39,16 +39,12 @@
                                 </div>
                                 <div>
                                     <div style="display: flex" class="page-list">
-                                        <div style="display: flex" v-if="myList" v-for="page in items.pageList">
+                                        <div v-for="page in items.pageList" style="display: flex">
                                             <div class="page-box-default" @click="fetchMyList(page)">{{ page }}</div>&nbsp;&nbsp;&nbsp;
-                                        </div>
-                                        <div style="display: flex" v-if="myList===false" v-for="page in items.pageList">
-                                            <div class="page-box-default" @click="fetchData(page)">{{ page }}</div>&nbsp;&nbsp;&nbsp;
                                         </div>
                                     </div>
                                 </div>
                                 <div>
-
                                 </div>
                             </div>
                         </th>

@@ -62,3 +62,9 @@ export function qnaAdminList(num) {
 export function likePost(postNum, Data) {
     return api.post(`/api/cmnty/like/${postNum}`, Data);
 }
+
+//좋아요 생성
+export function myCmnt(writer) {
+    return api.get(`/api/mngmt/mypage/mycmnts?writer=${writer}`);
+}
+

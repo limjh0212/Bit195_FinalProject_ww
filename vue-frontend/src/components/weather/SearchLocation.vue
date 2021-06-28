@@ -1,27 +1,53 @@
 <template>
-    <div style="justify-content: center">
-        <!--검색-->
-        <div style="margin: 20px">
-            <input v-model="keyword" placeholder="검색어" type="text" style="width: 500px"></input>
-            <button @click="SearchKeyword"><i class="material-icons" style="font-size: 25px">search</i></button>
-            <ul>
-                <li v-for="(item, i) in data"><span>{{ item.city }} {{ item.address1 }} {{ item.address2 }}</span>
-                    <button @click="save(i)"><i class="material-icons" style="font-size: 20px">add</i></button>
-                </li>
-            </ul>
-        </div>
+    <v-container>
+        <div style="justify-content: center">
+            <!--검색-->
+            <div style="margin: 20px">
+                <input v-model="keyword" placeholder="동 이름을 입력하세요" style="width: 500px" type="text"></input>
+                <button @click="SearchKeyword"><i class="material-icons" style="font-size: 25px">search</i></button>
+                <v-card v-if="data!=''" style="width: 600px; margin: 0 auto;">
+                    <v-simple-table dense>
+                        <thead>
+                            <tr>
+                                <td style="text-align: center">no.</td>
+                                <td style="text-align: center">주소1</td>
+                                <td style="text-align: center">주소2</td>
+                                <td style="text-align: center">행정구역</td>
+                                <td style="text-align: center">추가</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, i) in data">
+                                <td style="text-align: center">{{ i + 1 }}</td>
+                                <td style="text-align: center">{{ item.city }}</td>
+                                <td style="text-align: center">{{ item.address1 }}</td>
+                                <td style="text-align: center">{{ item.address2 }}</td>
+                                <td style="text-align: center">
+                                    <button @click="save(i)"><i class="material-icons" style="font-size: 20px">add</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            {{ message }}
+                        </tfoot>
+                    </v-simple-table>
+                </v-card>
+            </div>
 
-        <!--조회-->
-        <div style="margin: auto; ">
-            <table style="width: 200px;">
-                <tr v-for="(item, i) in locations">
-                    <td>{{ item.address2 }}</td>
-                    <td @click.prevent="deleteLocation(item.num)"><i class="material-icons" style="font-size: 20px">clear</i></td>
-                </tr>
-            </table>
+            <!--조회-->
+            <div style="margin: 0 auto; ">
+                <table style="width: 200px;">
+                    <tr v-for="(item, i) in locations">
+                        <td>{{ item.address2 }}</td>
+                        <td @click.prevent="deleteLocation(item.num)"><i class="material-icons" style="font-size: 20px">clear</i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
-        {{ message }}
-    </div>
+    </v-container>
 </template>
 
 <script>

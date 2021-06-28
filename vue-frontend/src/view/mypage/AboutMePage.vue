@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <div class="mypageImg">
             <img :src="src" class="profile">
         </div>
@@ -8,11 +8,16 @@
             <p>email : {{ item.email }}</p>
             <p>닉네임 : {{ item.nickname }}</p>
             <p>가입일 : {{ $moment(item.regdate).format('YYYY-MM-DD') }}</p>
-            <p><input name="pw" placeholder="Password" type="password"></input></p>
         </div>
+        <br>
+        <br>
+        <br>
         <div>
-            <button @click.prevent="">뒤로</button>
-            <button @click.prevent="">수정</button>
+            <v-btn elevation="1" rounded small type="submit" @click="goback">뒤로
+            </v-btn>&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <v-btn elevation="1" rounded small type="submit">수정
+            </v-btn>
         </div>
     </div>
 </template>
@@ -39,6 +44,9 @@ export default {
                 base.src = "data:image/png;base64," + base64String;
             });
         },
+        goback(){
+            this.$router.go(-1)
+        }
     },
     created() {
         this.fetchData();
