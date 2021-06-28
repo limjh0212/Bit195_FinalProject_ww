@@ -38,18 +38,6 @@ public class ImgService {
             .filesize(imgEntity.getFilesize())
             .build();
     }
-    // Todo: OOTD 이미지 전체 출력
-    // 하고자 하는 방식 : 각 게시물에 추가된 전체 이미지 출력
-    @Transactional
-    public List<ImgDTO> findImgs(int postid) {
-        List<ImgEntity> imgEntities = imgRepository.findAllByPostid(postid);
-        List<ImgDTO> imgDTOList = new ArrayList<>();
-
-        for (ImgEntity imgEntity : imgEntities) {
-            imgDTOList.add(this.convertEntityToDTO(imgEntity));
-        }
-        return imgDTOList;
-    }
     // 테스트용 - 이미지 출력 - 진행중
     @Transactional
     public ImgDTO findImg(int num){

@@ -36,7 +36,7 @@ export const store = new Vuex.Store({
             state.nickname = userData.nickname;
             state.role = userData.role;
             if(userData.img === 0){
-                state.img = 1;
+                state.img = 18;
             }else{
                 state.img = userData.img;
             }
