@@ -22,5 +22,5 @@ export function getOotdList(){
 }
 // 내글보기
 export function getMyOotdList(uid){
-    return api.get(`/api/cmnty/getootdlist/${uid}`);
+    return api.get(`/api/cmnty/myootdlist/${uid}`);
 }

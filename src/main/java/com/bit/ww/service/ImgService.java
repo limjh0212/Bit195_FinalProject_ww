@@ -156,12 +156,6 @@ public class ImgService {
         for (int j = 0; j < myOotdPostid.size();j++){
             postidList.add(0,myOotdPostid.get(j).getPostnum());
         }
-//        for (int i = 0; i < imgEntities.size(); i++){
-//            if(!postidList.contains(imgEntities.get(i).getPostid())) {
-//                System.out.println(imgEntities.get(i).getPostid());
-//                postidList.add(0, imgEntities.get(i).getPostid());
-//            }
-//        }
 
         List<ImgEntity> imgEntityList = new ArrayList<>();
         for (int k = 0; k < postidList.size(); k++) {

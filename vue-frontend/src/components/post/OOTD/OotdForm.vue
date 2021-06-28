@@ -31,10 +31,10 @@
           <div class="main">
             <table>
                 <tr class="ootd-line">
-                    <td id="card-form" class="card" v-for="item in list()">
-                      <div class="card-size">
+                    <td class="card" v-for="item in list()">
+                      <div id="card-form" class="card-size">
                           <div class="card-img card-box">
-                            <img :src="item[0]" class="imgCard">
+                            <div><img :src="item[0]" class="imgCard"></div>
                           </div>
                           <div class="card-info card-box">
                             <div class="card-box-default card-info1">
@@ -42,7 +42,7 @@
                               <div class="card-info1-right"><router-link :to="`/post/OOTD/${item[1].num}`"><div>{{ item[1].title }}</div></router-link></div>
                             </div>
                             <div id="card-post" class="card-box-default card-info2">
-                              <div class="card-info2-left">작성자 {{ item[1].writer }}</div>
+                              <div class="card-info2-left">{{ item[1].writer }}</div>
                               <div class="card-info2-right" v-if="$moment(item[1].regdate).format('YYYY-MM-DD')===$moment().format('YYYY-MM-DD')">{{ $moment(item[1].regdate).format('HH:mm:ss') }}</div>
                               <div class="card-info2-right" v-else>{{ $moment(item[1].regdate).format('YYYY-MM-DD') }}</div>
                             </div>
