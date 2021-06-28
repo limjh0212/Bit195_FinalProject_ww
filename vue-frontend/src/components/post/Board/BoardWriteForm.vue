@@ -1,46 +1,46 @@
 <template>
-  <div class="board-router-view">
-    <div v-if="this.$route.params.boardname === 'freeBoard'">
-      <div>
-        <form @submit.prevent="save">
-          <input v-model="title" placeholder='제목을 적어주세요' type="text"></input>
-          <el-tiptap :extensions="extensions" class="editor__content" :content="content" v-model="content"
-                     :width="700"
-                     height="100%" placeholder="Write something ..."/>
-          <button type="submit">저장</button>
-        </form>
-      </div>
-    </div>
-    <div v-if="this.$route.params.boardname === 'OOTD'">
-      <div>
-        <div>
-            <form @submit.prevent="saveOotd" method="post" enctype="multipart/form-data">
-              <input v-model="title" placeholder='제목' type="text"></input>
-              <el-tiptap :extensions="extensions" class="editor__content" :content="content" v-model="content"
-                         :width="700"
-                         height="100%" placeholder="내용을 입력하세요."/>
-              <p>대표 이미지</p>
-              <input id="File" multiple="multiple" name="files" type="file" @change="onFileSelected"></input>
-              <button id="Button" type="submit">저장</button>
-            </form>
+    <div class="board-router-view">
+        <div v-if="this.$route.params.boardname === 'freeBoard'">
+            <div>
+                <form @submit.prevent="save">
+                    <input v-model="title" placeholder='제목을 적어주세요' type="text"></input>
+                    <el-tiptap v-model="content" :content="content" :extensions="extensions" :width="700"
+                               class="editor__content"
+                               height="100%" placeholder="Write something ..."/>
+                    <button type="submit">저장</button>
+                </form>
+            </div>
         </div>
-        <div>
-          <img ref="uploadImg" :src="this.imgsrc">
+        <div v-if="this.$route.params.boardname === 'OOTD'">
+            <div>
+                <div>
+                    <form enctype="multipart/form-data" method="post" @submit.prevent="saveOotd">
+                        <input v-model="title" placeholder='제목' type="text"></input>
+                        <el-tiptap v-model="content" :content="content" :extensions="extensions" :width="700"
+                                   class="editor__content"
+                                   height="100%" placeholder="내용을 입력하세요."/>
+                        <p>대표 이미지</p>
+                        <input id="File" multiple="multiple" name="files" type="file" @change="onFileSelected"></input>
+                        <button id="Button" type="submit">저장</button>
+                    </form>
+                </div>
+                <div>
+                    <img ref="uploadImg" :src="this.imgsrc">
+                </div>
+            </div>
         </div>
-      </div>
+        <div v-if="this.$route.params.boardname === 'qna'">
+            <div>
+                <form @submit.prevent="save">
+                    <input v-model="title" placeholder='제목을 적어주세요' type="text"></input>
+                    <el-tiptap v-model="content" :content="content" :extensions="extensions" :width="700"
+                               class="editor__content"
+                               height="100%" placeholder="Write something ..."/>
+                    <button type="submit">저장</button>
+                </form>
+            </div>
+        </div>
     </div>
-    <div v-if="this.$route.params.boardname === 'qna'">
-      <div>
-        <form @submit.prevent="save">
-          <input v-model="title" placeholder='제목을 적어주세요' type="text"></input>
-          <el-tiptap :extensions="extensions" class="editor__content" :content="content" v-model="content"
-                     :width="700"
-                     height="100%" placeholder="Write something ..."/>
-          <button type="submit">저장</button>
-        </form>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -65,6 +65,7 @@ import "codemirror/addon/selection/active-line.js"; // require active-line.js
 import "codemirror/addon/edit/closetag.js";
 import {savePost} from "@/api/post";
 import {saveOotdPost} from "@/api/img";
+
 let FileElement = document.querySelector('#File');
 export default {
     name: "Editor",
@@ -88,7 +89,7 @@ export default {
             ],
             content   : ``,
             title     : '',
-            imgsrc : "",
+            imgsrc    : "",
         };
     },
     methods: {
@@ -107,31 +108,31 @@ export default {
             await this.$router.push(`/list/${postData.boardname}`);
         },
         async saveOotd() {
-          if (this.title === '') {
-            this.title = '제목 없음';
-          }
-          const ootdData = new FormData();
-          ootdData.append("boardname", this.$route.params.boardname);
-          ootdData.append("title", this.title);
-          ootdData.append("content", this.content);
-          ootdData.append("uid", this.$store.state.id);
-          for (let i = 0; i < FileElement.files.length; i++) {
-            ootdData.append("images", FileElement.files[i]);
-          }
-          const {data} = await saveOotdPost(ootdData);
-          await this.$router.push('/list/OOTD');
+            if (this.title === '') {
+                this.title = '제목 없음';
+            }
+            const ootdData = new FormData();
+            ootdData.append("boardname", this.$route.params.boardname);
+            ootdData.append("title", this.title);
+            ootdData.append("content", this.content);
+            ootdData.append("uid", this.$store.state.id);
+            for (let i = 0; i < FileElement.files.length; i++) {
+                ootdData.append("images", FileElement.files[i]);
+            }
+            const {data} = await saveOotdPost(ootdData);
+            await this.$router.push('/list/OOTD');
         },
         onFileSelected: function (event) {
-          FileElement = event.target;
-          if (FileElement.files[0]) {
-            let img = this.$refs.uploadImg;
-            img.src = URL.createObjectURL(FileElement.files[0]);
-            this.imgsrc = img.src;
-            img.width = 200;
-            img.onload = () => {
-              URL.revokeObjectURL(this.src)
+            FileElement = event.target;
+            if (FileElement.files[0]) {
+                let img = this.$refs.uploadImg;
+                img.src = URL.createObjectURL(FileElement.files[0]);
+                this.imgsrc = img.src;
+                img.width = 200;
+                img.onload = () => {
+                    URL.revokeObjectURL(this.src)
+                }
             }
-          }
         },
     }
 };
