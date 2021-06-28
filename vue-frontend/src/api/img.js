@@ -24,3 +24,6 @@ export function getOotdList(){
 export function getMyOotdList(uid){
     return api.get(`/api/cmnty/myootdlist/${uid}`);
 }
+export function getRecoImgList(){
+    return api.get('/api/reco/imgList');
+}
