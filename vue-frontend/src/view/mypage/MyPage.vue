@@ -41,7 +41,7 @@
                 </v-btn>
             </div>
         </div>
-        <div>
+        <div class="router-view">
             <router-view></router-view>
         </div>
     </v-container>
