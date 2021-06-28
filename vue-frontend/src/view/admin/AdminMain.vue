@@ -148,7 +148,7 @@ export default {
       await spark2Chart.render();
     },
     async fetchQnaData(){
-      const {data} = await fetchQna();
+      const {data} = await fetchQna(1);
       this.cntRecentQuestion = data.cntRecentQuestion;
 
       var spark3 = {

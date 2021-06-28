@@ -1,5 +1,5 @@
 <template>
-    <div class="row" id="login-page" style="width: 400px">
+    <div class="content-view" id="login-page" style="width: 400px">
         <div class="col s12 z-depth-4 card-panel">
             <!--Form-->
             <form class="login-form">
@@ -48,7 +48,7 @@
                     {{ logMessage }}
                 </p>
 
-                <div class="row" style="margin-top: 0px;margin-bottom: 0px; ">
+                <div class="row" style="margin-top: 0;margin-bottom: 0; ">
                     <!--Submit 버튼-->
                     <div class="input-field col s12">
                         <button class="btn waves-effect waves-light col s12" @click.prevent="submitForm">Submit</button>

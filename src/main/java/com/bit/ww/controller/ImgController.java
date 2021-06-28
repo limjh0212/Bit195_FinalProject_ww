@@ -3,7 +3,6 @@ package com.bit.ww.controller;
 import com.bit.ww.dto.BoardDTO;
 import com.bit.ww.dto.ImgDTO;
 import com.bit.ww.dto.PostDTO;
-import com.bit.ww.entity.MemberEntity;
 import com.bit.ww.entity.PostEntity;
 import com.bit.ww.service.BoardService;
 import com.bit.ww.service.ImgService;
@@ -23,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -72,13 +70,13 @@ public class ImgController {
         String absolutePath = new File("").getAbsolutePath()+File.separator+File.separator;
         String path = imgDTO.getStoredpath();
         // 맥에서 출력되지 않는 문제 해결을 위해
-        System.out.println(path);
-        String[] paths = path.split("\\\\");
-        String imagesFolder = paths[0];
-        String dateFolder = paths[1];
-        String filename = paths[2];
-        path = imagesFolder+"/"+dateFolder+"/"+filename;
-        System.out.println(path);
+//        System.out.println(path);
+//        String[] paths = path.split("\\\\");
+//        String imagesFolder = paths[0];
+//        String dateFolder = paths[1];
+//        String filename = paths[2];
+//        path = imagesFolder+"/"+dateFolder+"/"+filename;
+//        System.out.println(path);
         // escape 문자라서 \\\\네개 사용함.
         InputStream imageStream = new FileInputStream(absolutePath+path);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -97,11 +95,11 @@ public class ImgController {
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
             String path = imgDTOList.get(i).getStoredpath();
             // 맥에서 출력되지 않는 문제 해결을 위해
-            String[] paths = path.split("\\\\");
-            String imagesFolder = paths[0];
-            String dateFolder = paths[1];
-            String filename = paths[2];
-            path = imagesFolder + "/" + dateFolder + "/" + filename;
+//            String[] paths = path.split("\\\\");
+//            String imagesFolder = paths[0];
+//            String dateFolder = paths[1];
+//            String filename = paths[2];
+//            path = imagesFolder + "/" + dateFolder + "/" + filename;
             // escape 문자라서 \\\\네개 사용함.
             InputStream imageStream = new FileInputStream(absolutePath + path);
             byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -121,11 +119,11 @@ public class ImgController {
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
             String path = imgDTOList.get(i).getStoredpath();
             // 맥에서 출력되지 않는 문제 해결을 위해
-            String[] paths = path.split("\\\\");
-            String imagesFolder = paths[0];
-            String dateFolder = paths[1];
-            String filename = paths[2];
-            path = imagesFolder + "/" + dateFolder + "/" + filename;
+//            String[] paths = path.split("\\\\");
+//            String imagesFolder = paths[0];
+//            String dateFolder = paths[1];
+//            String filename = paths[2];
+//            path = imagesFolder + "/" + dateFolder + "/" + filename;
             // escape 문자라서 \\\\네개 사용함.
             InputStream imageStream = new FileInputStream(absolutePath + path);
             byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -137,19 +135,19 @@ public class ImgController {
     // 내글 보기
     @CrossOrigin(origins = {"http://localhost:8081/"})
     @ApiOperation(value = "OOTD 내글보기", notes = "OOTD 내글보기")
-    @GetMapping(value = "/api/cmnty/getootdlist/{uid}")
-    public ResponseEntity<List<byte[]>> getOotdList(@PathVariable String uid) throws Exception{
+    @GetMapping(value = "/api/cmnty/myootdlist/{uid}")
+    public ResponseEntity<List<byte[]>> getMyOotdList(@PathVariable String uid) throws Exception{
         List<byte[]> imgByteList = new ArrayList<>();
         List<ImgDTO> imgDTOList = imgService.findMyOotdImgs(uid);
         for( int i =0; i<imgDTOList.size(); i++) {
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
             String path = imgDTOList.get(i).getStoredpath();
             // 맥에서 출력되지 않는 문제 해결을 위해
-            String[] paths = path.split("\\\\");
-            String imagesFolder = paths[0];
-            String dateFolder = paths[1];
-            String filename = paths[2];
-            path = imagesFolder + "/" + dateFolder + "/" + filename;
+//            String[] paths = path.split("\\\\");
+//            String imagesFolder = paths[0];
+//            String dateFolder = paths[1];
+//            String filename = paths[2];
+//            path = imagesFolder + "/" + dateFolder + "/" + filename;
             // escape 문자라서 \\\\네개 사용함.
             InputStream imageStream = new FileInputStream(absolutePath + path);
             byte[] imageByteArray = IOUtils.toByteArray(imageStream);

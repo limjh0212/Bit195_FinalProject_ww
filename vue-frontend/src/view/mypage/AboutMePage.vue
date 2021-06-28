@@ -1,16 +1,14 @@
 <template>
-    <div >
+    <div class="mypage">
         <div class="mypageImg">
             <img :src="src" class="profile">
         </div>
-        <div>
+        <div class="mypageInfo">
             <p>ID : {{ item.id }}</p>
             <p>email : {{ item.email }}</p>
             <p>닉네임 : {{ item.nickname }}</p>
             <p>가입일 : {{ $moment(item.regdate).format('YYYY-MM-DD') }}</p>
         </div>
-        <br>
-        <br>
         <br>
         <div>
             <v-btn elevation="1" rounded small type="submit" @click="goback">뒤로
@@ -56,17 +54,24 @@ export default {
 </script>
 
 <style scoped>
+.mypage{
+  margin: 20px;
+}
 .mypageImg {
     width: 150px;
     height: 150px;
     border-radius: 70%;
     overflow: hidden;
-    margin: 20px;
+    margin: auto;
+
 }
 
 .profile {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.mypageInfo{
+  margin: 20px;
 }
 </style>
