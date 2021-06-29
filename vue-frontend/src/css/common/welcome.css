@@ -1,0 +1,34 @@
+@media(max-width: 1200px){
+    #welcome{
+        width: 100%;
+    }
+}
+/*layout*/
+.welcome{
+    height: 100%;
+    background-color: #FFFFFF;
+}
+
+.welcome-service-img{
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+.welcome-btn{
+    background-color: #FFFFFF;
+    float: left;
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+.welcome-btn-box{
+    float: left;
+    width: 50%;
+    font-size: 40px;
+    font-weight: bold;
+}
+.welcome-btn-login{
+    color: #775DD0;
+}
+.welcome-btn-signup{
+    color: #00D8B6;
+}
