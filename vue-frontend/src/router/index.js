@@ -16,6 +16,7 @@ export const router = new VueRouter({
                 //MainPage
                 path     : '/main',
                 component: () => import('@/view/main/MainPage'),
+                meta     : {auth: true},
             },
             {
                 //AdminPage
