@@ -70,12 +70,9 @@ public class ImgService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if(!img.equals(null)){
-//            imgRepository.save(img.toEntity());
-//        }
         return imgRepository.save(img.toEntity()).getNum();
     }
-    // 이미지 + 게시물 함께 저장 Todo: 수정 필요.
+    // 이미지 + 게시물 함께 저장
     @Transactional
     public PostEntity addPost(PostDTO postDTO, List<MultipartFile> files) throws Exception{
         // 파일을 저장하고 그 img에 대한 리스트를 저장
@@ -116,7 +113,6 @@ public class ImgService {
         List<Integer> postidList = new ArrayList<>();
         for (int i = 0; i < imgEntities.size(); i++){
             if(!postidList.contains(imgEntities.get(i).getPostid())) {
-                System.out.println(imgEntities.get(i).getPostid());
                 postidList.add(0, imgEntities.get(i).getPostid());
             }
         }
@@ -124,11 +120,8 @@ public class ImgService {
         for (int k = 0; k < postidList.size(); k++) {
             if (imgRepository.existsAllByBoardidAndPostid(2, postidList.get(k))) {
                 imgEntityList.add(0,(imgRepository.findAllByBoardidAndPostidOrderByNumDesc(2, postidList.get(k))).get(0));
-            }else{
-                //todo: 기본 이미지 출력
             }
         }
-        System.out.println("imgEntityList : "+imgEntityList);
         List<ImgDTO> imgDTOList = new ArrayList<>();
 
         for (ImgEntity imgEntity : imgEntityList) {
@@ -149,11 +142,8 @@ public class ImgService {
         for (int k = 0; k < postidList.size(); k++) {
             if (imgRepository.existsAllByBoardidAndPostid(2, postidList.get(k))) {
                 imgEntityList.add(0,(imgRepository.findAllByBoardidAndPostidOrderByNumDesc(2, postidList.get(k))).get(0));
-            }else{
-                //todo: 기본 이미지 출력
             }
         }
-        System.out.println("imgEntityList : "+imgEntityList);
         List<ImgDTO> imgDTOList = new ArrayList<>();
 
         for (ImgEntity imgEntity : imgEntityList) {
@@ -186,23 +176,18 @@ public class ImgService {
     @Transactional
     public List<ImgDTO> findRecoImgList() throws Exception{
         List<ImgEntity> imgEntities = imgRepository.findAllByBoardidOrderByNumDesc(6);
-        System.out.println(imgEntities);
         List<Integer> postidList = new ArrayList<>();
         for (int i = 0; i < imgEntities.size(); i++){
             if(!postidList.contains(imgEntities.get(i).getPostid())) {
-                System.out.println(imgEntities.get(i).getPostid());
                 postidList.add(0, imgEntities.get(i).getPostid());
             }
-        }System.out.println(postidList);
+        }
         List<ImgEntity> imgEntityList = new ArrayList<>();
         for (int k = 0; k < postidList.size(); k++) {
             if (imgRepository.existsAllByBoardidAndPostid(6, postidList.get(k))) {
                 imgEntityList.add(0,(imgRepository.findAllByBoardidAndPostidOrderByNumDesc(6, postidList.get(k))).get(0));
-            }else{
-                //todo: 기본 이미지 출력
             }
         }
-        System.out.println("imgEntityList : "+imgEntityList);
         List<ImgDTO> imgDTOList = new ArrayList<>();
 
         for (ImgEntity imgEntity : imgEntityList) {
@@ -213,23 +198,18 @@ public class ImgService {
     @Transactional
     public List<ImgDTO> findWelcomeList() throws Exception{
         List<ImgEntity> imgEntities = imgRepository.findAllByBoardidOrderByNumDesc(5);
-        System.out.println(imgEntities);
         List<Integer> postidList = new ArrayList<>();
         for (int i = 0; i < imgEntities.size(); i++){
             if(!postidList.contains(imgEntities.get(i).getPostid())) {
-                System.out.println(imgEntities.get(i).getPostid());
                 postidList.add(0, imgEntities.get(i).getPostid());
             }
-        }System.out.println(postidList);
+        }
         List<ImgEntity> imgEntityList = new ArrayList<>();
         for (int k = 0; k < postidList.size(); k++) {
             if (imgRepository.existsAllByBoardidAndPostid(5, postidList.get(k))) {
                 imgEntityList.add(0,(imgRepository.findAllByBoardidAndPostidOrderByNumDesc(5, postidList.get(k))).get(0));
-            }else{
-                //todo: 기본 이미지 출력
             }
         }
-        System.out.println("imgEntityList : "+imgEntityList);
         List<ImgDTO> imgDTOList = new ArrayList<>();
 
         for (ImgEntity imgEntity : imgEntityList) {

@@ -78,15 +78,6 @@ public class BoardService {
                 }
             }
         }
-        // Todo: 코드 좀더 간결하게. "0<pagenum<lastPagenum" 범위 지정해서 이외의 값은 호출 불가능하도록.
-//        int lastCntPagenum = (lastPagenum > pagenum + CNTPAGENUM) ? pagenum+CNTPAGENUM : lastPagenum;
-//        // 페이지 시작 번호 조정
-//        pagenum = (pagenum <= 3) ? 1 : pagenum-2;
-////        if (!(lastPagenum > CNTPAGENUM)) {
-////            pagenum = 1;
-////        } else {
-////            pagenum = (pagenum <= 3) ? 1 : pagenum - 2;
-////        }
         // 페이지 번호 할당 - 보이는 페이지 수 5개 안에 들어갈 숫자 범위
         for (int value = pagenum, i = 0; value <= lastViewPagenum; value++, i++) {
             pageList[i] = value;
@@ -320,7 +311,6 @@ public class BoardService {
         }
         return postDTOList;
     }
-    // Todo: 아직 안쓰이는 중(추가 필요)
     // 관리자 및 마이페이지
     // uid가 쓴 모든 글
     @Transactional

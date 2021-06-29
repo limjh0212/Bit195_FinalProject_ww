@@ -85,7 +85,6 @@ public class BoardController {
         return "delete ok!";
     }
 
-    // QnA 게시판
     @ApiOperation(value = "QnA 답변 작성", notes = "QnA 답변 작성")
     @PostMapping(value = "/answer/{postId}")
     @Secured({"ROLE_ADMIN"})
@@ -98,14 +97,12 @@ public class BoardController {
         return cmntService.saveCmnt(cmntDTO);
     }
 
-    // 댓글
     @ApiOperation(value = "댓글 등록", notes = "댓글 등록")
     @PostMapping(value = "/cmnt/post")
     public CmntEntity cmntPost(@RequestBody @Validated CmntDTO cmntDTO) {
         return cmntService.saveCmnt(cmntDTO);
     }
 
-    // Todo: 추후 view에서 boardnum, postnum, writer 가져오고, 댓글에서 대댓글 달기 클릭 시, 댓글의 num을 cmntnum으로 가져올 것.
     @ApiOperation(value = "대댓글 등록", notes = "대댓글 등록(댓글번호입력)")
     @PostMapping(value = "/cmnt/post/{cmntId}")
     public CmntEntity cmnt2Post(@PathVariable("cmntId") int cmntnum, @RequestBody @Validated CmntDTO cmntDTO) {
@@ -145,11 +142,9 @@ public class BoardController {
         }
     }
 
-    // 좋아요
     @ApiOperation(value = "좋아요 생성 및 삭제", notes = "좋아요 생성 및 삭제")
     @PostMapping(value = "/like/{postId}")
     public String like(@PathVariable("postId") int num, @RequestBody @Validated LikeDTO likeDTO) {
-        // 일단 테스트 용으로
         String authId = likeDTO.getUid();
         PostDTO postDTO = boardService.getPost(num);
         int boardnum = postDTO.getBoardnum();

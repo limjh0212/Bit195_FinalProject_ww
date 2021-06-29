@@ -83,9 +83,7 @@ public class MemberService implements UserDetailsService {
                 info.add(date);
                 info.add(memberRepository.countAllByIswithdrawalIsFalseAndRegdateIsBetween(start, end));
                 info.add(memberRepository.countAllByIswithdrawalIsTrueAndWthdrdateIsBetween(start, end));
-                System.out.println(info);
         }
-        System.out.println(info);
         return info;
     }
 }

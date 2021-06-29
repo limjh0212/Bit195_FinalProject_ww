@@ -56,8 +56,8 @@ public class FileHandler {
                     String newname = Long.toString(System.nanoTime()) + originalFileExtension;
                     // 생성 후 리스트에 추가
                     ImgDTO imgDTO = ImgDTO.builder()
-                            .boardid(boardnum) //Todo: 수정 필요.
-                            .postid(1) //Todo: 수정 필요.
+                            .boardid(boardnum)
+                            .postid(0)
                             .filename(newname)
                             .originalname(multipartFile.getOriginalFilename())
                             .storedpath(path + File.separator + newname)
@@ -74,7 +74,6 @@ public class FileHandler {
                     file.setReadable(true);
             }
         }
-        System.out.print(fileList);
         return fileList;
     }
     public ImgDTO parseFileInfo(MultipartFile multipartFile) throws Exception{
@@ -130,7 +129,6 @@ public class FileHandler {
                 file.setReadable(true);
             }
         }
-        System.out.print(imgFile);
         return imgFile;
     }
 }

@@ -6,7 +6,6 @@ import com.bit.ww.dto.PostDTO;
 import com.bit.ww.entity.PostEntity;
 import com.bit.ww.service.BoardService;
 import com.bit.ww.service.ImgService;
-import com.bit.ww.service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
@@ -28,8 +27,7 @@ import java.util.List;
 public class ImgController {
     private final BoardService boardService;
     private final ImgService imgService;
-    private final MemberService memberService;
-    // Todo: 이미지 + 포스트 수정 필요.
+
     @CrossOrigin(origins = {"http://localhost:8081"})
     @ApiOperation(value = "OOTD 이미지 저장", notes = "OOTD 이미지 저장")
     @PostMapping("/api/cmnty/ootdpost")
@@ -53,7 +51,7 @@ public class ImgController {
                         .img(files.size())
                         .build(),files);
     }
-    // Todo: swagger에서 불가능
+
     @CrossOrigin(origins = {"http://localhost:8081"})
     @ApiOperation(value = "이미지 저장 테스트", notes = "이미지 저장 테스트")
     @PostMapping("/api/cmnty/postimg")
@@ -70,13 +68,11 @@ public class ImgController {
         String absolutePath = new File("").getAbsolutePath()+File.separator+File.separator;
         String path = imgDTO.getStoredpath();
         // 맥에서 출력되지 않는 문제 해결을 위해
-//        System.out.println(path);
 //        String[] paths = path.split("\\\\");
 //        String imagesFolder = paths[0];
 //        String dateFolder = paths[1];
 //        String filename = paths[2];
 //        path = imagesFolder+"/"+dateFolder+"/"+filename;
-//        System.out.println(path);
         // escape 문자라서 \\\\네개 사용함.
         InputStream imageStream = new FileInputStream(absolutePath+path);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -176,7 +172,7 @@ public class ImgController {
                 .img(files.size())
                 .build(),files);
     }
-    // Todo: swagger에서 불가능
+
     @CrossOrigin(origins = {"http://localhost:8081/"})
     @ApiOperation(value = "웰컴페이지", notes = "웰컴페이지 사진 출력")
     @GetMapping(value = "/api/welcome/imglist")
@@ -200,7 +196,7 @@ public class ImgController {
         }
         return new ResponseEntity<>(imgByteList, HttpStatus.OK);
     }
-    // OOTD 카드 imgList test
+
     @CrossOrigin(origins = {"http://localhost:8081/"})
     @ApiOperation(value = "추천 사진 출력", notes = "추천 사진 출력")
     @GetMapping(value = "/api/reco/imgList")

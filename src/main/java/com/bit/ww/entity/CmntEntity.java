@@ -8,7 +8,6 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
-// 수정 완료
 @Entity
 @Table(name = "board_cmnts")
 @Getter
