@@ -201,4 +201,16 @@ public class ImgController {
         }
         return new ResponseEntity<>(imgByteList, HttpStatus.OK);
     }
+    @CrossOrigin(origins = {"http://localhost:8081/"})
+    @ApiOperation(value = "추천 파일이름 출력", notes = "추천 파일이름 출력")
+    @GetMapping(value = "/api/reco/filenamelist")
+    public ResponseEntity<List<String>> fileNameList() throws Exception{
+        List<String> fileNameList = new ArrayList<>();
+        List<ImgDTO> imgDTOList = imgService.findRecoImgList();
+        for( int i =0; i<imgDTOList.size(); i++) {
+            String fileName = imgDTOList.get(i).getOriginalname();
+            fileNameList.add(fileName);
+        }
+        return new ResponseEntity<>(fileNameList, HttpStatus.OK);
+    }
 }

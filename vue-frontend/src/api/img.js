@@ -27,3 +27,6 @@ export function getMyOotdList(uid){
 export function getRecoImgList(){
     return api.get('/api/reco/imgList');
 }
+export function getFileNameList(){
+    return api.get('/api/reco/filenamelist');
+}

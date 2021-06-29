@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {getRecoImgList} from "@/api/img";
+import {getRecoImgList,getFileNameList} from "@/api/img";
 
 export default {
   name: "SelectImg",
@@ -34,10 +34,15 @@ export default {
         imgList.push(imgsrc);
       }
       this.recoImgList = imgList;
+    },
+    async fetchFileNameList(){
+      const {data} = await getFileNameList();
+      console.log(data);
     }
   },
   created() {
     this.fetchRecoImgList();
+    this.fetchFileNameList();
   }
 }
 </script>
