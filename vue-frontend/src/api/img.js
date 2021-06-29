@@ -30,3 +30,8 @@ export function getRecoImgList(){
 export function getFileNameList(){
     return api.get('/api/reco/filenamelist');
 }
+
+export function userPreference(Data){
+    return api.post('http://54.180.151.43:5000/userpreference',Data);
+}
+

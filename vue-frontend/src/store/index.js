@@ -30,6 +30,10 @@ export const store = new Vuex.Store({
         },
     },
     mutations: {
+        setSignupId(state, userId){
+            state.id = userId;
+        },
+
         setUserData(state, userData) {
             state.id = userData.id;
             state.token = userData.token;

@@ -60,6 +60,11 @@ export const router = new VueRouter({
                 path     : '/signup',
                 component: () => import('@/view/member/SignupPage'),
             },
+            {
+                //회원 가입
+                path     : '/signup/img',
+                component: () => import('@/view/member/SelectImg'),
+            },
 
             {
                 //회원 조회

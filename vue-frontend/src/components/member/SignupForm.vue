@@ -98,8 +98,9 @@ export default {
                     email   : this.email,
                     role    : this.role,
                 };
+                this.$store.commit('setSignupId', this.id);
                 await api_registerUser(userData);
-                await this.$router.push('/login');
+                await this.$router.push('/signup/img');
             } catch (error) {
                 this.logMessage = "입력하신 내용을 다시 확인바랍니다.";
                 this.pw = ''

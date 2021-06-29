@@ -29,7 +29,6 @@
             <router-link to="/signup">Sign up</router-link>
         </div>
         <!--</v-container>-->
-        <SelectImg></SelectImg>
     </div>
 </template>
 
