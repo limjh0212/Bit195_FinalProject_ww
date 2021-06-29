@@ -98,6 +98,8 @@ export default {
             temp.push(post);
           }
           this.cardList=temp;
+
+          await this.fetchMyPostList()
         },
         async fetchData() {
             this.isLoading = true;
@@ -121,6 +123,8 @@ export default {
               temp.push(post);
             }
             this.cardList=temp;
+
+          await this.fetchData();
         },
         list : function (){
           var card = [];
@@ -136,7 +140,7 @@ export default {
     },
     created() {
       this.fetchOotd();
-      this.fetchData();
+
     }
 }
 </script>

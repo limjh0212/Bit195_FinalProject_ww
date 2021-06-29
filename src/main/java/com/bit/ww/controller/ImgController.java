@@ -84,7 +84,7 @@ public class ImgController {
         return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
     }
     // OOTD 상세보기 imgList test
-    @CrossOrigin(origins = {"http://localhost:8081/getimg"})
+    @CrossOrigin(origins = {"http://localhost:8081"})
     @ApiOperation(value = "OOTD 상세보기 이미지 출력 테스트", notes = "OOTD 상세보기 이미지 출력 테스트")
     @GetMapping(value = "/api/cmnty/getimglist/{num}")
     public ResponseEntity<List<byte[]>> getImageList(@PathVariable int num) throws Exception{
