@@ -20,7 +20,7 @@ public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     // 각 게시판 별 제목+내용 검색
     Page<PostEntity> findByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardnameOrderByNumDesc(String title, String content, String boardname, Pageable pageable);
     int countAllByTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContainingAndBoardname(String title, String content, String boardname);
-    // 관리 - 작성자 검색 (Id, 닉네임) //Todo: 여기서부터 수정 진행중(0623 15:00)
+    // 관리 - 작성자 검색 (Id, 닉네임)
     Page<PostEntity> findByUidOrderByNumDesc(String uid, Pageable pageable);
     int countAllByUid(String uid);
     Page<PostEntity> findByWriterOrderByNumDesc(String writer, Pageable pageable);

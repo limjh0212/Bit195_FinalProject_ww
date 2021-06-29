@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter // @ModelAttribute를 위해 필요 -> parameter 값으로 DTO객체를 바인딩하는 방식이기 때문이다.
+@Setter
 @ToString
 @NoArgsConstructor
 public class PostDTO {
@@ -26,14 +26,6 @@ public class PostDTO {
     private int tempnum;
     private LocalDateTime regdate;
     private LocalDateTime editdate;
-
-    // Todo: 사용하지 않으면 삭제 예정.
-//    public PostDTO(String boardname, String uid, String title, String content) {
-//        this.boardname = boardname;
-//        this.uid = uid;
-//        this.title = title;
-//        this.content = content;
-//    }
 
     public PostEntity toEntity() {
         return PostEntity.builder()

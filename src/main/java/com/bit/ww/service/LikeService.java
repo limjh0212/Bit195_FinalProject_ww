@@ -13,11 +13,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class LikeService {
     private final LikeRepository likeRepository;
-    // 좋아요 조건 - 한 사람당 한 게시물에 한 번만 좋아요를 누를 수 있음.
-    // 다시 누르면 취소
-    // 또다시 누르면 좋아요
-    // 즉각적으로 눈에 보여주기 ( 뷰 단 - 짝수면 누르지 않은것,홀수면 누른 것으로 보고 최종적으로 페이지가 이동될때 값을 저장)
-
     // 게시물 마다의 좋아요 수
     @Transactional
     public boolean existLike(int boardnum, int postnum, String uid){

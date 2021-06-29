@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-// 수정완료
 @Getter
 @Setter
 @ToString

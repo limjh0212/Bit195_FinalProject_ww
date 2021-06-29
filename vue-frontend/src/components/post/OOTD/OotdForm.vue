@@ -76,23 +76,27 @@ export default {
             this.myList = true;
         },
         async fetchMyImgList() {
-            this.isLoading = true;
-            const {data} = await getMyOotdList(this.$store.state.id);
-            this.isLoading = false;
-            this.myList = true;
-            let img = '';
-            let post = [];
-            let temp = [];
-            for (var i = 0; i < data.length; i++) {
-                img = "data:image/png;base64," + data[i];
-                temp.push(img);
-                post = this.postList[i];
-                temp.push(post);
-            }
-            this.cardList = temp;
+          this.isLoading = true;
+          const {data} = await getMyOotdList(this.$store.state.id);
+          this.isLoading = false;
+          this.myList = true;
+          let img='';
+          let post=[];
+          let temp = [];
+          for (var i=0;i<data.length;i++){
+            img = "data:image/png;base64," + data[i];
+            temp.push(img);
+            post = this.postList[i];
+            temp.push(post);
+          }
+          this.cardList=temp;
+
+          await this.fetchMyPostList()
         },
         async fetchData() {
+            this.isLoading = true;
             const {data} = await OOTDList();
+            this.isLoading = false;
             this.myList = false;
             this.postList = data.posts; // 포스트 정보 리스트
         },
@@ -109,6 +113,8 @@ export default {
                 temp.push(post);
             }
             this.cardList = temp;
+
+          await this.fetchData();
         },
         list: function () {
             var card = [];
@@ -123,8 +129,8 @@ export default {
 
     },
     created() {
-        this.fetchOotd();
-        this.fetchData();
+      this.fetchOotd();
+
     }
 }
 </script>
