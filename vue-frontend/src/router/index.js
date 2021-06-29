@@ -88,13 +88,6 @@ export const router = new VueRouter({
 
             },
             {
-                //이미지 게시글 출력
-                path     : '/getimg',
-                component: () => import('@/view/post/GetImgPage'),
-                meta     : {auth: true}
-
-            },
-            {
                 //커뮤니티
                 path     : '/board',
                 component: () => import('@/view/post/BoardMain'),

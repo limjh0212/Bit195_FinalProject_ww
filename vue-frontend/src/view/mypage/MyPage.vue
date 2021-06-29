@@ -43,11 +43,10 @@
 </template>
 
 <script>
-import MyPageMain from "@/view/mypage/MyPageMain";
 
 export default {
     name      : "MyPage",
-    components: {MyPageMain},
+    components: {},
     computed  : {
         isAdmin() {
             return this.$store.getters.isAdmin;

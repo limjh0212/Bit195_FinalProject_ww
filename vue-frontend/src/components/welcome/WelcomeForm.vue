@@ -18,7 +18,7 @@
             </div>
             <div class="welcome-btn-right">
                 <router-link to="/signup">
-                    <div class="welcome-btn-signup">JOIN</div>
+                    <div class="welcome-btn-signup">SIGNUP</div>
                 </router-link>
             </div>
         </div>

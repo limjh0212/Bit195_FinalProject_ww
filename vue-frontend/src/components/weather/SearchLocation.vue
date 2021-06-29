@@ -1,5 +1,4 @@
 <template>
-    <!--    <v-container>-->
     <div class="search-location" style="margin: 0 auto; justify-content: center">
         <!--검색-->
         <div class="search" style="margin: 0 auto;">
@@ -39,7 +38,6 @@
         </div>
 
         <!--조회-->
-        <!--          <div style="margin: 0 auto; ">-->
         <div class="search-result" style="margin: 0 auto;">
             <h5 style="text-align: left;margin-bottom: 20px">위치 정보</h5>
             <table style="width: 200px;">
@@ -51,7 +49,6 @@
             </table>
         </div>
     </div>
-    <!--    </v-container>-->
 </template>
 
 <script>

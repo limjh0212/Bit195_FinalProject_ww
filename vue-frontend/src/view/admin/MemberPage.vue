@@ -299,18 +299,6 @@ export default {
             let chartBar = new ApexCharts(elBar, bar);
             await chartBar.render();
         },
-        // list: function () {
-        //   let cnt1day = [];
-        //   let cntWeek = [];
-        //   for (let i = 0; i < this.cnt7days.length; i+=3) {
-        //     cntWeek.push(this.cnt7days[i]);
-        //     cntWeek.push(this.cnt7days[i+1]);
-        //     cntWeek.push(this.cnt7days[i+2]);
-        //     cnt1day.push(cntWeek.slice(i,i+3));
-        //   }
-        //   this.listData = cnt1day;
-        //   return cnt1day;
-        // },
     },
     created() {
         this.fetchData();
