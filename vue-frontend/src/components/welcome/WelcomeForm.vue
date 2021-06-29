@@ -11,10 +11,10 @@
       </div>
     </div>
     <div class="welcome-btn">
-      <div class="welcome-btn-box">
+      <div class="welcome-btn-left">
         <router-link to="/login"><div class="welcome-btn-login">LOGIN</div></router-link>
       </div>
-      <div class="welcome-btn-box">
+      <div class="welcome-btn-right">
         <router-link to="/signup"><div class="welcome-btn-signup">JOIN</div></router-link>
       </div>
     </div>

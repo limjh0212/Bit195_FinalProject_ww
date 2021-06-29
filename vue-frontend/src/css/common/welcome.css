@@ -19,16 +19,25 @@
     width: 100%;
     position: relative;
     text-align: center;
-}
-.welcome-btn-box{
-    float: left;
-    width: 50%;
-    font-size: 40px;
-    font-weight: bold;
+    margin-bottom: 150px;
 }
 .welcome-btn-login{
     color: #775DD0;
 }
 .welcome-btn-signup{
     color: #00D8B6;
+}
+.welcome-btn-left{
+    float: left;
+    width: 45%;
+    text-align: right;
+    font-size: 40px;
+    font-weight: bold;
+}
+.welcome-btn-right{
+    float: right;
+    width: 45%;
+    text-align: left;
+    font-size: 40px;
+    font-weight: bold;
 }
