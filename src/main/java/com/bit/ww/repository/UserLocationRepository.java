@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface UserLocationRepository extends JpaRepository<UserLocationEntity, Integer> {
     List<UserLocationEntity> findByUserid(String keyword);
+
     int countByUserid(String userid);
 }

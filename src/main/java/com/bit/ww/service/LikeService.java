@@ -13,23 +13,25 @@ import java.util.Optional;
 @AllArgsConstructor
 public class LikeService {
     private final LikeRepository likeRepository;
+
     // 게시물 마다의 좋아요 수
     @Transactional
-    public boolean existLike(int boardnum, int postnum, String uid){
+    public boolean existLike(int boardnum, int postnum, String uid) {
         return likeRepository.existsByBoardnumAndPostnumAndUid(boardnum, postnum, uid);
     }
+
     @Transactional
-    public int saveLike(LikeDTO likeDTO){
+    public int saveLike(LikeDTO likeDTO) {
         return likeRepository.save(likeDTO.toEntity()).getNum();
     }
 
     @Transactional
-    public void deleteLike(int num){
+    public void deleteLike(int num) {
         likeRepository.deleteById(num);
     }
 
     @Transactional
-    public int findLikeNum(int boardnum, int postnum, String userid){
+    public int findLikeNum(int boardnum, int postnum, String userid) {
         Optional<LikeEntity> likeEntityWrapper = likeRepository.findByBoardnumAndPostnumAndUid(boardnum, postnum, userid);
         LikeEntity likeEntity = likeEntityWrapper.get();
 

@@ -1,7 +1,7 @@
 <template>
-        <div>
-            <SearchLocation></SearchLocation>
-        </div>
+    <div>
+        <SearchLocation></SearchLocation>
+    </div>
 </template>
 
 <script>

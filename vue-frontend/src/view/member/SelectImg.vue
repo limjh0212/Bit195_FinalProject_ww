@@ -7,7 +7,8 @@
             <div class="card-select1">
                 <div v-for="(item,i) in recoImgList" v-if="i<6" class="card-select-box">
                     <div class="card-select-box-default"><img :src="item"
-                                                              :style="isEffectImg(i)?'border: 3px solid crimson;':''" class="card-select-img" @click="checkImg(i)">
+                                                              :style="isEffectImg(i)?'border: 3px solid crimson;':''"
+                                                              class="card-select-img" @click="checkImg(i)">
                     </div>
                 </div>
             </div>
@@ -60,7 +61,7 @@ export default {
             const {data} = await getRecoImgList();
             let imgsrc = '';
             let imgList = [];
-            for (var i = 0; i < data.length; i++) {
+            for (let i = 0; i < data.length; i++) {
                 imgsrc = "data:image/png;base64," + data[i];
                 imgList.push(imgsrc);
             }
@@ -94,7 +95,6 @@ export default {
                     img_id : this.selectImg
                 };
                 await userPreference(Data);
-                console.log(Data);
                 await this.$router.push('/login');
             }
         }

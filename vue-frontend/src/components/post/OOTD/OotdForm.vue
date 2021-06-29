@@ -18,7 +18,7 @@
         <div>
             <table>
                 <tr class="ootd-line">
-                    <td class="card" v-for="item in list()">
+                    <td v-for="item in list()" class="card">
                         <div id="card-form" class="card-size">
                             <div class="card-img card-box">
                                 <div><img :src="item[0]" class="imgCard"></div>
@@ -34,8 +34,9 @@
                                 </div>
                                 <div id="card-post" class="card-box-default card-info2">
                                     <div class="card-info2-left">{{ item[1].writer }}</div>
-                                    <div v-if="$moment(item[1].regdate).format('YYYY-MM-DD')===$moment().format('YYYY-MM-DD')"
-                                         class="card-info2-right">
+                                    <div
+                                        v-if="$moment(item[1].regdate).format('YYYY-MM-DD')===$moment().format('YYYY-MM-DD')"
+                                        class="card-info2-right">
                                         {{ $moment(item[1].regdate).format('HH:mm:ss') }}
                                     </div>
                                     <div v-else class="card-info2-right">
@@ -55,15 +56,12 @@
 </template>
 
 <script>
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {getMyOotdList, getOotdList} from "@/api/img";
 import {boardUserListNoPage, OOTDList} from "@/api/post";
 
 export default {
-    components: {LoadingSpinner},
     data() {
         return {
-            isLoading: false,
             postList : [],
             cardList : [],
             myList   : false,
@@ -76,27 +74,23 @@ export default {
             this.myList = true;
         },
         async fetchMyImgList() {
-          this.isLoading = true;
-          const {data} = await getMyOotdList(this.$store.state.id);
-          this.isLoading = false;
-          this.myList = true;
-          let img='';
-          let post=[];
-          let temp = [];
-          for (var i=0;i<data.length;i++){
-            img = "data:image/png;base64," + data[i];
-            temp.push(img);
-            post = this.postList[i];
-            temp.push(post);
-          }
-          this.cardList=temp;
+            const {data} = await getMyOotdList(this.$store.state.id);
+            this.myList = true;
+            let img = '';
+            let post = [];
+            let temp = [];
+            for (let i = 0; i < data.length; i++) {
+                img = "data:image/png;base64," + data[i];
+                temp.push(img);
+                post = this.postList[i];
+                temp.push(post);
+            }
+            this.cardList = temp;
 
-          await this.fetchMyPostList()
+            await this.fetchMyPostList()
         },
         async fetchData() {
-            this.isLoading = true;
             const {data} = await OOTDList();
-            this.isLoading = false;
             this.myList = false;
             this.postList = data.posts; // 포스트 정보 리스트
         },
@@ -106,7 +100,7 @@ export default {
             let img = '';
             let post = [];
             let temp = [];
-            for (var i = 0; i < data.length; i++) {
+            for (let i = 0; i < data.length; i++) {
                 img = "data:image/png;base64," + data[i];
                 temp.push(img);
                 post = this.postList[i];
@@ -114,12 +108,12 @@ export default {
             }
             this.cardList = temp;
 
-          await this.fetchData();
+            await this.fetchData();
         },
         list: function () {
-            var card = [];
-            var cards = [];
-            for (var i = 0; i < this.cardList.length; i += 2) {
+            let card = [];
+            let cards = [];
+            for (let i = 0; i < this.cardList.length; i += 2) {
                 card.push(this.cardList[i]);
                 card.push(this.cardList[i + 1]);
                 cards.push(card.slice(i, i + 2));
@@ -129,7 +123,7 @@ export default {
 
     },
     created() {
-      this.fetchOotd();
+        this.fetchOotd();
 
     }
 }

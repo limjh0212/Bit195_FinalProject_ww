@@ -37,13 +37,13 @@ export default {
             this.item = data
         },
         async fetchImg() {
-            var base = this;
+            let base = this;
             await getimg(this.$store.state.img).then(function (response) {
                 let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(response.data)));
                 base.src = "data:image/png;base64," + base64String;
             });
         },
-        goback(){
+        goback() {
             this.$router.go(-1)
         }
     },
@@ -55,9 +55,10 @@ export default {
 </script>
 
 <style scoped>
-.mypage{
-  margin: 20px;
+.mypage {
+    margin: 20px;
 }
+
 .mypageImg {
     width: 150px;
     height: 150px;
@@ -72,7 +73,8 @@ export default {
     height: 100%;
     object-fit: cover;
 }
-.mypageInfo{
-  margin: 20px;
+
+.mypageInfo {
+    margin: 20px;
 }
 </style>

@@ -3,8 +3,9 @@
     width: 10rem;
     text-align: center;
 }
+
 /*table 하단*/
-.page-list{
+.page-list {
     width: 50%;
     text-align: center;
     position: relative;
@@ -12,22 +13,26 @@
     font-size: 15px;
     margin: auto;
 }
-.page-box{
+
+.page-box {
     width: 20%;
-    float:left;
+    float: left;
 }
-.page-box-default{
+
+.page-box-default {
     margin: 3px;
 }
-.foot-search{
+
+.foot-search {
     width: 100%;
     text-align: center;
     position: relative;
     height: auto;
-    font-size: 10px;  /* Todo: tfoot의 문제 - 해결 필요 */
+    font-size: 10px; /* Todo: tfoot의 문제 - 해결 필요 */
 }
-.foot-search-box{
+
+.foot-search-box {
     width: 30%;
-    float:left;
+    float: left;
     margin: 3px;
 }

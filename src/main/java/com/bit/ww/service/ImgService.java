@@ -28,23 +28,25 @@ public class ImgService {
     private final FileHandler fileHandler;
 
     public ImgDTO convertEntityToDTO(ImgEntity imgEntity) {
-    return ImgDTO.builder()
-            .num(imgEntity.getNum())
-            .boardid(imgEntity.getBoardid())
-            .postid(imgEntity.getPostid())
-            .filename(imgEntity.getFilename())
-            .originalname(imgEntity.getOriginalname())
-            .storedpath(imgEntity.getStoredpath())
-            .filesize(imgEntity.getFilesize())
-            .build();
+        return ImgDTO.builder()
+                .num(imgEntity.getNum())
+                .boardid(imgEntity.getBoardid())
+                .postid(imgEntity.getPostid())
+                .filename(imgEntity.getFilename())
+                .originalname(imgEntity.getOriginalname())
+                .storedpath(imgEntity.getStoredpath())
+                .filesize(imgEntity.getFilesize())
+                .build();
     }
+
     // 테스트용 - 이미지 출력 - 진행중
     @Transactional
-    public ImgDTO findImg(int num){
+    public ImgDTO findImg(int num) {
         Optional<ImgEntity> imgEntityWrapper = imgRepository.findById(num);
         ImgEntity imgEntity = imgEntityWrapper.get();
         return convertEntityToDTO(imgEntity);
     }
+
     // 이미지 저장
     public String addImg(int boardnum, List<MultipartFile> files) {
         List<ImgDTO> imgList = null;
@@ -53,15 +55,16 @@ public class ImgService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(!imgList.isEmpty()){
+        if (!imgList.isEmpty()) {
             List<ImgDTO> beans = new ArrayList<>();
-            for(ImgDTO imgDTO : imgList){
+            for (ImgDTO imgDTO : imgList) {
                 ImgEntity temp = imgRepository.save(imgDTO.toEntity());
                 beans.add(convertEntityToDTO(temp));
             }
         }
         return "img save ok!";
     }
+
     // 이미지 저장
     public int addMember(MultipartFile file) {
         ImgDTO img = null;
@@ -72,21 +75,22 @@ public class ImgService {
         }
         return imgRepository.save(img.toEntity()).getNum();
     }
+
     // 이미지 + 게시물 함께 저장
     @Transactional
-    public PostEntity addPost(PostDTO postDTO, List<MultipartFile> files) throws Exception{
+    public PostEntity addPost(PostDTO postDTO, List<MultipartFile> files) throws Exception {
         // 파일을 저장하고 그 img에 대한 리스트를 저장
         List<ImgDTO> imgList = null;
         int boardnum = boardRepository.findByBoardname(postDTO.getBoardname()).get().getBoardnum();
 
         try {
-            imgList = fileHandler.parseFilesInfo(boardnum,files);
+            imgList = fileHandler.parseFilesInfo(boardnum, files);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(!imgList.isEmpty()){
+        if (!imgList.isEmpty()) {
             List<ImgDTO> beans = new ArrayList<>();
-            for(ImgDTO imgDTO : imgList){
+            for (ImgDTO imgDTO : imgList) {
                 imgDTO.setBoardid(boardnum);
                 imgDTO.setPostid(postDTO.getPostnum());
                 ImgEntity temp = imgRepository.save(imgDTO.toEntity());
@@ -97,6 +101,7 @@ public class ImgService {
         postDTO.setWriter(memberRepository.findOneById(postDTO.getUid()).getNickname());
         return postRepository.save(postDTO.toEntity());
     }
+
     @Transactional
     public List<ImgDTO> findPostImgs(int postid) {
         List<ImgEntity> imgEntities = imgRepository.findAllByPostid(postid);
@@ -107,19 +112,20 @@ public class ImgService {
         }
         return imgDTOList;
     }
+
     @Transactional
-    public List<ImgDTO> findOotdImgs() throws Exception{
+    public List<ImgDTO> findOotdImgs() throws Exception {
         List<ImgEntity> imgEntities = imgRepository.findAllByBoardidOrderByNumDesc(2);
         List<Integer> postidList = new ArrayList<>();
-        for (int i = 0; i < imgEntities.size(); i++){
-            if(!postidList.contains(imgEntities.get(i).getPostid())) {
+        for (int i = 0; i < imgEntities.size(); i++) {
+            if (!postidList.contains(imgEntities.get(i).getPostid())) {
                 postidList.add(0, imgEntities.get(i).getPostid());
             }
         }
         List<ImgEntity> imgEntityList = new ArrayList<>();
         for (int k = 0; k < postidList.size(); k++) {
             if (imgRepository.existsAllByBoardidAndPostid(2, postidList.get(k))) {
-                imgEntityList.add(0,(imgRepository.findAllByBoardidAndPostidOrderByNumDesc(2, postidList.get(k))).get(0));
+                imgEntityList.add(0, (imgRepository.findAllByBoardidAndPostidOrderByNumDesc(2, postidList.get(k))).get(0));
             }
         }
         List<ImgDTO> imgDTOList = new ArrayList<>();
@@ -129,19 +135,20 @@ public class ImgService {
         }
         return imgDTOList;
     }
+
     @Transactional
-    public List<ImgDTO> findMyOotdImgs(String uid) throws Exception{
+    public List<ImgDTO> findMyOotdImgs(String uid) throws Exception {
         List<ImgEntity> imgEntities = imgRepository.findAllByBoardidOrderByNumDesc(2);
         List<Integer> postidList = new ArrayList<>();
-        List<PostEntity> myOotdPostid = postRepository.findAllByBoardnameAndUidOrderByNumDesc("OOTD",uid);
-        for (int j = 0; j < myOotdPostid.size();j++){
-            postidList.add(0,myOotdPostid.get(j).getPostnum());
+        List<PostEntity> myOotdPostid = postRepository.findAllByBoardnameAndUidOrderByNumDesc("OOTD", uid);
+        for (int j = 0; j < myOotdPostid.size(); j++) {
+            postidList.add(0, myOotdPostid.get(j).getPostnum());
         }
 
         List<ImgEntity> imgEntityList = new ArrayList<>();
         for (int k = 0; k < postidList.size(); k++) {
             if (imgRepository.existsAllByBoardidAndPostid(2, postidList.get(k))) {
-                imgEntityList.add(0,(imgRepository.findAllByBoardidAndPostidOrderByNumDesc(2, postidList.get(k))).get(0));
+                imgEntityList.add(0, (imgRepository.findAllByBoardidAndPostidOrderByNumDesc(2, postidList.get(k))).get(0));
             }
         }
         List<ImgDTO> imgDTOList = new ArrayList<>();
@@ -151,41 +158,45 @@ public class ImgService {
         }
         return imgDTOList;
     }
+
     @Transactional
-    public String deleteImg(String uid){
+    public String deleteImg(String uid) {
         MemberEntity memberEntity = memberRepository.findOneById(uid);
         imgRepository.deleteById(memberEntity.getImg());
         return "delete ok!";
     }
+
     @Transactional
-    public String deleteImgs(int postid){
+    public String deleteImgs(int postid) {
         List<Integer> numList = new ArrayList<>();
-        List<ImgEntity> imgEntityList = imgRepository.findAllByBoardidAndPostidOrderByNumDesc(2,postid);
-        for (int i = 0; i< imgEntityList.size(); i++){
-            numList.add(0,imgEntityList.get(i).getNum());
+        List<ImgEntity> imgEntityList = imgRepository.findAllByBoardidAndPostidOrderByNumDesc(2, postid);
+        for (int i = 0; i < imgEntityList.size(); i++) {
+            numList.add(0, imgEntityList.get(i).getNum());
         }
-        for (int j = 0; j < numList.size();j++){
+        for (int j = 0; j < numList.size(); j++) {
             imgRepository.deleteById(numList.get(j));
         }
         return "delete ok!";
     }
+
     @Transactional
-    public boolean existImg(int postid){
-        return imgRepository.existsAllByBoardidAndPostid(2,postid);
+    public boolean existImg(int postid) {
+        return imgRepository.existsAllByBoardidAndPostid(2, postid);
     }
+
     @Transactional
-    public List<ImgDTO> findRecoImgList() throws Exception{
+    public List<ImgDTO> findRecoImgList() throws Exception {
         List<ImgEntity> imgEntities = imgRepository.findAllByBoardidOrderByNumDesc(6);
         List<Integer> postidList = new ArrayList<>();
-        for (int i = 0; i < imgEntities.size(); i++){
-            if(!postidList.contains(imgEntities.get(i).getPostid())) {
+        for (int i = 0; i < imgEntities.size(); i++) {
+            if (!postidList.contains(imgEntities.get(i).getPostid())) {
                 postidList.add(0, imgEntities.get(i).getPostid());
             }
         }
         List<ImgEntity> imgEntityList = new ArrayList<>();
         for (int k = 0; k < postidList.size(); k++) {
             if (imgRepository.existsAllByBoardidAndPostid(6, postidList.get(k))) {
-                imgEntityList.add(0,(imgRepository.findAllByBoardidAndPostidOrderByNumDesc(6, postidList.get(k))).get(0));
+                imgEntityList.add(0, (imgRepository.findAllByBoardidAndPostidOrderByNumDesc(6, postidList.get(k))).get(0));
             }
         }
         List<ImgDTO> imgDTOList = new ArrayList<>();
@@ -195,19 +206,20 @@ public class ImgService {
         }
         return imgDTOList;
     }
+
     @Transactional
-    public List<ImgDTO> findWelcomeList() throws Exception{
+    public List<ImgDTO> findWelcomeList() throws Exception {
         List<ImgEntity> imgEntities = imgRepository.findAllByBoardidOrderByNumDesc(5);
         List<Integer> postidList = new ArrayList<>();
-        for (int i = 0; i < imgEntities.size(); i++){
-            if(!postidList.contains(imgEntities.get(i).getPostid())) {
+        for (int i = 0; i < imgEntities.size(); i++) {
+            if (!postidList.contains(imgEntities.get(i).getPostid())) {
                 postidList.add(0, imgEntities.get(i).getPostid());
             }
         }
         List<ImgEntity> imgEntityList = new ArrayList<>();
         for (int k = 0; k < postidList.size(); k++) {
             if (imgRepository.existsAllByBoardidAndPostid(5, postidList.get(k))) {
-                imgEntityList.add(0,(imgRepository.findAllByBoardidAndPostidOrderByNumDesc(5, postidList.get(k))).get(0));
+                imgEntityList.add(0, (imgRepository.findAllByBoardidAndPostidOrderByNumDesc(5, postidList.get(k))).get(0));
             }
         }
         List<ImgDTO> imgDTOList = new ArrayList<>();

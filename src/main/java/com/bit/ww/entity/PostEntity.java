@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "board_post")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PostEntity extends PostTimeEntity{
+public class PostEntity extends PostTimeEntity {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,7 +69,7 @@ public class PostEntity extends PostTimeEntity{
 
     // 생성자
     @Builder
-    public PostEntity (int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, int img, int readcount, int likecount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime editdate){
+    public PostEntity(int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, int img, int readcount, int likecount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime editdate) {
         this.num = num;
         this.boardname = boardname;
         this.boardnum = boardnum;

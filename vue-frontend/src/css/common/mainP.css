@@ -1,18 +1,22 @@
 /*반응형*/
-@media(max-width: 1200px){
-    #main-form{
+@media (max-width: 1200px) {
+    #main-form {
         width: 100%;
     }
-    #todayWeather{
+
+    #todayWeather {
         width: 100%;
     }
-    #todayWear{
+
+    #todayWear {
         width: 100%;
     }
-    #weeklyWeather{
+
+    #weeklyWeather {
         width: 100%;
     }
 }
+
 /*layout*/
 .todayWeather {
     float: left;
@@ -28,6 +32,7 @@
     position: relative;
     text-align: center;
 }
+
 .todayWear {
     float: right;
     color: #333333;
@@ -42,6 +47,7 @@
     position: relative;
     text-align: center;
 }
+
 .weeklyWeather {
     float: left;
     color: #333333;
@@ -50,104 +56,124 @@
     border-radius: 10px;
     overflow: hidden;
     margin-left: 20px;
-    margin-right:20px;
+    margin-right: 20px;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     padding: 1.25rem;
     text-align: center;
 }
+
 /*날씨 뷰*/
-.todayWeather div{
+.todayWeather div {
     display: inline-block;
 }
-.card-round{
+
+.card-round {
     background-color: #c6d8de;
     border-radius: 70%;
 }
-.card-icon{
-    width:100%;
+
+.card-icon {
+    width: 100%;
     margin: auto;
 }
-.weatherIcon{
+
+.weatherIcon {
     /*width: 100%;*/
     /*height: 100%;*/
     width: 140px;
     height: 140px;
 }
-.card-weather{
+
+.card-weather {
     text-align: center;
 }
-.card-weather-box{
+
+.card-weather-box {
     width: 100%;
     height: 20%;
     padding: 0;
 }
+
 /*의상 뷰*/
-.card-title{
+.card-title {
     width: 100%;
 }
-.card-header{
+
+.card-header {
     width: 100%;
 }
-.card-wear{
+
+.card-wear {
     float: left;
     width: 25%;
 }
-.wear-img{
+
+.wear-img {
     display: flex;
     width: 100%;
     height: 100%;
 }
+
 /*주간 날씨 정렬*/
-.card-week{
+.card-week {
     width: 100%;
     position: relative;
     text-align: center;
     margin-left: 12px;
 }
-.card-day{
+
+.card-day {
     float: left;
     width: 14%;
     position: relative;
     text-align: center;
 }
-.card-day-icon{
+
+.card-day-icon {
     background-color: #c6d8de;
     border-radius: 70%;
 }
-.card-day-box{
+
+.card-day-box {
     margin-top: 3px;
     margin-bottom: 3px;
     font-weight: bold;
 }
-.card-day-box div{
+
+.card-day-box div {
     display: inline-block;
 }
-.card-day-box-left{
+
+.card-day-box-left {
     float: left;
     width: 50%;
     text-align: right;
     color: red;
     padding-right: 5px;
 }
-.card-day-box-right{
+
+.card-day-box-right {
     float: right;
     width: 50%;
     text-align: left;
-    color:blue;
+    color: blue;
     padding-left: 5px;
 }
+
 /*카드 정보 정렬*/
-.card-weather-box{
+.card-weather-box {
     position: relative;
     text-align: center;
     margin: auto;
     padding-top: 10px;
 }
-.card-weather-box div{
+
+.card-weather-box div {
     display: inline-block;
 }
-.card-weather1{
+
+.card-weather1 {
     width: 100%;
     position: relative;
     text-align: center;
@@ -155,10 +181,12 @@
     font-size: 20px;
     font-weight: bold;
 }
-.card-weather1 div{
+
+.card-weather1 div {
     display: inline-block;
 }
-.card-weather2{
+
+.card-weather2 {
     width: 100%;
     position: relative;
     text-align: center;
@@ -167,6 +195,7 @@
     font-weight: bold;
     padding-bottom: 2px;
 }
+
 .card-weather2-left {
     float: left;
     width: 50%;
@@ -174,17 +203,20 @@
     color: red;
     padding-right: 10px;
 }
+
 .card-weather2-right {
     float: right;
     width: 50%;
     text-align: left;
-    color:blue;
+    color: blue;
     padding-left: 10px;
 }
-.card-weather2 div{
+
+.card-weather2 div {
     display: inline-block;
 }
-.card-weather3{
+
+.card-weather3 {
     width: 100%;
     position: relative;
     text-align: center;
@@ -193,27 +225,32 @@
     font-weight: bold;
     padding-bottom: 2px;
 }
-.card-location{
+
+.card-location {
     float: right;
     width: 50%;
     text-align: right;
     font-size: 14px;
 }
-.card-weather3 div{
+
+.card-weather3 div {
     display: inline-block;
 }
+
 /*admin - mainPage*/
-.side-nav{
+.side-nav {
     float: left;
-    width : 20%;
+    width: 20%;
     height: 100%;
     margin: auto;
 }
-.side-content-view{
+
+.side-content-view {
     float: right;
     width: 80%;
     height: 100%;
 }
-tr{
+
+tr {
     border-bottom: none;
 }

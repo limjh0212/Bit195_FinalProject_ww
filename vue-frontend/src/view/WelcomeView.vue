@@ -1,7 +1,7 @@
 <template>
     <div>
         <WelcomeForm></WelcomeForm>
-<!--    <SelectImg></SelectImg>-->
+        <!--    <SelectImg></SelectImg>-->
     </div>
 </template>
 

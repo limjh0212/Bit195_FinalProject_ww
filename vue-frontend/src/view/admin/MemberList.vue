@@ -41,22 +41,17 @@
 </template>
 <script>
 import {deleteId, fetchMemberList} from "@/api/admin";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default {
-    components: {LoadingSpinner},
     data() {
         return {
             members     : [],
             deleteSelect: [],
-            isLoading   : false,
         }
     },
     methods: {
         async fetchData() {
-            this.isLoading = true;
             const {data} = await fetchMemberList();
-            this.isLoading = false;
             this.members = data;
         },
 

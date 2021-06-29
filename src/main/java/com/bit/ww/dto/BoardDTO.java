@@ -12,17 +12,18 @@ public class BoardDTO {
     private String boardname;
     private int lastnum;
 
-    public BoardEntity toEntity(){
+    @Builder
+    public BoardDTO(int boardnum, String boardname, int lastnum) {
+        this.boardnum = boardnum;
+        this.boardname = boardname;
+        this.lastnum = lastnum;
+    }
+
+    public BoardEntity toEntity() {
         return BoardEntity.builder()
                 .boardnum(this.boardnum)
                 .boardname(this.boardname)
                 .lastnum(this.lastnum)
                 .build();
-    }
-    @Builder
-    public BoardDTO(int boardnum, String boardname, int lastnum){
-        this.boardnum = boardnum;
-        this.boardname = boardname;
-        this.lastnum = lastnum;
     }
 }

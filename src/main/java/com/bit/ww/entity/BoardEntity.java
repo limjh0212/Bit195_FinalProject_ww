@@ -28,7 +28,7 @@ public class BoardEntity {
     private int lastnum;
 
     @Builder
-    public BoardEntity(int boardnum, String boardname, int lastnum){
+    public BoardEntity(int boardnum, String boardname, int lastnum) {
         this.boardnum = boardnum;
         this.boardname = boardname;
         this.lastnum = lastnum;

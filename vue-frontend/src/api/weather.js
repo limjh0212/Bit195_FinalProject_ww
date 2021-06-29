@@ -12,7 +12,6 @@ function saveCoords(coordsObj) {
 }
 
 function handleGeoSuccess(position) {
-    console.log(position);
     const latitude = position.coords.latitude;  // 경도
     const longitude = position.coords.longitude;  // 위도
     const coordsObj = {latitude, longitude};
@@ -61,5 +60,5 @@ export function countLo(userid) {
 
 //날씨-코디 예측 값 요청
 export function api_wwData(Data) {
-    return instance.post(`http://54.180.151.43:5000/recommend`,Data);
+    return instance.post(`http://54.180.151.43:5000/recommend`, Data);
 }

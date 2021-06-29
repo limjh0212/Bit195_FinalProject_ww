@@ -27,10 +27,11 @@ public class LikeEntity {
     private String uid;
 
     @Builder
-    public LikeEntity(int num, int boardnum, int postnum, String uid){
+    public LikeEntity(int num, int boardnum, int postnum, String uid) {
         this.num = num;
         this.boardnum = boardnum;
         this.postnum = postnum;
         this.uid = uid;
-}}
+    }
+}
 

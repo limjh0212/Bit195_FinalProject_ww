@@ -18,11 +18,11 @@
                             <td class="text_center">{{ item.postnum }}</td>
                             <td class="text_center">{{ item.writer }}</td>
                             <td><a :href="`/post/freeBoard/${item.num}`">{{ item.title }}</a></td>
-                            <td class="text_center"
-                                v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')">
+                            <td v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')"
+                                class="text_center">
                                 {{ $moment(item.regdate).format('HH:mm:ss') }}
                             </td>
-                            <td class="text_center" v-else>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
+                            <td v-else class="text_center">{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
                             <td class="text_center">{{ item.likecount }}</td>
                             <td class="text_center">{{ item.readcount }}</td>
                         </tr>
@@ -36,18 +36,18 @@
                                                                                  style="font-size: 15px">create</i>
                                         </router-link>
                                     </v-btn>&nbsp;&nbsp;&nbsp;
-                                    <v-btn elevation="1" rounded small v-if="myList"><span
+                                    <v-btn v-if="myList" elevation="1" rounded small><span
                                         @click="fetchData(1)">전체 보기</span>
                                     </v-btn>
-                                    <v-btn elevation="1" rounded small v-else><span @click="fetchMyList(1)">내글 보기</span>
+                                    <v-btn v-else elevation="1" rounded small><span @click="fetchMyList(1)">내글 보기</span>
                                     </v-btn>
                                 </div>
                                 <div>
-                                    <div style="display: flex" class="page-list">
-                                        <div style="display: flex" v-if="myList" v-for="page in items.pageList">
+                                    <div class="page-list" style="display: flex">
+                                        <div v-for="page in items.pageList" v-if="myList" style="display: flex">
                                             <div class="page-box-default" @click="fetchMyList(page)">{{ page }}</div>&nbsp;&nbsp;&nbsp;
                                         </div>
-                                        <div style="display: flex" v-if="myList===false" v-for="page in items.pageList">
+                                        <div v-for="page in items.pageList" v-if="myList===false" style="display: flex">
                                             <div class="page-box-default" @click="fetchData(page)">{{ page }}</div>&nbsp;&nbsp;&nbsp;
                                         </div>
                                     </div>
@@ -80,17 +80,14 @@
 </template>
 
 <script>
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {boardUserList, freeBoardAll, freeboardList, freeBoardTitle} from "@/api/post";
 
 export default {
-    components: {LoadingSpinner},
     data() {
         return {
             items    : [],
             pageList : [],
             options  : ['제목', '제목+내용'],
-            isLoading: false,
             keyword  : '',
             search   : true,
             myList   : false,
@@ -103,32 +100,24 @@ export default {
             this.items = data;
             this.pageList = data.pageList;
             this.myList = true;
-            console.log(this.items)
         },
 
         async fetchData(num) {
-            this.isLoading = true;
             const {data} = await freeboardList(num);
-            this.isLoading = false;
             this.items = data;
             this.pageList = data.pageList;
             this.myList = false;
-            console.log(this.items)
         },
 
         //기본 게시글 조회
         async SearchData() {
             if (this.search === true) {
                 // Title 검색
-                this.isLoading = true;
                 const {data} = await freeBoardTitle(this.keyword, 1);
-                this.isLoading = false;
                 this.items = data;
             } else {
                 // Title+Content 검색
-                this.isLoading = true;
                 const {data} = await freeBoardAll(this.keyword, 1);
-                this.isLoading = false;
                 this.items = data;
             }
         },

@@ -1,5 +1,5 @@
 <template>
-    <div class="content-view" id="login-page" style="width: 400px">
+    <div id="login-page" class="content-view" style="width: 400px">
         <div class="col s12 z-depth-4 card-panel">
             <!--Form-->
             <form class="login-form">
@@ -12,7 +12,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">account_circle</i>
-                            <input id="id" name="id" v-model="id" type="text"/>
+                            <input id="id" v-model="id" name="id" type="text"/>
                             <label for="id">ID</label>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">vpn_key</i>
-                            <input id="pw" name="pw" v-model="pw" type="password"/>
+                            <input id="pw" v-model="pw" name="pw" type="password"/>
                             <label for="pw">Password</label>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">face</i>
-                            <input id="nickname" name="nickname" v-model="nickname" type="text"/>
+                            <input id="nickname" v-model="nickname" name="nickname" type="text"/>
                             <label for="pw">Nickname</label>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">mail</i>
-                            <input id="email" name="email" v-model="email" type="text"/>
+                            <input id="email" v-model="email" name="email" type="text"/>
                             <label for="email">Email</label>
                         </div>
                     </div>
@@ -90,7 +90,6 @@ export default {
         async submitForm() {
             try {
                 const {data} = await (api_checkId(this.id));
-                console.log(data);
                 const userData = {
                     id      : this.id,
                     pw      : this.pw,

@@ -18,11 +18,11 @@
                             <td class="text_center">{{ item.postnum }}</td>
                             <td class="text_center">{{ item.writer }}</td>
                             <td><a :href="`/post/qna/${item.num}`">{{ item.title }}</a></td>
-                            <td class="text_center"
-                                v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')">
+                            <td v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')"
+                                class="text_center">
                                 {{ $moment(item.regdate).format('HH:mm:ss') }}
                             </td>
-                            <td class="text_center" v-else>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
+                            <td v-else class="text_center">{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
                             <td class="text_center">{{ item.likecount }}</td>
                             <td class="text_center">{{ item.readcount }}</td>
                         </tr>
@@ -38,12 +38,15 @@
                                     </v-btn>
                                 </div>
                                 <div>
-                                    <div style="display: flex" class="page-list">
-                                        <div v-for="page in items.pageList" @click="fetchData(page)">&nbsp;&nbsp;&nbsp;{{ page }}&nbsp;&nbsp;&nbsp;</div>
+                                    <div class="page-list" style="display: flex">
+                                        <div v-for="page in items.pageList" @click="fetchData(page)">&nbsp;&nbsp;&nbsp;{{
+                                                page
+                                            }}&nbsp;&nbsp;&nbsp;
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="foot-search" >
+                                    <div class="foot-search">
                                         <div class="foot-search-box">
                                             <select v-model="search" name="search">
                                                 <option value="">Select</option>
@@ -56,7 +59,8 @@
                                         </div>
                                         <div class="foot-search-box">
                                             <button @click.prevent="SearchData"><i class="material-icons"
-                                                                                   style="font-size: 25px">search</i></button>
+                                                                                   style="font-size: 25px">search</i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -70,16 +74,13 @@
 </template>
 
 <script>
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {boardUserList, freeBoardAll, freeBoardTitle, qnaAdminList} from "@/api/post";
 
 export default {
-    components: {LoadingSpinner},
     data() {
         return {
             items    : [],
             options  : ['제목', '제목+내용'],
-            isLoading: false,
             keyword  : '',
             search   : true,
         }
@@ -93,17 +94,10 @@ export default {
         //게시글 조회
         async fetchData(num) {
             if (this.isAdmin) {
-                this.isLoading = true;
                 const {data} = await qnaAdminList(num);
-                console.log(data);
-                this.isLoading = false;
                 this.items = data;
             } else {
-                this.isLoading = true;
                 const {data} = await boardUserList(this.$store.state.id, num, this.$route.params.boardname);
-                console.log(data);
-                console.log(this.$store.state.id, num);
-                this.isLoading = false;
                 this.items = data;
             }
         },
@@ -111,18 +105,12 @@ export default {
         //게시글 검색
         async SearchData() {
             if (this.search === true) {
-                console.log(this.search);
                 // Title 검색
-                this.isLoading = true;
                 const {data} = await freeBoardTitle(this.keyword, 1);
-                this.isLoading = false;
                 this.items = data;
             } else {
-                console.log(this.search);
                 // Title+Content 검색
-                this.isLoading = true;
                 const {data} = await freeBoardAll(this.keyword, 1);
-                this.isLoading = false;
                 this.items = data;
             }
         },

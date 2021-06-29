@@ -30,7 +30,6 @@ export default {
                 formData.append("images", FileElement.files[i]);
             }
             const {data} = await saveImg(formData);
-            await console.log(data);
         },
         onFileSelected: function (event) {
             FileElement = event.target;

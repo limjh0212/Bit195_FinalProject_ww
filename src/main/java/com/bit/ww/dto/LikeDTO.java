@@ -15,6 +15,14 @@ public class LikeDTO {
     private String uid;
 
 
+    @Builder
+    public LikeDTO(int num, int boardnum, int postnum, String uid) {
+        this.num = num;
+        this.boardnum = boardnum;
+        this.postnum = postnum;
+        this.uid = uid;
+    }
+
     public LikeEntity toEntity() {
         return LikeEntity.builder()
                 .num(this.num)
@@ -22,13 +30,5 @@ public class LikeDTO {
                 .postnum(this.postnum)
                 .uid(this.uid)
                 .build();
-    }
-
-    @Builder
-    public LikeDTO(int num, int boardnum, int postnum, String uid){
-        this.num = num;
-        this.boardnum = boardnum;
-        this.postnum = postnum;
-        this.uid = uid;
     }
 }

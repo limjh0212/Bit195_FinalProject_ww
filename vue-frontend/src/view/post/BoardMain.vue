@@ -1,10 +1,10 @@
 <template>
     <div>
-      <div>
-        <BoardSubNav></BoardSubNav>
-      </div>
+        <div>
+            <BoardSubNav></BoardSubNav>
+        </div>
         <div class="router-view">
-          <router-view></router-view>
+            <router-view></router-view>
         </div>
     </div>
 </template>

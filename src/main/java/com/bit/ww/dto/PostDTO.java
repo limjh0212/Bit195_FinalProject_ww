@@ -27,6 +27,26 @@ public class PostDTO {
     private LocalDateTime regdate;
     private LocalDateTime editdate;
 
+    @Builder
+    public PostDTO(int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, int img, int readcount, int likecount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime regdate, LocalDateTime editdate) {
+        this.num = num;
+        this.boardname = boardname;
+        this.boardnum = boardnum;
+        this.postnum = postnum;
+        this.uid = uid;
+        this.writer = writer;
+        this.title = title;
+        this.content = content;
+        this.img = img;
+        this.readcount = readcount;
+        this.likecount = likecount;
+        this.isanswered = isanswered;
+        this.istemp = istemp;
+        this.tempnum = tempnum;
+        this.regdate = regdate;
+        this.editdate = editdate;
+    }
+
     public PostEntity toEntity() {
         return PostEntity.builder()
                 .num(this.num)
@@ -45,25 +65,5 @@ public class PostDTO {
                 .tempnum(this.tempnum)
                 .editdate(this.editdate)
                 .build();
-    }
-
-    @Builder
-    public PostDTO(int num, String boardname, int boardnum, int postnum, String uid, String writer, String title, String content, int img, int readcount, int likecount, boolean isanswered, boolean istemp, int tempnum, LocalDateTime regdate, LocalDateTime editdate){
-        this.num = num;
-        this.boardname = boardname;
-        this.boardnum = boardnum;
-        this.postnum = postnum;
-        this.uid = uid;
-        this.writer = writer;
-        this.title = title;
-        this.content = content;
-        this.img = img;
-        this.readcount = readcount;
-        this.likecount = likecount;
-        this.isanswered = isanswered;
-        this.istemp = istemp;
-        this.tempnum = tempnum;
-        this.regdate = regdate;
-        this.editdate = editdate;
     }
 }

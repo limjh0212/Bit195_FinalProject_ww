@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5, h6, strong {
     display: flex;
     height: 36px;
     border-radius: 35px;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .search-bar-dropdown {
@@ -73,6 +73,7 @@ h1, h2, h3, h4, h5, h6, strong {
     background: #2c393f;
 
 }
+
 .search-bar-input {
     flex: 2 0 0;
     display: flex;
@@ -86,9 +87,10 @@ h1, h2, h3, h4, h5, h6, strong {
     width: 100%;
     background: transparent;
     border: 0;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
 }
-.search-bar-input input:focus{
+
+.search-bar-input input:focus {
     outline: none;
 }
 
@@ -98,11 +100,13 @@ h1, h2, h3, h4, h5, h6, strong {
     padding: 0;
     box-shadow: none;
 }
+
 .box.banana_map .title {
     padding-top: 40px;
     padding-left: 25px;
     font-size: 16px;
 }
+
 .box.banana_map .subtitle {
     font-weight: 700;
     padding-top: 10px;
@@ -122,12 +126,27 @@ h1, h2, h3, h4, h5, h6, strong {
     z-index: 10;
 }
 
-@media screen and (max-width:760px) {
-    #topnav { flex-wrap: wrap; }
-    .admin-menu { flex-basis: 20%; }
-    .logo { justify-content: flex-end; padding-right: 10px; }
-    .logo { flex-basis: 80%; }
-    .topnav-rightmenu, .search-bar { display: none; }
+@media screen and (max-width: 760px) {
+    #topnav {
+        flex-wrap: wrap;
+    }
+
+    .admin-menu {
+        flex-basis: 20%;
+    }
+
+    .logo {
+        justify-content: flex-end;
+        padding-right: 10px;
+    }
+
+    .logo {
+        flex-basis: 80%;
+    }
+
+    .topnav-rightmenu, .search-bar {
+        display: none;
+    }
 }
 
 .box {
@@ -135,14 +154,17 @@ h1, h2, h3, h4, h5, h6, strong {
     background-color: #fff;
     padding: 25px 35px 25px 30px;
 }
+
 .table-box {
     box-shadow: 0px 1px 22px -12px #607D8B;
     background-color: #fff;
     padding: 25px 35px 25px 35px;
 }
+
 #monthly-earnings-chart #apexcharts-canvas {
     position: relative;
 }
+
 #monthly-earnings-chart #apexcharts-canvas:after {
     content: "";
     position: absolute;
@@ -153,12 +175,15 @@ h1, h2, h3, h4, h5, h6, strong {
     background: #24bdd3;
     opacity: 0.65;
 }
+
 #monthly-earnings-chart #apexcharts-title-text {
     font-weight: 600;
 }
+
 #monthly-earnings-chart #apexcharts-subtitle-text {
     font-weight: 700;
 }
+
 .monthly-earnings-text {
     position: absolute;
     left: 70px;
@@ -170,17 +195,19 @@ h1, h2, h3, h4, h5, h6, strong {
 .monthly-earnings-text h6 {
     font-size: 16px;
 }
+
 .chart-title h5 {
     font-size: 18px;
-    color: rgba(51,51,51,1);
+    color: rgba(51, 51, 51, 1);
     margin-bottom: 38px;
 }
 
 
-@media screen and (max-width:760px) {
+@media screen and (max-width: 760px) {
     .monthly-earnings-text {
         left: 30px;
     }
+
     .box {
         padding: 25px 0;
     }
@@ -195,8 +222,11 @@ h1, h2, h3, h4, h5, h6, strong {
     position: relative;
     padding-top: 15px;
 }
+
 /* overrides */
-.sparkboxes #apexcharts-subtitle-text { fill: #8799a2 !important; }
+.sparkboxes #apexcharts-subtitle-text {
+    fill: #8799a2 !important;
+}
 
 /* fusionexport btn CSS START */
 #fusionexport-btn {
@@ -206,6 +236,7 @@ h1, h2, h3, h4, h5, h6, strong {
     min-height: 30px;
     text-align: center;
 }
+
 #ootd-btn {
     /*min-width: 169px;*/
     /*min-height: 38px;*/
@@ -213,6 +244,7 @@ h1, h2, h3, h4, h5, h6, strong {
     min-height: 30px;
     text-align: center;
 }
+
 #fusionexport-btn .span {
     display: inline-block;
 }
@@ -233,4 +265,5 @@ h1, h2, h3, h4, h5, h6, strong {
 #fusionexport-btn[disabled] .btn-text {
     display: none;
 }
+
 /* fusionexport btn CSS START */

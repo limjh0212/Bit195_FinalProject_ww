@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "board_temp")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TempEntity extends PostTimeEntity{
+public class TempEntity extends PostTimeEntity {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class TempEntity extends PostTimeEntity{
     private String content;
 
     @Builder
-    public TempEntity(int num, int boardnum, String writer, String title, String content){
+    public TempEntity(int num, int boardnum, String writer, String title, String content) {
         this.num = num;
         this.boardnum = boardnum;
         this.writer = writer;

@@ -1,7 +1,6 @@
 package com.bit.ww.entity;
 
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

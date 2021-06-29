@@ -46,13 +46,15 @@ export function freeBoardAll(keyword, page) {
 }
 
 //Qna 내글보기(사용자)
-export function boardUserList(userid,num,boardname) {
+export function boardUserList(userid, num, boardname) {
     return api.get(`/api/cmnty/${boardname}/searchUid/${userid}?page=${num}`);
 }
+
 //Qna 내글보기(사용자) - 페이징 없음
-export function boardUserListNoPage(userid,boardname) {
+export function boardUserListNoPage(userid, boardname) {
     return api.get(`/api/cmnty/${boardname}/myList/${userid}`);
 }
+
 //Qna 내글보기(관리자)
 export function qnaAdminList(num) {
     return api.get(`/api/cmnty/qna/posts?page=${num}`);

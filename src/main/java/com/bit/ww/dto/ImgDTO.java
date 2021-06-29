@@ -16,7 +16,18 @@ public class ImgDTO {
     private String storedpath;
     private long filesize;
 
-    public ImgEntity toEntity(){
+    @Builder
+    public ImgDTO(int num, int boardid, int postid, String filename, String originalname, String storedpath, long filesize) {
+        this.num = num;
+        this.boardid = boardid;
+        this.postid = postid;
+        this.filename = filename;
+        this.originalname = originalname;
+        this.storedpath = storedpath;
+        this.filesize = filesize;
+    }
+
+    public ImgEntity toEntity() {
         return ImgEntity.builder()
                 .num(this.num)
                 .boardid(this.boardid)
@@ -26,16 +37,5 @@ public class ImgDTO {
                 .storedpath(this.storedpath)
                 .filesize(this.filesize)
                 .build();
-    }
-
-    @Builder
-    public ImgDTO(int num, int boardid, int postid, String filename, String originalname, String storedpath, long filesize){
-        this.num = num;
-        this.boardid = boardid;
-        this.postid = postid;
-        this.filename = filename;
-        this.originalname = originalname;
-        this.storedpath = storedpath;
-        this.filesize = filesize;
     }
 }

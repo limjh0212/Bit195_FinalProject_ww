@@ -1,7 +1,8 @@
-.board-btn{
-    margin-left:10px;
+.board-btn {
+    margin-left: 10px;
 }
-.page-list{
+
+.page-list {
     width: 50%;
     text-align: center;
     position: relative;
@@ -11,11 +12,13 @@
     margin: 0px;
     display: flex;
 }
-.page-box{
+
+.page-box {
     width: 20%;
-    float:left;
+    float: left;
 }
-.page-box-default{
+
+.page-box-default {
     margin: 3px;
     text-align: right;
 }

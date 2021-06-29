@@ -19,11 +19,11 @@
                                 <tr v-for="(item,i) in freeBoard" v-if="i < 5">
                                     <td><a :href="`/post/freeBoard/${item.num}`">{{ item.title }}</a></td>
                                     <td style="text-align: center">{{ item.writer }}</td>
-                                    <td style="text-align: center;"
-                                        v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')">
+                                    <td v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')"
+                                        style="text-align: center;">
                                         {{ $moment(item.regdate).format('HH:mm:ss') }}
                                     </td>
-                                    <td style="text-align: center;" v-else>{{
+                                    <td v-else style="text-align: center;">{{
                                             $moment(item.regdate).format('YYYY-MM-DD')
                                         }}
                                     </td>
@@ -55,11 +55,11 @@
                                 <tr v-for="(item,i) in qna" v-if="i < 5">
                                     <td><a :href="`/post/qna/${item.num}`">{{ item.title }}</a></td>
                                     <td style="text-align: center">{{ item.writer }}</td>
-                                    <td style="text-align: center;"
-                                        v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')">
+                                    <td v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')"
+                                        style="text-align: center;">
                                         {{ $moment(item.regdate).format('HH:mm:ss') }}
                                     </td>
-                                    <td style="text-align: center;" v-else>{{
+                                    <td v-else style="text-align: center;">{{
                                             $moment(item.regdate).format('YYYY-MM-DD')
                                         }}
                                     </td>
@@ -95,8 +95,6 @@ export default {
                 this.qna = data;
             } else {
                 const {data} = await boardUserList(this.$store.state.id, num, 'qna');
-                console.log(data);
-                console.log(this.$store.state.id, num);
                 this.qna = data.posts;
             }
         },

@@ -43,7 +43,7 @@
         <div class="search-result" style="margin: 0 auto;">
             <h5 style="text-align: left;margin-bottom: 20px">위치 정보</h5>
             <table style="width: 200px;">
-                <tr class="current-location" v-for="(item, i) in locations">
+                <tr v-for="(item, i) in locations" class="current-location">
                     <td>{{ item.address2 }}</td>
                     <td @click.prevent="deleteLocation(item.num)"><i class="material-icons" style="font-size: 20px">clear</i>
                     </td>

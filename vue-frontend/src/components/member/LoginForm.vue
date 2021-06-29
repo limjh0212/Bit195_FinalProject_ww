@@ -12,7 +12,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">account_circle</i>
-                            <input id="id" name="id" v-model="id" type="text"/>
+                            <input id="id" v-model="id" name="id" type="text"/>
                             <label for="id">ID</label>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                     <div class="row margin">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">vpn_key</i>
-                            <input id="pw" name="pw" v-model="pw" type="password"/>
+                            <input id="pw" v-model="pw" name="pw" type="password"/>
                             <label for="pw">Password</label>
                         </div>
                     </div>

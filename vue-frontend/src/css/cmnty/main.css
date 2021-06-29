@@ -1,35 +1,43 @@
 /*반응형*/
-@media(max-width: 1200px){
-    #nav{
-        width:100%;
-    }
-    #sub-nav{
-        width:100%;
-    }
-    #board-list-form{
-        width:100%;
-    }
-    #admin-side-nav{
+@media (max-width: 1200px) {
+    #nav {
         width: 100%;
     }
-    #footer{
-        width:100%;
+
+    #sub-nav {
+        width: 100%;
+    }
+
+    #board-list-form {
+        width: 100%;
+    }
+
+    #admin-side-nav {
+        width: 100%;
+    }
+
+    #footer {
+        width: 100%;
     }
 }
+
 /*링크 : 밑줄 없음, 클릭해도 색상 변경 없음.*/
 a {
     text-decoration: none;
     color: #333;
 }
+
 th {
     font-family: 'Titillium Web', Arial, Helvetica, sans-serif;
     font-size: 15px;
 }
-td{
+
+td {
     font-family: 'Titillium Web', Arial, Helvetica, sans-serif;
     font-size: 0.9rem;
 }
-.board-btn{
+
+.board-btn {
     display: inline-block;
     font-weight: 400;
     color: dimgrey;
@@ -53,6 +61,7 @@ td{
     margin-top: 10px;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
 @media screen and (prefers-reduced-motion: reduce) {
     .board-btn {
         transition: none;
@@ -76,8 +85,9 @@ td{
 .board-btn:not(:disabled):not(.disabled) {
     cursor: pointer;
 }
+
 /*메인 네비게이션*/
-#nav{
+#nav {
     width: 100%;
     text-align: center;
     position: relative;
@@ -85,56 +95,66 @@ td{
     border-bottom: 1px solid #D8D8D8;
     font-size: 15px;
 }
-.nav-logo{
+
+.nav-logo {
     position: absolute;
     top: 0;
     padding-left: 20px;
-    float:left;
+    float: left;
     width: 20%;
 }
-.nav-menu{
-    float:right;
+
+.nav-menu {
+    float: right;
     width: 60%;
     height: 60px;
 }
-.nav-box{
-    width:25%;
-    float:right;
+
+.nav-box {
+    width: 25%;
+    float: right;
 }
-.nav-box-default{
+
+.nav-box-default {
     /*width: 100%;*/
     /*height: 100%;*/
     margin: 10px;
 }
-.nav-box div{
+
+.nav-box div {
     display: inline-block;
 }
+
 .headerProfile {
-    float:left;
+    float: left;
     width: 40px;
     height: 40px;
     border-radius: 70%;
     overflow: hidden;
 }
+
 .profile {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.nickname{
-    float:right;
+
+.nickname {
+    float: right;
     width: auto;
     height: 40px;
     margin: 5px;
     color: #333;
 }
+
 /*서브 네이게이션*/
-#sub-nav{
+#sub-nav {
     width: 100%;
     position: relative;
     text-align: center;
 }
-.sub-nav-box{
+
+.sub-nav-box {
     float: left;
     width: 15%;
     margin-left: 10px;
@@ -142,46 +162,55 @@ td{
     border: 1px solid grey;
     border-radius: 5px;
 }
-.sub-nav-box-default{
+
+.sub-nav-box-default {
     margin-top: 5px;
     margin-bottom: 5px;
 }
-.sub-nav-box div{
+
+.sub-nav-box div {
     display: inline-block;
 }
+
 /*사이드 네이게이션*/
-#side-nav{
+#side-nav {
     width: 100%;
     position: relative;
     text-align: center;
     margin: auto;
 }
-.side-nav-box{
+
+.side-nav-box {
     margin-top: 25px;
     margin-bottom: 25px;
     /*border: 1px solid grey;*/
     /*border-radius: 5px;*/
 }
-.side-nav-box-default{
+
+.side-nav-box-default {
     width: 100px;
     height: 100px;
     font-size: 14px;
 }
-.side-nav-box div{
+
+.side-nav-box div {
     display: inline-block;
 }
+
 /*main화면*/
-.router-view{
+.router-view {
     padding: 0;
     margin: 0;
     display: inline-block;
     width: 100%;
 }
-.content-view{
+
+.content-view {
     width: 100%;
     margin: auto;
     height: auto;
 }
+
 /*footer*/
 #footer {
     border-top: 1px solid #D8D8D8;

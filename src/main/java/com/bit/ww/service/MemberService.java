@@ -58,31 +58,35 @@ public class MemberService implements UserDetailsService {
 
     //회원 정보
     // 총 회원 수
-    public int cntMembers(){
+    public int cntMembers() {
         return memberRepository.countAllByIdIsNotNull();
     }
+
     // 성별, 연령별 회원 수
-    public int cntGenderAndAge(boolean gender, int start, int end){
+    public int cntGenderAndAge(boolean gender, int start, int end) {
         return memberRepository.countAllByGenderAndIswithdrawalIsFalseAndAgeBetween(gender, start, end);
     }
+
     // 총 회원 중 가입탈퇴 수
-    public int cntWthdrFalse(){
+    public int cntWthdrFalse() {
         return memberRepository.countAllByIswithdrawalIsFalse();
     }
-    public int cntWthdrTrue(){
+
+    public int cntWthdrTrue() {
         return memberRepository.countAllByIswithdrawalIsTrue();
     }
+
     // 일주일 간 일일 가입 탈퇴 수
-    public List cntToday(){
+    public List cntToday() {
         List<Object> info = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-                LocalDate date = LocalDate.now().minusDays(i);
-                LocalDateTime start = LocalDateTime.of(date, LocalTime.of(0, 0, 0));
-                LocalDateTime end = LocalDateTime.of(date, LocalTime.of(23, 59, 59));
-                //idx 붙이면 날짜 순, 안붙이면 최신순
-                info.add(date);
-                info.add(memberRepository.countAllByIswithdrawalIsFalseAndRegdateIsBetween(start, end));
-                info.add(memberRepository.countAllByIswithdrawalIsTrueAndWthdrdateIsBetween(start, end));
+            LocalDate date = LocalDate.now().minusDays(i);
+            LocalDateTime start = LocalDateTime.of(date, LocalTime.of(0, 0, 0));
+            LocalDateTime end = LocalDateTime.of(date, LocalTime.of(23, 59, 59));
+            //idx 붙이면 날짜 순, 안붙이면 최신순
+            info.add(date);
+            info.add(memberRepository.countAllByIswithdrawalIsFalseAndRegdateIsBetween(start, end));
+            info.add(memberRepository.countAllByIswithdrawalIsTrueAndWthdrdateIsBetween(start, end));
         }
         return info;
     }

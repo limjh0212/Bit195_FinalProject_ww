@@ -1,7 +1,6 @@
-import {store} from '@/store/index';
+import {store} from '@/store';
 
 export function setInterceptors(instance) {
-    //Request 인터셉터
     instance.interceptors.request.use(
         function (config) {
             //Header에 인증 토큰 작성

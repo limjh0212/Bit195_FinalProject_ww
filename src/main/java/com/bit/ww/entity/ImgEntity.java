@@ -35,7 +35,7 @@ public class ImgEntity {
     private long filesize;
 
     @Builder
-    public ImgEntity (int num, int boardid, int postid, String filename, String originalname, String storedpath, long filesize){
+    public ImgEntity(int num, int boardid, int postid, String filename, String originalname, String storedpath, long filesize) {
         this.num = num;
         this.boardid = boardid;
         this.postid = postid;

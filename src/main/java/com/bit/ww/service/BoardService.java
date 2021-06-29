@@ -23,11 +23,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @DynamicUpdate
 public class BoardService {
-    private final BoardRepository boardRepository;
-    private final PostRepository postRepository;
     // 페이징
     private static final int CNTPAGENUM = 5; // 화면에서 보이는 페이지 번호 개수
     private static final int CNTPAGEPOST = 10; // 한 페이지에서 보이는 게시글 개수
+    private final BoardRepository boardRepository;
+    private final PostRepository postRepository;
     private double cntPosts = 0.0; // 총 포스트 개수 ( 중복 코드 줄이기 위해 )
 
     // 공통 - Entity -> DTO
@@ -51,6 +51,7 @@ public class BoardService {
                 .editdate(postEntity.getEditdate())
                 .build();
     }
+
     // 공통 - 페이지 리스트
     @Transactional
     public Integer[] pageList(int pagenum) { // pagenum = 현재페이지
@@ -60,21 +61,21 @@ public class BoardService {
         // 총 게시글 수 기준 마지막 페이지 번호 계산 (올림)
         int lastPagenum = (int) (Math.ceil((cntPosts / CNTPAGEPOST)));
         // 현재 페이지 기준으로 화면에서 보이는 마지막 페이지 번호 계산
-        int lastViewPagenum ;
-        if (lastPagenum <= 5){
+        int lastViewPagenum;
+        if (lastPagenum <= 5) {
             lastViewPagenum = lastPagenum;
             pagenum = 1;
-        }else {
-            if (pagenum <=3){
+        } else {
+            if (pagenum <= 3) {
                 pagenum = 1;
                 lastViewPagenum = 5;
-            }else {
-                if(pagenum+2 <= lastPagenum){
-                    lastViewPagenum = pagenum+2;
-                    pagenum = pagenum-2;
-                }else {
+            } else {
+                if (pagenum + 2 <= lastPagenum) {
+                    lastViewPagenum = pagenum + 2;
+                    pagenum = pagenum - 2;
+                } else {
                     lastViewPagenum = lastPagenum;
-                    pagenum = lastPagenum-4;
+                    pagenum = lastPagenum - 4;
                 }
             }
         }
@@ -84,6 +85,7 @@ public class BoardService {
         }
         return pageList;
     }
+
     // 게시판 이름으로 게시판 조회
     @Transactional
     public BoardDTO findBoard(String boardname) {
@@ -95,6 +97,7 @@ public class BoardService {
                 .lastnum(boardEntity.getLastnum())
                 .build();
     }
+
     // 게시판 이름으로 게시물 리스트 조회 + 페이징없음
     @Transactional
     public List<PostDTO> findPostsNoPage(String boardname) {
@@ -106,6 +109,7 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     // 게시판 이름으로 게시물 리스트 조회 + 페이징
     @Transactional
     public List<PostDTO> findPosts(String boardname, int pagenum) {
@@ -118,11 +122,13 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     @Transactional
     public Integer[] pageListFindPosts(String boardname, int pagenum) { // pagenum = 현재페이지
         cntPosts = (double) this.cntPosts(boardname);
         return pageList(pagenum);
     }
+
     @Transactional
     public int cntPosts(String boardname) {
         return postRepository.countAllByBoardname(boardname);
@@ -179,11 +185,13 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     @Transactional
     public Integer[] pageListSearchTitle(String search, String boardname, int pagenum) {
         cntPosts = (double) cntSearchTitle(search, boardname);
         return pageList(pagenum);
     }
+
     @Transactional
     public int cntSearchTitle(String search, String boardname) {
         return postRepository.countAllByTitleIgnoreCaseIsContainingAndBoardname(search, boardname);
@@ -201,6 +209,7 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     @Transactional
     public Integer[] pageListSearchTitleOrContent(String search, String boardname, int pagenum) {
         cntPosts = (double) cntSearchTitleOrContent(search, boardname);
@@ -223,6 +232,7 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     // 내글보기 & QnA 작성자 검색
     @Transactional
     public List<PostDTO> searchUid(String boardname, String uid, int pagenum) {
@@ -235,11 +245,13 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     @Transactional
     public Integer[] pageListSearchUid(String boardname, String uid, int pagenum) {
         cntPosts = (double) cntSearchUid(boardname, uid);
         return pageList(pagenum);
     }
+
     @Transactional
     public int cntSearchUid(String boardname, String uid) {
         return postRepository.countAllByBoardnameAndUid(boardname, uid);
@@ -257,11 +269,13 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     @Transactional
     public Integer[] pageListSearchUidAndTitle(String boardname, String uid, String search, int pagenum) {
         cntPosts = (double) cntSearchUidAndTitle(boardname, uid, search);
         return pageList(pagenum);
     }
+
     @Transactional
     public int cntSearchUidAndTitle(String boardname, String uid, String search) {
         return postRepository.countAllByBoardnameAndUidAndTitleIgnoreCase(boardname, uid, search);
@@ -279,11 +293,13 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     @Transactional
     public Integer[] pageListSearchUidAndTitleOrContent(String boardname, String uid, String search, int pagenum) {
         cntPosts = (double) cntSearchUidAndTitleOrContent(boardname, uid, search);
         return pageList(pagenum);
     }
+
     @Transactional
     public int cntSearchUidAndTitleOrContent(String boardname, String uid, String search) {
         return postRepository.countAllByBoardnameAndUidAndTitleIgnoreCaseIsContainingOrContentIgnoreCaseIsContaining(boardname, uid, search, search);
@@ -311,6 +327,7 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     // 관리자 및 마이페이지
     // uid가 쓴 모든 글
     @Transactional
@@ -324,11 +341,13 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     @Transactional
     public Integer[] pageListUidPosts(String uid, int pagenum) {
         cntPosts = (double) cntUidPosts(uid);
         return pageList(pagenum);
     }
+
     @Transactional
     public int cntUidPosts(String uid) {
         return postRepository.countAllByUid(uid);
@@ -346,11 +365,13 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     @Transactional
     public Integer[] pageListWriterPosts(String writer, int pagenum) {
         cntPosts = (double) cntWriterPosts(writer);
         return pageList(pagenum);
     }
+
     @Transactional
     public int cntWriterPosts(String writer) {
         return postRepository.countAllByWriter(writer);
@@ -386,11 +407,13 @@ public class BoardService {
         }
         return postDTOList;
     }
+
     @Transactional
-    public Integer[] pageListNotAnswered( int pagenum) {
+    public Integer[] pageListNotAnswered(int pagenum) {
         cntPosts = (double) cntNotAnswered();
         return pageList(pagenum);
     }
+
     @Transactional
     public int cntNotAnswered() {
         int boardnum = 4;

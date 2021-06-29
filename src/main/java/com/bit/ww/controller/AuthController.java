@@ -26,7 +26,7 @@ public class AuthController {
     MemberService memberService;
     ImgService imgService;
 
-        //회원가입
+    //회원가입
     @ApiOperation(value = "회원 등록", notes = "회원 등록")
     @PostMapping("/signup")
     public String signup(@RequestBody MemberEntity member) {

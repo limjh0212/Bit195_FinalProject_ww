@@ -78,7 +78,7 @@ public class BoardController {
     public String deletePost(@PathVariable("postId") int num) {
         PostDTO postDTO = boardService.getPost(num);
         int ootdnum = postDTO.getPostnum();
-        if(imgService.existImg(ootdnum)){
+        if (imgService.existImg(ootdnum)) {
             imgService.deleteImgs(ootdnum);
         }
         boardService.deletePost(num);

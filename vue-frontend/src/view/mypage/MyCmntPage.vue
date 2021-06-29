@@ -47,11 +47,9 @@
 </template>
 
 <script>
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {myCmnt} from "@/api/post";
 
 export default {
-    components: {LoadingSpinner},
     data() {
         return {
             items   : [],

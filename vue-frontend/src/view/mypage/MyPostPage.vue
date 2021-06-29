@@ -18,11 +18,11 @@
                             <td class="text_center">{{ item.postnum }}</td>
                             <td class="text_center">{{ item.writer }}</td>
                             <td><a :href="`/post/freeBoard/${item.num}`">{{ item.title }}</a></td>
-                            <td class="text_center"
-                                v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')">
+                            <td v-if="$moment().format('YYYY-MM-DD') === $moment(item.regdate).format('YYYY-MM-DD')"
+                                class="text_center">
                                 {{ $moment(item.regdate).format('HH:mm:ss') }}
                             </td>
-                            <td class="text_center" v-else>{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
+                            <td v-else class="text_center">{{ $moment(item.regdate).format('YYYY-MM-DD') }}</td>
                             <td class="text_center">{{ item.likecount }}</td>
                             <td class="text_center">{{ item.readcount }}</td>
                         </tr>
@@ -38,7 +38,7 @@
                                     </v-btn>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div>
-                                    <div style="display: flex" class="page-list">
+                                    <div class="page-list" style="display: flex">
                                         <div v-for="page in items.pageList" style="display: flex">
                                             <div class="page-box-default" @click="fetchMyList(page)">{{ page }}</div>&nbsp;&nbsp;&nbsp;
                                         </div>
@@ -56,11 +56,9 @@
 </template>
 
 <script>
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {boardUserList} from "@/api/post";
 
 export default {
-    components: {LoadingSpinner},
     data() {
         return {
             items   : [],
@@ -74,7 +72,6 @@ export default {
             this.items = data;
             this.pageList = data.pageList;
             this.myList = true;
-            console.log(this.items)
         },
     },
     created() {

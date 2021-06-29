@@ -8,9 +8,9 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     plugins  : [createPersistedState({
-        storage : {
-            getItem: key => Cookies.get(key),
-            setItem: (key, value) => Cookies.set(key, value, { expires: 1, secure: true }),
+        storage: {
+            getItem   : key => Cookies.get(key),
+            setItem   : (key, value) => Cookies.set(key, value, {expires: 1, secure: true}),
             removeItem: key => Cookies.remove(key)
         }
     })],
@@ -19,7 +19,7 @@ export const store = new Vuex.Store({
         token   : '',
         nickname: '',
         role    : '',
-        img : '',
+        img     : '',
     },
     getters  : {
         isLogin(state) {
@@ -30,7 +30,7 @@ export const store = new Vuex.Store({
         },
     },
     mutations: {
-        setSignupId(state, userId){
+        setSignupId(state, userId) {
             state.id = userId;
         },
 
@@ -39,9 +39,9 @@ export const store = new Vuex.Store({
             state.token = userData.token;
             state.nickname = userData.nickname;
             state.role = userData.role;
-            if(userData.img === 0){
+            if (userData.img === 0) {
                 state.img = 18;
-            }else{
+            } else {
                 state.img = userData.img;
             }
         },

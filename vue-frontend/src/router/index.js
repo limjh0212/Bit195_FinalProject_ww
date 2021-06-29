@@ -165,7 +165,6 @@ export const router = new VueRouter({
 //로그인 검증
 router.beforeEach((to, form, next) => {
     if (to.meta.auth && !store.getters.isLogin) {
-        console.log('인증이 필요합니다')
         next('/login');
         return;
     }
@@ -175,7 +174,6 @@ router.beforeEach((to, form, next) => {
 //관리자 권한 검증
 router.beforeEach((to, form, next) => {
     if (to.meta.admin && !store.getters.isAdmin) {
-        console.log('관리자 권한이 필요합니다')
         next('/');
         return;
     }

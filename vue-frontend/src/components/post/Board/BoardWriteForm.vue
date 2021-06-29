@@ -10,8 +10,10 @@
                                    height="400px" placeholder="내용을 입력하세요."/>
                         <br>
                         <div style="width:700px; display: flex; justify-content: space-between">
-                            <div><v-btn elevation="1" rounded small @click="goback">뒤로
-                            </v-btn></div>
+                            <div>
+                                <v-btn elevation="1" rounded small @click="goback">뒤로
+                                </v-btn>
+                            </div>
                             <div>
                                 <v-btn elevation="1" rounded small type="submit">저장<i class="material-icons"
                                                                                       style="font-size: 20px">save</i>
@@ -36,8 +38,10 @@
                                    @change="onFileSelected"></input>
                             <br>
                             <div style="width:700px; display: flex; justify-content: space-between">
-                                <div><v-btn elevation="1" rounded small @click="goback">뒤로
-                                </v-btn></div>
+                                <div>
+                                    <v-btn elevation="1" rounded small @click="goback">뒤로
+                                    </v-btn>
+                                </div>
                                 <div>
                                     <v-btn elevation="1" rounded small type="submit">저장<i class="material-icons"
                                                                                           style="font-size: 20px">save</i>

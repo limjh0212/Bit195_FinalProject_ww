@@ -20,6 +20,19 @@ public class CmntDTO {
     private LocalDateTime regdate;
     private LocalDateTime editdate;
 
+    @Builder
+    public CmntDTO(int num, int boardnum, int postnum, int cmntnum, int depth, String writer, String content, LocalDateTime regdate, LocalDateTime editdate) {
+        this.num = num;
+        this.boardnum = boardnum;
+        this.postnum = postnum;
+        this.cmntnum = cmntnum;
+        this.depth = depth;
+        this.writer = writer;
+        this.content = content;
+        this.regdate = regdate;
+        this.editdate = editdate;
+    }
+
     public CmntEntity toEntity() {
         return CmntEntity.builder()
                 .num(this.num)
@@ -30,18 +43,5 @@ public class CmntDTO {
                 .writer(this.writer)
                 .content(this.content)
                 .build();
-    }
-
-    @Builder
-    public CmntDTO(int num, int boardnum, int postnum, int cmntnum, int depth, String writer, String content, LocalDateTime regdate, LocalDateTime editdate){
-        this.num = num;
-        this.boardnum = boardnum;
-        this.postnum = postnum;
-        this.cmntnum = cmntnum;
-        this.depth = depth;
-        this.writer = writer;
-        this.content = content;
-        this.regdate = regdate;
-        this.editdate = editdate;
     }
 }

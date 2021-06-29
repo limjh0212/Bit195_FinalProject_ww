@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Table(name = "member")
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberEntity extends TimeEntity{
+public class MemberEntity extends TimeEntity {
     @ApiModelProperty(example = "ID")
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -53,6 +53,7 @@ public class MemberEntity extends TimeEntity{
     @ApiModelProperty(hidden = true)
     @Column //탈퇴일자
     private LocalDateTime wthdrdate;
+
     @Builder
     public MemberEntity(String id, String pw, String nickname, String email, String role, boolean gender, Integer age, int img, boolean iswithdrawal, LocalDateTime wthdrdate) {
         this.id = id;

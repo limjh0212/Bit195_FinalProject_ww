@@ -26,13 +26,11 @@ JWT에는 토큰 만료 시간이나 회원 권한 정보등을 저장
 @Component
 public class JwtTokenProvider {
 
+    private final MemberService userDetailsService;
     @Value("${spring.jwt.secret}")
     private String secretKey;
-
     // 토큰 유효시간 30분
     private long tokenValidTime = 30 * 60 * 1000L;
-
-    private final MemberService userDetailsService;
 
     // 객체 초기화, secretKey를 Base64로 인코딩
     @PostConstruct

@@ -39,7 +39,7 @@ public class CmntEntity extends TimeEntity {
     private String content;
 
     @Builder
-    public CmntEntity(int num, int boardnum, int postnum, int cmntnum, int depth, String writer, String content){
+    public CmntEntity(int num, int boardnum, int postnum, int cmntnum, int depth, String writer, String content) {
         this.num = num;
         this.boardnum = boardnum;
         this.postnum = postnum;

@@ -7,11 +7,15 @@ import java.util.List;
 
 public interface ImgRepository extends JpaRepository<ImgEntity, Integer> {
     ImgEntity save(ImgEntity imgEntity);
+
     List<ImgEntity> findAllByPostid(int postid);
+
     // Exist
     Boolean existsAllByBoardidAndPostid(int boardid, int postid);
+
     //Postid List 출력용
     List<ImgEntity> findAllByBoardidOrderByNumDesc(int boardid);
+
     //Boardid & Postid로 List출력
     List<ImgEntity> findAllByBoardidAndPostidOrderByNumDesc(int boardid, int postid);
 

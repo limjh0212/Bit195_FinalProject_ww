@@ -28,7 +28,7 @@ public class MngmtController {
     @ApiOperation(value = "관리자 메인 페이지", notes = "총 회원수, 성별 연령별 회원 수, 총 게시물 수")
     @GetMapping("/admin")
     @Secured({"ROLE_ADMIN"})
-    public HashMap infos(){
+    public HashMap infos() {
         HashMap<String, Object> infos = new HashMap<>();
         infos.put("cntMembers", memberService.cntMembers());
         infos.put("cntM10", memberService.cntGenderAndAge(true, 10, 19));
@@ -42,10 +42,11 @@ public class MngmtController {
         infos.put("cntTotalPosts", boardService.cntTotalPosts(5));
         return infos;
     }
+
     @ApiOperation(value = "멤버관리 페이지", notes = "총 회원수, 가입회원 수, 탈퇴 회원수, 일주일간 각 날짜별 가입 및 탈퇴 회원수")
     @GetMapping("/member")
     @Secured({"ROLE_ADMIN"})
-    public HashMap memberInfos(){
+    public HashMap memberInfos() {
         HashMap<String, Object> infos = new HashMap<>();
         infos.put("cntMembers", memberService.cntMembers());
         infos.put("cntWthdrFalse", memberService.cntWthdrFalse());
@@ -53,11 +54,12 @@ public class MngmtController {
         infos.put("cnt7days", memberService.cntToday());
         return infos;
     }
+
     // 회원 목록은 MemberController에 있음.
     @ApiOperation(value = "커뮤니티 관리 페이지", notes = "총 게시물수, 각 게시판 별 게시물수, 최근게시물 수, 최근 각 게시판별 게시물 수")
     @GetMapping("/cmnty")
     @Secured({"ROLE_ADMIN"})
-    public HashMap cmntyInfos(){
+    public HashMap cmntyInfos() {
         HashMap<String, Object> infos = new HashMap<>();
         infos.put("cntTotalPosts", boardService.cntTotalPosts(5));
         infos.put("cntFreeBoard", boardService.cntPosts("freeBoard"));
@@ -65,31 +67,33 @@ public class MngmtController {
         infos.put("cntHotDeal", boardService.cntPosts("hotDeal"));
         LocalDateTime start = LocalDateTime.of(LocalDate.now().minusDays(7), LocalTime.of(0, 0, 0));
         LocalDateTime end = LocalDateTime.now();
-        infos.put("cntRecentPosts", boardService.cntRecentPosts(start, end,5));
-        infos.put("cntRecentFB",boardService.cntRecentBoard(start, end,1));
-        infos.put("cntRecentOOTD", boardService.cntRecentBoard(start, end,2));
-        infos.put("cntRecentHD", boardService.cntRecentBoard(start, end,3));
+        infos.put("cntRecentPosts", boardService.cntRecentPosts(start, end, 5));
+        infos.put("cntRecentFB", boardService.cntRecentBoard(start, end, 1));
+        infos.put("cntRecentOOTD", boardService.cntRecentBoard(start, end, 2));
+        infos.put("cntRecentHD", boardService.cntRecentBoard(start, end, 3));
         return infos;
     }
+
     // 게시글 목록은 BoardController에 있음.
     @ApiOperation(value = "문의 관리 페이지", notes = "최근 문의 수, 미해결문의 수, 미해결문의리스트")
     @GetMapping("/qna")
     @Secured({"ROLE_ADMIN"})
-    public HashMap qnaInfos(@RequestParam(value = "page", defaultValue = "1") int pagenum){
+    public HashMap qnaInfos(@RequestParam(value = "page", defaultValue = "1") int pagenum) {
         HashMap<String, Object> infos = new HashMap<>();
         LocalDateTime start = LocalDateTime.of(LocalDate.now().minusDays(7), LocalTime.of(0, 0, 0));
         LocalDateTime end = LocalDateTime.now();
-        infos.put("cntRecentQuestion", boardService.cntRecentBoard(start, end,4));
-        infos.put("cntNotAnswered",boardService.cntNotAnswered());
+        infos.put("cntRecentQuestion", boardService.cntRecentBoard(start, end, 4));
+        infos.put("cntNotAnswered", boardService.cntNotAnswered());
         infos.put("NotAnsweredQuestion", boardService.findNotAnswered(pagenum));
         infos.put("pageList", boardService.pageListNotAnswered(pagenum));
         return infos;
     }
+
     // 마이 페이지
     // 나머지는 내글보기와 동일
     @ApiOperation(value = "마이 페이지 - 내가 남긴 댓글", notes = "내가 남긴 댓글")
     @GetMapping("/mypage/mycmnts")
-    public HashMap mycmnts(String writer, @RequestParam(value = "page", defaultValue = "1") int pagenum){
+    public HashMap mycmnts(String writer, @RequestParam(value = "page", defaultValue = "1") int pagenum) {
         HashMap<String, Object> infos = new HashMap<>();
         infos.put("myCmntList", cmntService.getMyCmntList(writer, pagenum));
         infos.put("pageList", cmntService.pageListMyCmntList(writer, pagenum));

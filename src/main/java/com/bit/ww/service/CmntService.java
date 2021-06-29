@@ -17,11 +17,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CmntService {
-    private final CmntRepository cmntRepository;
     // 페이징
     private static final int CNTPAGENUM = 5; // 화면에서 보이는 페이지 번호 개수
     private static final int CNTPAGEPOST = 10; // 한 페이지에서 보이는 게시글 개수
+    private final CmntRepository cmntRepository;
     private double cntPosts = 0.0; // 총 포스트 개수 ( 중복 코드 줄이기 위해 )
+
     // 공통 - 페이지 리스트
     @Transactional
     public Integer[] pageList(int pagenum) { // pagenum = 현재페이지
@@ -31,21 +32,21 @@ public class CmntService {
         // 총 게시글 수 기준 마지막 페이지 번호 계산 (올림)
         int lastPagenum = (int) (Math.ceil((cntPosts / CNTPAGEPOST)));
         // 현재 페이지 기준으로 화면에서 보이는 마지막 페이지 번호 계산
-        int lastViewPagenum ;
-        if (lastPagenum <= 5){
+        int lastViewPagenum;
+        if (lastPagenum <= 5) {
             lastViewPagenum = lastPagenum;
             pagenum = 1;
-        }else {
-            if (pagenum <=3){
+        } else {
+            if (pagenum <= 3) {
                 pagenum = 1;
                 lastViewPagenum = 5;
-            }else {
-                if(pagenum+2 <= lastPagenum){
-                    lastViewPagenum = pagenum+2;
-                    pagenum = pagenum-2;
-                }else {
+            } else {
+                if (pagenum + 2 <= lastPagenum) {
+                    lastViewPagenum = pagenum + 2;
+                    pagenum = pagenum - 2;
+                } else {
                     lastViewPagenum = lastPagenum;
-                    pagenum = lastPagenum-4;
+                    pagenum = lastPagenum - 4;
                 }
             }
         }
@@ -118,12 +119,14 @@ public class CmntService {
         }
         return cmntDTOList;
     }
+
     @Transactional
     public Integer[] pageListMyCmntList(String writer, int pagenum) {
         int cntMyCmnts = cmntRepository.countAllByWriter(writer);
         cntPosts = (double) cntMyCmnts;
         return pageList(pagenum);
     }
+
     public CmntDTO getAnswer(int boardnum, int postnum) {
         Optional<CmntEntity> cmntEntityWrapper = cmntRepository.findByBoardnumAndPostnum(boardnum, postnum);
         CmntEntity cmntEntity = cmntEntityWrapper.get();
