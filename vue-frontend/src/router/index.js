@@ -103,23 +103,25 @@ export const router = new VueRouter({
                         //Main
                         path     : '/board',
                         component: () => import('@/view/post/PostMain'),
-
+                        meta     : {auth: true},
                     },
                     {
                         //게시글 작성
                         path     : '/post/:boardname',
                         component: () => import('@/view/post/WritePage'),
-
+                        meta     : {auth: true},
                     },
                     {
                         //게시글 목록조회
                         path     : '/list/:boardname',
                         component: () => import('@/view/post/Board/BoardView'),
+                        meta     : {auth: true},
                     },
                     {
                         //게시글 상세조회
                         path     : '/post/:boardname/:postnum',
                         component: () => import('@/view/post/Board/PostPage'),
+                        meta     : {auth: true},
                     },
                 ]
             },
@@ -131,33 +133,37 @@ export const router = new VueRouter({
                 children : [
                     {
                         //Main
-                        path     : '/mypage/main',
-                        component: () => import('@/view/mypage/MyPageMain')
+                        path    : '/mypage/main',
+                        redirect: '/mypage/aboutme',
+                        meta    : {auth: true},
                     },
                     {
                         //내가 작성한 글
                         path     : '/mypage/mypost',
                         component: () => import('@/view/mypage/MyPostPage'),
+                        meta     : {auth: true},
                     },
                     {
                         //내가 작성한 댓글
                         path     : '/mypage/mycmnt',
                         component: () => import('@/view/mypage/MyCmntPage'),
+                        meta     : {auth: true},
                     },
                     {
                         //내 정보 조회
                         path     : '/mypage/aboutme',
                         component: () => import('@/view/mypage/AboutMePage'),
+                        meta     : {auth: true},
                     },
                     {
                         //위치 등록
                         path     : '/mypage/location',
                         component: () => import('@/view/mypage/UserLocation'),
+                        meta     : {auth: true},
                     },
 
                 ]
             },
-
         ]
     })
 ;
