@@ -1,9 +1,3 @@
-### 🔗Link
-
-**Source**
-[https://github.com/limjh0212/Bit195_FinalProject_ww](https://github.com/limjh0212/Bit195_FinalProject_ww)
-[https://github.com/limjh0212/Bit195_FinalProject_API_Flask](https://github.com/limjh0212/Bit195_FinalProject_API_Flask-)
-
 ### 📖 살펴보기
 
 날씨 API와 딥러닝을 활용한 첫번째 프로젝트입니다. 매일 아침 어떤 옷을 입어야 할지 망설여질 때가 많습니다. 그 날의 날씨와 내가 선호하는 스타일을 반영하여 코디를 추천해주는 서비스로 고민을 해결해 보고자 프로젝트를 진행했습니다. 그 밖에 패션 커뮤니티 게시판에서 정보를 공유하고 소통할 수 있습니다.
